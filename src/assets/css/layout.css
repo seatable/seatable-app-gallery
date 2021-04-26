@@ -1,0 +1,69 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#root, #wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.seatable-app-gallery {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.seatable-app-gallery .seatable-app-gallery-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid #e4e4e4;
+}
+
+.seatable-app-gallery .seatable-app-gallery-settings {
+  /* width: 300px;
+  display: flex;
+  min-height: 0; */
+}
+
+.seatable-app-gallery .gallery-main-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.seatable-app-gallery .gallery-main-header .gallery-name {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.seatable-app-gallery .gallery-main-header .gallery-name > span {
+  padding-right: 10px;
+}
+
+.seatable-app-gallery .gallery-main-header .gallery-options {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.seatable-app-gallery .gallery-main-header .gallery-options .option-item {
+  margin-right: 10px;
+}
+
+.seatable-app-gallery .gallery-main-content {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}

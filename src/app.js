@@ -1,14 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import DTable from 'dtable-sdk';
-import intl from 'react-intl-universal';
+import Gallery from './pages/gallery.js';
+import Loading from './common/loading';
+
 import './locale/index.js'
 
-import './assets/css/plugin-layout.css';
-
 const propTypes = {
-  showDialog: PropTypes.bool
+  // viewConfig: PropTypes.object.isRequired,
+};
+
+const viewConfig = {
+  _id: '0000',
+  name: '你好的',
+  settings: {
+    table_name: 'Table1',
+    view_name: '默认视图',
+    shown_title_name: '',
+    shown_image_name: '',
+    shown_column_names: [],
+  }
 };
 
 class App extends React.Component {
@@ -17,7 +28,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      showDialog: props.showDialog || false,
+      viewConfig: viewConfig,
     };
     this.dtable = new DTable();
   }
@@ -26,26 +37,16 @@ class App extends React.Component {
     this.initPluginDTableData();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({showDialog: nextProps.showDialog});
-  } 
-
   componentWillUnmount() {
     this.unsubscribeLocalDtableChanged();
     this.unsubscribeRemoteDtableChanged();
   }
 
   async initPluginDTableData() {
-    const { isDevelopment } = this.props;
-    if (isDevelopment) {
-      // local develop
-      await this.dtable.init(window.dtablePluginConfig);
-      await this.dtable.syncWithServer();
-      this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
-    } else { 
-      // integrated to dtable app
-      this.dtable.initInBrowser(window.app.dtableStore);
-    }
+    // get accessToken
+    await this.dtable.init(window.dtablePluginConfig);
+    await this.dtable.syncWithServer();
+    this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     this.unsubscribeLocalDtableChanged = this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
     this.unsubscribeRemoteDtableChanged = this.dtable.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
     this.resetData();
@@ -63,35 +64,22 @@ class App extends React.Component {
     this.setState({isLoading: false});
   }
 
-  onPluginToggle = () => {
-    this.setState({showDialog: false});
-    window.app.onClosePlugin();
+  updateViewConfig = (config) => {
+    console.log(config)
   }
 
   render() {
-    let { isLoading, showDialog } = this.state;
+    let { isLoading } = this.state;
     if (isLoading) {
-      return '';
+      return <div className="d-flex flex-fill align-items-center"><Loading /></div>;
     }
-
-    let subtables = this.dtable.getTables();
-    let collaborators = this.dtable.getRelatedUsers();
     
     return (
-      <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" size="lg">
-        <ModalHeader className="test-plugin-header" toggle={this.onPluginToggle}>{'Plugin'}</ModalHeader>
-        <ModalBody className="test-plugin-content">
-          <div>{`'dtable-subtables: '${JSON.stringify(subtables)}`}</div>
-          <br></br>
-          <div>{`'dtable-collaborators: '${JSON.stringify(collaborators)}`}</div>
-          <div className="mt-4">
-            <h2 className="text-left">{intl.get('international_demo')}</h2>
-            <div>{intl.get('shanshui')}</div>
-            <div>{intl.get('hello_someone', {name: '小强'})}</div>
-            <div>{intl.getHTML('contans_html_params', {params: '参数1，参数2'})}</div>
-          </div>
-        </ModalBody>
-      </Modal>
+      <Gallery 
+        dtable={this.dtable}
+        viewConfig={viewConfig}
+        updateViewConfig={this.updateViewConfig}
+      />
     );
   }
 }

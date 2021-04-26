@@ -1,0 +1,20 @@
+.seatable-app-gallery .gallery-settings-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.seatable-app-gallery .gallery-settings-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.seatable-app-gallery .gallery-settings-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}

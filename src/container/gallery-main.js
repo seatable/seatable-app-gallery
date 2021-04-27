@@ -16,7 +16,7 @@ const propTypes = {
   formulaRows: PropTypes.object.isRequired,
 };
 
-class GalleryEditor extends React.Component {
+class GalleryMain extends React.Component {
 
   getImageColumn = () => {
     const { viewConfig, imageColumns } = this.props;
@@ -54,7 +54,7 @@ class GalleryEditor extends React.Component {
     const titleColumn = this.getTitleColumn();
     const shownColumns = this.getShownColumns();
     return (
-      <div className="gallery-editor-container container-fluid" style={{height: window.innerHeight - 50}}>
+      <div className="gallery-main-container container-fluid" style={{height: window.innerHeight - 50}}>
         <GalleryList 
           dtable={dtable}
           viewConfig={viewConfig} 
@@ -72,6 +72,6 @@ class GalleryEditor extends React.Component {
   }
 }
 
-GalleryEditor.propTypes = propTypes;
+GalleryMain.propTypes = propTypes;
 
-export default GalleryEditor;
+export default GalleryMain;

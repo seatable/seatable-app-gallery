@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GalleryEditor from '../container/gallery-editor';
+import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
 
 import '../assets/css/layout.css'
@@ -83,7 +83,7 @@ class Gallery extends React.Component {
             </div>
           </div>
           <div className="gallery-main-content">
-            <GalleryEditor
+            <GalleryMain
               dtable={dtable}
               viewConfig={viewConfig}
               viewRows={viewRows}

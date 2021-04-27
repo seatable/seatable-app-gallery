@@ -1,4 +1,4 @@
-.seatable-app-gallery .gallery-editor-container {
+.seatable-app-gallery .gallery-main-container {
   flex: 1;
   display: flex;
   min-height: 0;
@@ -13,17 +13,18 @@
 
 .seatable-app-gallery .gallery-item {
   margin: 0 10px 10px 0;
+  max-height: 350px;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #dedede;
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%);
-  max-height: 350px;
-  overflow: auto;
   background: #fff;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
 }
 
 .seatable-app-gallery .gallery-item .image-container {
+  flex-shrink: 0;
   height: 162px;
   background: #efefef;
   border-radius: 4px 4px 0 0;
@@ -52,22 +53,20 @@
   bottom: 10px;
   padding: 0 8px;
   font-size: .8125rem;
+  border-radius: 45%;
   background: rgba(0,0,0,.3);
   color: #fff;
-  border-radius: 45%;
 }
 
-
-
 .seatable-app-gallery .gallery-item .title-container {
-  padding: 0 5px;
+  padding: 0 10px;
 }
 
 .seatable-app-gallery .gallery-item .title-container:hover {
   background: #f1f1f1;
 }
 
-.seatable-app-gallery .gallery-item .row-title {
+.seatable-app-gallery .gallery-item  .title-container .row-title {
   font-size: 15px;
   cursor: pointer;
   text-overflow: ellipsis;
@@ -89,6 +88,13 @@
 }
 
 .seatable-app-gallery .gallery-item .row-content-container {
-  flex: 1;
+  padding: 8px 10px;
+}
 
+.seatable-app-gallery .gallery-item .row-content-container .gallery-editor-container {
+  margin-top: 7px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 }

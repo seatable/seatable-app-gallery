@@ -26,9 +26,8 @@ html, body {
 }
 
 .seatable-app-gallery .seatable-app-gallery-settings {
-  /* width: 300px;
-  display: flex;
-  min-height: 0; */
+  width: 300px;
+  min-width: 300px;
 }
 
 .seatable-app-gallery .gallery-main-header {

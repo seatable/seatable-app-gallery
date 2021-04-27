@@ -46,7 +46,7 @@ class ImageSetting extends React.Component {
 
   render() {
     return (
-      <div className="setting-item table-setting">
+      <div className="setting-item image-setting">
         <div className="title">Column_filed</div>
         {this.renderSelector()}
       </div>

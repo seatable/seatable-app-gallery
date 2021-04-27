@@ -46,7 +46,7 @@ class TitleSetting extends React.Component {
 
   render() {
     return (
-      <div className="setting-item table-setting">
+      <div className="setting-item title-setting">
         <div className="title">Title_filed</div>
         {this.renderSelector()}
       </div>

@@ -4,7 +4,7 @@ import TableSetting from '../components/gallery-settings/table-setting';
 import ViewSetting from '../components/gallery-settings/view-setting';
 import ImageSetting from '../components/gallery-settings/image-setting';
 import TitleSetting from '../components/gallery-settings/title-setting';
-import ColumnSettings from '../components/gallery-settings/column-settings';
+import FieldSettings from '../components/gallery-settings/field-settings';
 
 import '../assets/css/gallery-settings.css';
 
@@ -37,7 +37,7 @@ class GallerySettings extends React.Component {
     return (
       <div className="gallery-settings-container">
         <div className="gallery-settings-header">Settings</div>
-        <div className="gallery-settings-content">
+        <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 50}}>
           <TableSetting
             viewConfig={viewConfig} 
             tables={tables}
@@ -58,7 +58,7 @@ class GallerySettings extends React.Component {
             titleColumns={titleColumns}
             onSettingUpdate={this.onSettingUpdate}
           />
-          <ColumnSettings 
+          <FieldSettings 
             viewConfig={viewConfig} 
             columns={columns}
             onSettingUpdate={this.onSettingUpdate}

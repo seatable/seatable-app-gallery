@@ -4,10 +4,10 @@ import Switch from '../../../common/switch';
 
 const propTypes = {
   setting: PropTypes.object.isRequired,
-  onUpdateColumnSetting: PropTypes.func.isRequired,
+  onUpdateFieldSetting: PropTypes.func.isRequired,
 };
 
-class ColumnSettingItem extends React.PureComponent {
+class FieldSettingItem extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class ColumnSettingItem extends React.PureComponent {
     return null;
   }
 
-  onUpdateColumnSetting = (event) => {
+  onUpdateFieldSetting = (event) => {
     event.nativeEvent.stopImmediatePropagation();
     const value = event.target.checked;
     const { setting } = this.state;
@@ -32,7 +32,7 @@ class ColumnSettingItem extends React.PureComponent {
     }
     const newSetting = Object.assign({}, setting, {isChecked: value});
     this.setState({setting: newSetting}, () => {
-      this.props.onUpdateColumnSetting(newSetting);
+      this.props.onUpdateFieldSetting(newSetting);
     });
   }
 
@@ -50,12 +50,12 @@ class ColumnSettingItem extends React.PureComponent {
       <Switch 
         checked={setting.isChecked}  
         placeholder={placeholder} 
-        onChange={this.onUpdateColumnSetting} 
+        onChange={this.onUpdateFieldSetting} 
       />
     );
   }
 }
 
-ColumnSettingItem.propTypes = propTypes;
+FieldSettingItem.propTypes = propTypes;
 
-export default ColumnSettingItem;
+export default FieldSettingItem;

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import '../assets/css/layout.css'
 import GalleryEditor from '../container/gallery-editor';
 import GallerySettings from '../container/gallery-settings';
+
+import '../assets/css/layout.css'
 
 const propTypes = {
   dtable: PropTypes.object.isRequired,
@@ -23,26 +23,6 @@ class Gallery extends React.Component {
 
   componentDidMount() {
     // init currentSettings
-  }
-
-  initGallerySettings() {
-
-  }
-
-  updateGallerySettings() {
-
-  }
-
-  updateTableSettings() {
-
-  }
-
-  updateViewSettings() {
-
-  }
-
-  updateColumnSettings() {
-
   }
 
   getRows = (tableName, viewName) => {
@@ -78,15 +58,14 @@ class Gallery extends React.Component {
   render() {
     const { dtable, viewConfig } = this.props;
     const tables = dtable.getTables();
-    // todo
-    const selectedTable = tables[0];
+    const { table_name, view_name } = viewConfig.settings;
+    const selectedTable = tables.find(table => table.name === table_name) || tables[0];
     const views = dtable.getViews(selectedTable);
-    const selectedView = views[0];
+    const selectedView = views.find(view => view.name === view_name) || views[0];
     const columns = dtable.getColumns(selectedTable);
     const viewRows = this.getRows(selectedTable.name, selectedView.name);
     
     const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
-    // todo: handle link cell values
     const titleColumns = this.getTitleColumns(columns);
     const imageColumns = this.getImageColumns(columns);
     
@@ -119,12 +98,13 @@ class Gallery extends React.Component {
         </div>
         <div className="col-lg-2 col-md-3 seatable-app-gallery-settings">
           <GallerySettings 
+            dtable={dtable}
             viewConfig={viewConfig}
             tables={tables}
             views={views}
-            columns={columns}
             titleColumns={titleColumns}
             imageColumns={imageColumns}
+            columns={columns}
             onUpdateViewConfig={this.props.updateViewConfig}
           />
         </div>

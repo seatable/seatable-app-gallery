@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DTable from 'dtable-sdk';
+import context from './context.js';
 import Gallery from './pages/gallery.js';
 import Loading from './common/loading';
 
@@ -44,7 +45,7 @@ class App extends React.Component {
 
   async initPluginDTableData() {
     // get accessToken
-    await this.dtable.init(window.dtablePluginConfig);
+    await this.dtable.init(context.getConfig());
     await this.dtable.syncWithServer();
     this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     this.unsubscribeLocalDtableChanged = this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
@@ -65,7 +66,9 @@ class App extends React.Component {
   }
 
   updateViewConfig = (config) => {
-    console.log(config)
+    this.setState({viewConfig: config}, () => {
+      console.log(config);
+    });
   }
 
   render() {
@@ -73,6 +76,8 @@ class App extends React.Component {
     if (isLoading) {
       return <div className="d-flex flex-fill align-items-center"><Loading /></div>;
     }
+
+    const { viewConfig } = this.state;
     
     return (
       <Gallery 

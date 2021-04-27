@@ -1,0 +1,45 @@
+.gallery-setting-item .gallery-column-switch {
+  flex: 1;
+  display: flex;
+  padding-left: 10px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+
+.gallery-setting-item .gallery-column-switch .custom-switch {
+  width: 100%;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.gallery-setting-item .custom-switch .custom-switch-description {
+  width: 192px;
+  margin: 0;
+  padding-right: 5px;
+}
+
+.gallery-setting-item .custom-switch .dtable-font {
+  -webkit-transform: scale(.8);
+  transform: scale(.8);
+  display: inline-block;
+  line-height: 24px;
+  margin-right: 8px;
+  color: #666;
+}
+
+.gallery-setting-item .custom-switch .custom-switch-indicator {
+  width: 22px;
+  height: 12px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.gallery-setting-item .custom-switch .custom-switch-input:checked~.custom-switch-indicator:before {
+  left: 12px;
+}
+
+.gallery-setting-item .custom-switch .custom-switch-indicator:before {
+  height: 8px;
+  width: 8px;
+}

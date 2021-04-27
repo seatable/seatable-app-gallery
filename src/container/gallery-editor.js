@@ -43,7 +43,7 @@ class GalleryEditor extends React.Component {
     const { shown_column_names } = viewConfig.settings;
     let shownColumns = [];
     if (shown_column_names && Array.isArray(shown_column_names) && shown_column_names.length > 0) {
-      shownColumns = columns.find(column => shown_column_names.includes(column.name));
+      shownColumns = columns.filter(column => shown_column_names.includes(column.name));
     }
     return shownColumns;
   }

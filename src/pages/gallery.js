@@ -72,14 +72,23 @@ class Gallery extends React.Component {
     return (
       <div className="seatable-app seatable-app-gallery row no-gutters">
         <div className="col-auto seatable-app-gallery-main">
-          <div className="gallery-main-header">
-            <div className="gallery-name">
+          <div className="row no-gutters gallery-main-header">
+            <div className="col-auto gallery-name">
               <span>name</span>
               <span className="dtable-font dtable-icon-rename"></span>
             </div>
-            <div className="gallery-options">
-              <div className="option-item">share</div>
-              <div className="option-item">open</div>
+            <div className="col-md-4 d-none d-md-block">
+              <div className="gallery-options">
+                <div className="option-item">share</div>
+                <div className="option-item">open</div>
+              </div>
+            </div>
+            <div className="d-md-none col-6">
+              <div className="gallery-options">
+                <div className="option-item">share</div>
+                <div className="option-item">open</div>
+                <div className="option-item">settings</div>
+              </div>
             </div>
           </div>
           <div className="gallery-main-content">
@@ -96,7 +105,7 @@ class Gallery extends React.Component {
             />
           </div>
         </div>
-        <div className="col-lg-2 col-md-3 seatable-app-gallery-settings">
+        <div className="col-md-3 col-lg-2 seatable-app-gallery-settings">
           <GallerySettings 
             dtable={dtable}
             viewConfig={viewConfig}

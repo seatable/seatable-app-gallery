@@ -7,6 +7,7 @@
     "deep-copy": "1.4.2",
     "dtable-sdk": "0.0.67",
     "dtable-ui-component": "0.1.24",
+    "is-hotkey": "0.2.0",
     "moment": "^2.24.0",
     "react": "^16.12.0",
     "react-app-polyfill": "^1.0.6",

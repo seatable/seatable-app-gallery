@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import deepCopy from 'deep-copy';
+import Rename from '../common/rename';
 import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
 
@@ -56,12 +58,21 @@ class Gallery extends React.Component {
     return dtable.getTableFormulaResults(table, rows);
   }
 
-  onShareDialogToggle = () => {
-
+  onUpdateCurrentName = (newName) => {
+    const { viewConfig } = this.props;
+    const { name } = viewConfig;
+    if (name === newName) return;
+    const newViewConfig = deepCopy(viewConfig);
+    newViewConfig.name = name;
+    this.props.updateViewConfig(newViewConfig);
   }
 
+  onShareDialogToggle = () => {
+    alert('未实现');
+  }
+  
   onOpenShareApp = () => {
-
+    alert('未实现');
   }
 
   onSettingsToggle = () => {
@@ -90,8 +101,7 @@ class Gallery extends React.Component {
         <div className="col-auto seatable-app-gallery-main">
           <div className="row no-gutters gallery-main-header">
             <div className="col-auto gallery-name">
-              <span>name</span>
-              <span className="dtable-font dtable-icon-rename"></span>
+              <Rename currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
             </div>
             <div className="col-md-4 d-none d-md-block">
               <div className="gallery-options">

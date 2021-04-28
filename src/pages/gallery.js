@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import context from '../context';
 import Rename from '../common/rename';
 import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
@@ -26,6 +27,10 @@ class Gallery extends React.Component {
 
   componentDidMount() {
     // init currentSettings
+  }
+
+  isEditAppPage = () => {
+    return context.getSetting('isEditAppPage');
   }
 
   getRows = (tableName, viewName) => {
@@ -123,9 +128,11 @@ class Gallery extends React.Component {
                 <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
                   <i className="dtable-font dtable-icon-leave"></i>
                 </button>
-                <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
-                  <i className="dtable-font dtable-icon-settings"></i>
-                </button>
+                {this.isEditAppPage() && (
+                  <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
+                    <i className="dtable-font dtable-icon-settings"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -143,18 +150,20 @@ class Gallery extends React.Component {
             />
           </div>
         </div>
-        <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
-          <GallerySettings 
-            dtable={dtable}
-            viewConfig={viewConfig}
-            tables={tables}
-            views={views}
-            titleColumns={titleColumns}
-            imageColumns={imageColumns}
-            columns={columns}
-            onUpdateViewConfig={this.props.updateViewConfig}
-          />
-        </div>
+        {this.isEditAppPage() && (
+          <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
+            <GallerySettings 
+              dtable={dtable}
+              viewConfig={viewConfig}
+              tables={tables}
+              views={views}
+              titleColumns={titleColumns}
+              imageColumns={imageColumns}
+              columns={columns}
+              onUpdateViewConfig={this.props.updateViewConfig}
+            />
+          </div>
+        )}
       </div>
     );
   }

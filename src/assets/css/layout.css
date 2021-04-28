@@ -30,6 +30,16 @@ html, body {
   min-width: 300px;
 }
 
+@media (max-width: 768px) {
+  .seatable-app-gallery .seatable-app-gallery-settings {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
 .seatable-app-gallery .gallery-main-header {
   height: 50px;
   display: flex;

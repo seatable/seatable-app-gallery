@@ -1,8 +1,17 @@
 .seatable-app-gallery .gallery-settings-container {
-  flex: 1;
+  width: 300px;
+  min-width: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  background-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .seatable-app-gallery  .gallery-settings-container {
+    float: right;
+  }
 }
 
 .seatable-app-gallery .gallery-settings-header {

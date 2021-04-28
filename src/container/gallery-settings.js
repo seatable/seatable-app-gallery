@@ -21,6 +21,11 @@ const propTypes = {
 
 class GallerySettings extends React.Component {
 
+
+  onSettingContainerClick = (event) => {
+    event.stopPropagation();
+  }
+
   getColumnIconConfig = () => {
     const { dtable } = this.props;
     return dtable.getColumnIconConfig()
@@ -35,7 +40,7 @@ class GallerySettings extends React.Component {
     const { viewConfig, tables, views, imageColumns, titleColumns, columns } = this.props;
 
     return (
-      <div className="gallery-settings-container">
+      <div className="gallery-settings-container" onClick={this.onSettingContainerClick}>
         <div className="gallery-settings-header">Settings</div>
         <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 50}}>
           <TableSetting

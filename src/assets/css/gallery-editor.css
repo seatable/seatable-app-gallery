@@ -5,6 +5,7 @@
   padding: 10px 10px 10px 20px;
   overflow: auto;
 }
+
 .seatable-app-gallery .gallery-list {
   flex: 1;
   display: flex;

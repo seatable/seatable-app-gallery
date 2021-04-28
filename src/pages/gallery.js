@@ -18,6 +18,7 @@ class Gallery extends React.Component {
     this.state = {
       currentSettings: null,
       isShowSharedDialog: false,
+      isShowSetting: false
     };
   }
 
@@ -55,6 +56,18 @@ class Gallery extends React.Component {
     return dtable.getTableFormulaResults(table, rows);
   }
 
+  onShareDialogToggle = () => {
+
+  }
+
+  onOpenShareApp = () => {
+
+  }
+
+  onSettingsToggle = () => {
+    this.setState({isShowSetting: !this.state.isShowSetting})
+  }
+
   render() {
     const { dtable, viewConfig } = this.props;
     const tables = dtable.getTables();
@@ -68,6 +81,9 @@ class Gallery extends React.Component {
     const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
     const titleColumns = this.getTitleColumns(columns);
     const imageColumns = this.getImageColumns(columns);
+
+    const { isShowSetting } = this.state;
+    const settingStyle = isShowSetting ?  {display: 'block'} : null;
     
     return (
       <div className="seatable-app seatable-app-gallery row no-gutters">
@@ -79,15 +95,27 @@ class Gallery extends React.Component {
             </div>
             <div className="col-md-4 d-none d-md-block">
               <div className="gallery-options">
-                <div className="option-item">share</div>
-                <div className="option-item">open</div>
+                <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
+                  <i className="dtable-font dtable-icon-share mr-2"></i>
+                  <span>Share</span>
+                </button>
+                <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
+                  <i className="dtable-font dtable-icon-table mr-2"></i>
+                  <span>App</span>
+                </button>
               </div>
             </div>
             <div className="d-md-none col-6">
               <div className="gallery-options">
-                <div className="option-item">share</div>
-                <div className="option-item">open</div>
-                <div className="option-item">settings</div>
+                <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
+                  <i className="dtable-font dtable-icon-share"></i>
+                </button>
+                <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
+                  <i className="dtable-font dtable-icon-leave"></i>
+                </button>
+                <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
+                  <i className="dtable-font dtable-icon-settings"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -105,7 +133,7 @@ class Gallery extends React.Component {
             />
           </div>
         </div>
-        <div className="col-md-3 col-lg-2 seatable-app-gallery-settings">
+        <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
           <GallerySettings 
             dtable={dtable}
             viewConfig={viewConfig}

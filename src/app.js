@@ -8,19 +8,7 @@ import Loading from './common/loading';
 import './locale/index.js'
 
 const propTypes = {
-  // viewConfig: PropTypes.object.isRequired,
-};
-
-const viewConfig = {
-  _id: '0000',
-  name: '你好的',
-  settings: {
-    table_name: 'Table1',
-    view_name: '默认视图',
-    shown_title_name: '',
-    shown_image_name: '',
-    shown_column_names: [],
-  }
+  viewConfig: PropTypes.object.isRequired,
 };
 
 class App extends React.Component {
@@ -29,7 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      viewConfig: viewConfig,
+      viewConfig: props.viewConfig,
     };
     this.dtable = new DTable();
   }

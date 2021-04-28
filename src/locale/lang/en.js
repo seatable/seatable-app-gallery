@@ -8,7 +8,7 @@ const en = {
   "Title_field": "Title field",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
-  "Choose_all": "Choose all",
+  "Choose_all": "Choose all"
 };
 
 export default en;

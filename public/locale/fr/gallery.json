@@ -1,4 +1,4 @@
-const de = {
+{
   "Share": "Share",
   "App_page": "App page",
   "Settings": "Settings",
@@ -9,6 +9,4 @@ const de = {
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
   "Choose_all": "Choose all"
-};
-
-export default de;
+}

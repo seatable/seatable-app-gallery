@@ -1,8 +1,14 @@
 const fr = {
-  "international_demo": "international demo",
-  "shanshui": "english",
-  "hello_someone": "hello,{name}!",
-  "contans_html_params": "test child component <span class='bg-primary'>{params}</span>"
+  "Share": "Share",
+  "App_page": "App page",
+  "Settings": "Settings",
+  "Table": "Table",
+  "View": "View",
+  "Image_field": "Image field",
+  "Title_field": "Title field",
+  "Other_fields": "Other fields",
+  "Hide_all": "Hide all",
+  "Choose_all": "Choose all"
 };
 
 export default fr;

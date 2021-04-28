@@ -1,4 +1,4 @@
-const zh_CN = {
+{
   "Share": "共享",
   "App_page": "应用页面",
   "Settings": "设置",
@@ -9,6 +9,4 @@ const zh_CN = {
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",
   "Choose_all": "选择全部"
-};
-
-export default zh_CN;
+}

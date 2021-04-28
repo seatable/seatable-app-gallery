@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import intl from 'react-intl-universal';
 import FieldSettingItem from './widgets/field-setting-item';
 
 const propTypes = {
@@ -93,7 +94,7 @@ class FieldSettings extends React.Component {
     const newViewConfig = deepCopy(viewConfig);
     newViewConfig.settings.shown_column_names = shown_column_names;
     this.setState({fieldSettings: newFieldSettings}, () => {
-      this.props.onSettingUpdate(newViewConfig); 
+      this.props.onSettingUpdate(newViewConfig);
     });
   }
 
@@ -101,9 +102,9 @@ class FieldSettings extends React.Component {
     let { fieldSettings } = this.state;
     let isShowHideChoose = fieldSettings.length > 0 && fieldSettings.every(setting => setting.isChecked);
     if (isShowHideChoose) {
-      return <span className="setting-choose-all" onClick={this.onHideAllColumns}>Hide_all</span>;
+      return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
     }
-    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>Choose_all</span>;
+    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>;
   }
 
   render() {
@@ -112,7 +113,7 @@ class FieldSettings extends React.Component {
     return (
       <div className="setting-item field-settings">
         <div className="field-settings-header">
-          <span>{'Other_fields'}</span>
+          <span>{intl.get('Other_fields')}</span>
           {this.renderChooseFields()}
         </div>
         <div className="field-settings-body">

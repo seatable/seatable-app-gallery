@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[seatable_plugins.test]
-file_filter = public/locale/<lang>/test.json
-source_file = public/locale/en/test.json
+[seatable_apps.gallery]
+file_filter = public/locale/<lang>/gallery.json
+source_file = public/locale/en/gallery.json
 source_lang = en_US
 type = KEYVALUEJSON

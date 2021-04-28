@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
@@ -53,7 +54,7 @@ class ViewSetting extends React.Component {
   render() {
     return (
       <div className="setting-item view-setting">
-        <div className="title">View</div>
+        <div className="title">{intl.get('View')}</div>
         {this.renderSelector()}
       </div>
     );

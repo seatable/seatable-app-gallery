@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import intl from 'react-intl-universal';
 import context from '../context';
 import Rename from '../common/rename';
 import GalleryMain from '../container/gallery-main';
@@ -108,15 +109,15 @@ class Gallery extends React.Component {
             <div className="col-auto gallery-name">
               <Rename currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
             </div>
-            <div className="col-md-4 d-none d-md-block">
+            <div className="col-md-6 d-none d-md-block">
               <div className="gallery-options">
                 <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
                   <i className="dtable-font dtable-icon-share mr-2"></i>
-                  <span>Share</span>
+                  <span>{intl.get('Share')}</span>
                 </button>
                 <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
                   <i className="dtable-font dtable-icon-table mr-2"></i>
-                  <span>App</span>
+                  <span>{intl.get('App_page')}</span>
                 </button>
               </div>
             </div>

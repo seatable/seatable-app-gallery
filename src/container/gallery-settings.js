@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import intl from 'react-intl-universal';
 import TableSetting from '../components/gallery-settings/table-setting';
 import ViewSetting from '../components/gallery-settings/view-setting';
 import ImageSetting from '../components/gallery-settings/image-setting';
@@ -41,7 +42,7 @@ class GallerySettings extends React.Component {
 
     return (
       <div className="gallery-settings-container" onClick={this.onSettingContainerClick}>
-        <div className="gallery-settings-header">Settings</div>
+        <div className="gallery-settings-header">{intl.get('Settings')}</div>
         <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 50}}>
           <TableSetting
             viewConfig={viewConfig} 

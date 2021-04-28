@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
@@ -47,7 +48,7 @@ class TitleSetting extends React.Component {
   render() {
     return (
       <div className="setting-item title-setting">
-        <div className="title">Title_filed</div>
+        <div className="title">{intl.get('Title_field')}</div>
         {this.renderSelector()}
       </div>
     );

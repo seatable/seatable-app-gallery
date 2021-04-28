@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
+import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
@@ -53,7 +54,7 @@ class TableSetting extends React.Component {
   render() {
     return (
       <div className="setting-item table-setting">
-        <div className="title">Table</div>
+        <div className="title">{intl.get('Table')}</div>
         {this.renderSelector()}
       </div>
     );

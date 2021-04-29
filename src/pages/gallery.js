@@ -8,6 +8,7 @@ import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
 
 import '../assets/css/layout.css'
+import { Fragment } from 'react';
 
 const propTypes = {
   dtable: PropTypes.object.isRequired,
@@ -107,35 +108,37 @@ class Gallery extends React.Component {
         <div className="col-auto seatable-app-gallery-main">
           <div className="row no-gutters gallery-main-header">
             <div className="col-auto gallery-name">
-              <Rename currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
+              <Rename isSupportRename={this.isEditAppPage()} currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
             </div>
-            <div className="col-md-6 d-none d-md-block">
-              <div className="gallery-options">
-                <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
-                  <i className="dtable-font dtable-icon-share mr-2"></i>
-                  <span>{intl.get('Share')}</span>
-                </button>
-                <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
-                  <i className="dtable-font dtable-icon-table mr-2"></i>
-                  <span>{intl.get('App_page')}</span>
-                </button>
-              </div>
-            </div>
-            <div className="d-md-none col-6">
-              <div className="gallery-options">
-                <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
-                  <i className="dtable-font dtable-icon-share"></i>
-                </button>
-                <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
-                  <i className="dtable-font dtable-icon-leave"></i>
-                </button>
-                {this.isEditAppPage() && (
-                  <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
-                    <i className="dtable-font dtable-icon-settings"></i>
-                  </button>
-                )}
-              </div>
-            </div>
+            {this.isEditAppPage() && (
+              <Fragment>
+                <div className="col-md-6 d-none d-md-block">
+                  <div className="gallery-options">
+                    <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
+                      <i className="dtable-font dtable-icon-share mr-2"></i>
+                      <span>{intl.get('Share')}</span>
+                    </button>
+                    <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
+                      <i className="dtable-font dtable-icon-table mr-2"></i>
+                      <span>{intl.get('App_page')}</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="d-md-none col-6">
+                  <div className="gallery-options">
+                    <button className="btn btn-outline-primary option-item" onClick={this.onShareDialogToggle}>
+                      <i className="dtable-font dtable-icon-share"></i>
+                    </button>
+                    <button className="btn btn-outline-primary option-item" onClick={this.onOpenShareApp}>
+                      <i className="dtable-font dtable-icon-leave"></i>
+                    </button>
+                    <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
+                      <i className="dtable-font dtable-icon-settings"></i>
+                    </button>
+                  </div>
+                </div>
+              </Fragment>
+            )}
           </div>
           <div className="gallery-main-content">
             <GalleryMain

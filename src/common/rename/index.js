@@ -4,10 +4,15 @@ import isHotkey from 'is-hotkey';
 
 const propTypes = {
   currentName: PropTypes.string,
+  isSupportRename: PropTypes.bool,
   onUpdateCurrentName: PropTypes.func.isRequired,
 };
 
 class Rename extends React.Component {
+
+  static defaultProps = {
+    isSupportRename: true
+  }
 
   constructor(props) {
     super(props);
@@ -72,7 +77,9 @@ class Rename extends React.Component {
           :
           <Fragment>
             <span className="mr-2">{name}</span>
-            <i className="dtable-font dtable-icon-rename edit" onClick={this.onRenameClick}></i>
+            {this.props.isSupportRename && (
+              <i className="dtable-font dtable-icon-rename edit" onClick={this.onRenameClick}></i>
+            )}
           </Fragment>
         }
       </div>

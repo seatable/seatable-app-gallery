@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DTable from 'dtable-sdk';
 import context from './context.js';
 import Gallery from './pages/gallery.js';
@@ -7,9 +6,7 @@ import Loading from './common/loading';
 
 import './locale/index.js'
 
-const propTypes = {
-  viewConfig: PropTypes.object.isRequired,
-};
+const viewConfig = context.getSetting('viewConfig');
 
 class App extends React.Component {
 
@@ -17,7 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      viewConfig: props.viewConfig,
+      viewConfig: viewConfig,
     };
     this.dtable = new DTable();
   }
@@ -76,7 +73,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.propTypes = propTypes;
 
 export default App;

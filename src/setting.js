@@ -3,12 +3,20 @@ import intl from 'react-intl-universal';
 
 /** (1/5) initialize config object */
 let config = {
-  APIToken: '65be605361e3fed0bd364a2596b134ed9a337e7f',
-  server: 'http://127.0.0.1:80',
-  workspaceID: '1',
-  dtableName: 'test-1',
-  lang: 'zh-cn',
-  isEditAppPage: true
+  isDevelopment: true,
+  username: '',
+  password: '',
+  lang: "zh-cn",
+  siteRoot: '/',
+  server: "http://127.0.0.1:80",
+  dtableServer: "http://127.0.0.1:5000",
+  dtableSocket: "http://127.0.0.1:5000",
+  dtableUuid: "84c80017-510d-4afe-afe4-6918d2dd3d9e",
+  accessToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjI1NDAwMTIsImR0YWJsZV91dWlkIjoiODRjODAwMTctNTEwZC00YWZlLWFmZTQtNjkxOGQyZGQzZDllIiwidXNlcm5hbWUiOiJlOWY3NWFmNDBhYjk0NjZlOGQ0YmYxMDIyZTNkYWRiYUBhdXRoLmxvY2FsIiwicGVybWlzc2lvbiI6InJ3In0.ObXm_fBLWM0e6q5BfzWaW62_2-sPkls8gJaEEWj6tAo",
+  workspaceID: "1",
+  dtableName: "test-1",
+  appConfig:"{\"id\":12,\"name\":\"你好的\",\"settings\":{\"table_name\":\"Table1\",\"view_name\":\"默认视图\",\"shown_title_name\":\"\",\"shown_image_name\":\"\",\"shown_column_names\":[]}}",
+  isEditAppPage: true,
 };
 
 /** (2/5) load local development settings ./setting.local.js (if exist) */

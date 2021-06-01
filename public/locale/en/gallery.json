@@ -8,5 +8,6 @@
   "Title_field": "Title field",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
-  "Choose_all": "Choose all"
+  "Choose_all": "Choose all",
+  "Failed_to_update_app_config": "Failed to update app config"
 }

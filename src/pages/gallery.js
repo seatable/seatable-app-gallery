@@ -66,9 +66,26 @@ class Gallery extends React.Component {
     const { dtable, appConfig } = this.props;
     const tables = dtable.getTables();
     const { table_name, view_name } = appConfig.settings;
-    const selectedTable = tables.find(table => table.name === table_name) || tables[0];
+    const selectedTable = tables.find(table => table.name === table_name);
+    // visit app by shared link, the table in the settings has been deleted
+    if (!isEditAppPage() && !selectedTable) {
+      return (
+        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
+          {intl.get('The_shared_app_has_expired_and_the_related_table_has_been_deleted')}
+        </div>
+      );
+    }
+    // visit app by shared link, the view in the settings has been deleted
     const views = dtable.getViews(selectedTable);
-    const selectedView = views.find(view => view.name === view_name) || views[0];
+    const selectedView = views.find(view => view.name === view_name);
+    if (!isEditAppPage() && !selectedView) {
+      return (
+        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
+          {intl.get('The_shared_app_has_expired_and_the_related_view_has_been_deleted')}
+        </div>
+      );
+    }
+    
     const columns = dtable.getColumns(selectedTable);
     const viewRows = this.getRows(selectedTable.name, selectedView.name);
     

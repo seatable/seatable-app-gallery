@@ -5,7 +5,7 @@ import intl from 'react-intl-universal';
 import FieldSettingItem from './widgets/field-setting-item';
 
 const propTypes = {
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   columns: PropTypes.array.isRequired,
   onSettingUpdate: PropTypes.func.isRequired,
   getColumnIconConfig: PropTypes.func.isRequired,
@@ -21,8 +21,8 @@ class FieldSettings extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, preState) {
-    const { viewConfig, columns } = nextProps;
-    const { shown_column_names } = viewConfig.settings;
+    const { appConfig, columns } = nextProps;
+    const { shown_column_names } = appConfig.settings;
     const columnIconConfig = nextProps.getColumnIconConfig();
     const fieldSettings = columns.map(column => {
       const columnIcon = columnIconConfig[column.type];
@@ -53,11 +53,11 @@ class FieldSettings extends React.Component {
       shown_column_names.push(setting.columnName);
       return setting;
     });
-    const { viewConfig } = this.props;
-    const newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings.shown_column_names = shown_column_names;
+    const { appConfig } = this.props;
+    const newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings.shown_column_names = shown_column_names;
     this.setState({fieldSettings: newFieldSettings}, () => {
-      this.props.onSettingUpdate(newViewConfig);
+      this.props.onSettingUpdate(newAppConfig);
     });
   }
 
@@ -69,11 +69,11 @@ class FieldSettings extends React.Component {
       shown_column_names.push(setting.columnName);
       return setting;
     });
-    const { viewConfig } = this.props;
-    const newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings.shown_column_names = shown_column_names;
+    const { appConfig } = this.props;
+    const newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings.shown_column_names = shown_column_names;
     this.setState({fieldSettings: newFieldSettings}, () => {
-      this.props.onSettingUpdate(newViewConfig);
+      this.props.onSettingUpdate(newAppConfig);
     });
   }
 
@@ -90,11 +90,11 @@ class FieldSettings extends React.Component {
       return setting;
     });
 
-    const { viewConfig } = this.props;
-    const newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings.shown_column_names = shown_column_names;
+    const { appConfig } = this.props;
+    const newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings.shown_column_names = shown_column_names;
     this.setState({fieldSettings: newFieldSettings}, () => {
-      this.props.onSettingUpdate(newViewConfig);
+      this.props.onSettingUpdate(newAppConfig);
     });
   }
 

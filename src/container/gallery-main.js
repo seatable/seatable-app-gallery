@@ -6,7 +6,7 @@ import '../assets/css/gallery-editor.css';
 
 const propTypes = {
   dtable: PropTypes.object.isRequired,
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   viewRows: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   titleColumns: PropTypes.array.isRequired,
@@ -19,8 +19,8 @@ const propTypes = {
 class GalleryMain extends React.Component {
 
   getImageColumn = () => {
-    const { viewConfig, imageColumns } = this.props;
-    const { shown_image_name } = viewConfig.settings;
+    const { appConfig, imageColumns } = this.props;
+    const { shown_image_name } = appConfig.settings;
     let imageColumn = imageColumns[0];
     if (shown_image_name) {
       imageColumn = imageColumns.find(column => column.name === shown_image_name);
@@ -29,8 +29,8 @@ class GalleryMain extends React.Component {
   }
 
   getTitleColumn = () => {
-    const { viewConfig, titleColumns } = this.props;
-    const { shown_title_name } = viewConfig.settings;
+    const { appConfig, titleColumns } = this.props;
+    const { shown_title_name } = appConfig.settings;
     let titleColumn = titleColumns[0];
     if (shown_title_name) {
       titleColumn = titleColumns.find(column => column.name === shown_title_name);
@@ -39,8 +39,8 @@ class GalleryMain extends React.Component {
   }
   
   getShownColumns = () => {
-    const { viewConfig, columns } = this.props;
-    const { shown_column_names } = viewConfig.settings;
+    const { appConfig, columns } = this.props;
+    const { shown_column_names } = appConfig.settings;
     let shownColumns = [];
     if (shown_column_names && Array.isArray(shown_column_names) && shown_column_names.length > 0) {
       shownColumns = columns.filter(column => shown_column_names.includes(column.name));
@@ -49,7 +49,7 @@ class GalleryMain extends React.Component {
   }
 
   render() {
-    const { dtable, viewConfig, viewRows, columns, selectedTable, selectedView, formulaRows } = this.props;
+    const { dtable, appConfig, viewRows, columns, selectedTable, selectedView, formulaRows } = this.props;
     const imageColumn = this.getImageColumn();
     const titleColumn = this.getTitleColumn();
     const shownColumns = this.getShownColumns();
@@ -57,7 +57,7 @@ class GalleryMain extends React.Component {
       <div className="gallery-main-container container-fluid" style={{height: window.innerHeight - 50}}>
         <GalleryList 
           dtable={dtable}
-          viewConfig={viewConfig} 
+          appConfig={appConfig} 
           viewRows={viewRows} 
           columns={columns}
           imageColumn={imageColumn} 

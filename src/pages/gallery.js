@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
@@ -8,12 +8,11 @@ import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
 
 import '../assets/css/layout.css'
-import { Fragment } from 'react';
 
 const propTypes = {
   dtable: PropTypes.object.isRequired,
-  viewConfig: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  updateViewConfig: PropTypes.func.isRequired,
+  appConfig: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  updateAppConfig: PropTypes.func.isRequired,
 };
 
 class Gallery extends React.Component {
@@ -66,12 +65,12 @@ class Gallery extends React.Component {
   }
 
   onUpdateCurrentName = (newName) => {
-    const { viewConfig } = this.props;
-    const { name } = viewConfig;
+    const { appConfig } = this.props;
+    const { name } = appConfig;
     if (name === newName) return;
-    const newViewConfig = deepCopy(viewConfig);
-    newViewConfig.name = name;
-    this.props.updateViewConfig(newViewConfig);
+    const newAppConfig = deepCopy(appConfig);
+    newAppConfig.name = name;
+    this.props.updateAppConfig(newAppConfig);
   }
 
   onShareDialogToggle = () => {
@@ -87,9 +86,9 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { dtable, viewConfig } = this.props;
+    const { dtable, appConfig } = this.props;
     const tables = dtable.getTables();
-    const { table_name, view_name } = viewConfig.settings;
+    const { table_name, view_name } = appConfig.settings;
     const selectedTable = tables.find(table => table.name === table_name) || tables[0];
     const views = dtable.getViews(selectedTable);
     const selectedView = views.find(view => view.name === view_name) || views[0];
@@ -143,7 +142,7 @@ class Gallery extends React.Component {
           <div className="gallery-main-content">
             <GalleryMain
               dtable={dtable}
-              viewConfig={viewConfig}
+              appConfig={appConfig}
               viewRows={viewRows}
               columns={columns}
               titleColumns={titleColumns}
@@ -158,13 +157,13 @@ class Gallery extends React.Component {
           <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
             <GallerySettings 
               dtable={dtable}
-              viewConfig={viewConfig}
+              appConfig={appConfig}
               tables={tables}
               views={views}
               titleColumns={titleColumns}
               imageColumns={imageColumns}
               columns={columns}
-              onUpdateViewConfig={this.props.updateViewConfig}
+              onUpdateAppConfig={this.props.updateAppConfig}
             />
           </div>
         )}

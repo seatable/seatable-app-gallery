@@ -5,7 +5,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   imageColumns: PropTypes.array.isRequired,
   onSettingUpdate: PropTypes.func.isRequired,
 };
@@ -14,24 +14,24 @@ class ImageSetting extends React.Component {
 
   onSettingUpdate = (option) => {
     const { value: name } = option;
-    const { viewConfig } = this.props;
-    if (name === viewConfig.settings.shown_image_name) {
+    const { appConfig } = this.props;
+    if (name === appConfig.settings.shown_image_name) {
       return;
     }
-    let newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings.shown_image_name = name;
+    let newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings.shown_image_name = name;
     
-    this.props.onSettingUpdate(newViewConfig);
+    this.props.onSettingUpdate(newAppConfig);
   }
 
   renderSelector = () => {
-    const { viewConfig, imageColumns } = this.props;
+    const { appConfig, imageColumns } = this.props;
     const options = imageColumns.map((item) => {
       let value = item['name'];
       let label = item['name'];
       return {value, label};
     });
-    const { settings } = viewConfig;
+    const { settings } = appConfig;
     let selectedOption = options.find(item => item.value === settings['shown_image_name']);
     if (!selectedOption) {
       selectedOption = options[0];

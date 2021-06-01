@@ -11,13 +11,13 @@ import '../assets/css/gallery-settings.css';
 
 const propTypes = {
   dtable: PropTypes.object.isRequired,
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   tables: PropTypes.array.isRequired,
   views: PropTypes.array.isRequired,
   titleColumns: PropTypes.array.isRequired,
   imageColumns: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
-  onUpdateViewConfig: PropTypes.func.isRequired,
+  onUpdateAppConfig: PropTypes.func.isRequired,
 };
 
 class GallerySettings extends React.Component {
@@ -33,39 +33,39 @@ class GallerySettings extends React.Component {
   }
 
   onSettingUpdate = (settings) => {
-    this.props.onUpdateViewConfig(settings);
+    this.props.onUpdateAppConfig(settings);
   }
 
   render() {
 
-    const { viewConfig, tables, views, imageColumns, titleColumns, columns } = this.props;
+    const { appConfig, tables, views, imageColumns, titleColumns, columns } = this.props;
 
     return (
       <div className="gallery-settings-container" onClick={this.onSettingContainerClick}>
         <div className="gallery-settings-header">{intl.get('Settings')}</div>
         <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 50}}>
           <TableSetting
-            viewConfig={viewConfig} 
+            appConfig={appConfig} 
             tables={tables}
             onSettingUpdate={this.onSettingUpdate}
           />
           <ViewSetting
-            viewConfig={viewConfig} 
+            appConfig={appConfig} 
             views={views}
             onSettingUpdate={this.onSettingUpdate}
           />
           <ImageSetting 
-            viewConfig={viewConfig} 
+            appConfig={appConfig} 
             imageColumns={imageColumns}
             onSettingUpdate={this.onSettingUpdate}
           />
           <TitleSetting 
-            viewConfig={viewConfig} 
+            appConfig={appConfig} 
             titleColumns={titleColumns}
             onSettingUpdate={this.onSettingUpdate}
           />
           <FieldSettings 
-            viewConfig={viewConfig} 
+            appConfig={appConfig} 
             columns={columns}
             onSettingUpdate={this.onSettingUpdate}
             getColumnIconConfig={this.getColumnIconConfig}

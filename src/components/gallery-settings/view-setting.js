@@ -5,7 +5,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   views: PropTypes.array.isRequired,
   onSettingUpdate: PropTypes.func.isRequired,
 };
@@ -14,30 +14,30 @@ class ViewSetting extends React.Component {
 
   onSettingUpdate = (option) => {
     const { value: name } = option;
-    const { viewConfig } = this.props;
-    if (name === viewConfig.settings.view_name) {
+    const { appConfig } = this.props;
+    if (name === appConfig.settings.view_name) {
       return;
     }
-    let newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings = {
-      table_name: newViewConfig.settings.table_name,
+    let newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings = {
+      table_name: newAppConfig.settings.table_name,
       view_name: name,
       shown_image_name: '',
       shown_title_name: '',
       shown_column_names: [],
     };
 
-    this.props.onSettingUpdate(newViewConfig);
+    this.props.onSettingUpdate(newAppConfig);
   }
 
   renderSelector = () => {
-    const { viewConfig, views } = this.props;
+    const { appConfig, views } = this.props;
     const options = views.map((item) => {
       let value = item['name'];
       let label = item['name'];
       return {value, label};
     });
-    const { settings } = viewConfig;
+    const { settings } = appConfig;
     let selectedOption = options.find(item => item.value === settings['view_name']);
     if (!selectedOption) {
       selectedOption = options[0];

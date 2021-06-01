@@ -5,7 +5,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from '../../common/select';
 
 const propTypes = {
-  viewConfig: PropTypes.object.isRequired,
+  appConfig: PropTypes.object.isRequired,
   tables: PropTypes.array.isRequired,
   onSettingUpdate: PropTypes.func.isRequired,
 };
@@ -14,12 +14,12 @@ class TableSetting extends React.Component {
 
   onSettingUpdate = (option) => {
     const { value: name } = option;
-    const { viewConfig } = this.props;
-    if (name === viewConfig.settings.table_name) {
+    const { appConfig } = this.props;
+    if (name === appConfig.settings.table_name) {
       return;
     }
-    let newViewConfig = deepCopy(viewConfig);
-    newViewConfig.settings = {
+    let newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings = {
       table_name: name,
       view_name: '',
       shown_image_name: '',
@@ -27,17 +27,17 @@ class TableSetting extends React.Component {
       shown_column_names: [],
     };
     
-    this.props.onSettingUpdate(newViewConfig);
+    this.props.onSettingUpdate(newAppConfig);
   }
 
   renderSelector = () => {
-    const { viewConfig, tables } = this.props;
+    const { appConfig, tables } = this.props;
     const options = tables.map((item) => {
       let value = item['name'];
       let label = item['name'];
       return {value, label};
     });
-    const { settings } = viewConfig;
+    const { settings } = appConfig;
     let selectedOption = options.find(item => item.value === settings['table_name']);
     if (!selectedOption) {
       selectedOption = options[0];

@@ -6,7 +6,7 @@ import Loading from './common/loading';
 
 import './locale/index.js'
 
-const viewConfig = context.getSetting('viewConfig');
+const appConfig = context.getSetting('appConfig');
 
 class App extends React.Component {
 
@@ -14,7 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      viewConfig: viewConfig,
+      appConfig: appConfig,
     };
     this.dtable = new DTable();
   }
@@ -50,8 +50,8 @@ class App extends React.Component {
     this.setState({isLoading: false});
   }
 
-  updateViewConfig = (config) => {
-    this.setState({viewConfig: config}, () => {
+  updateAppConfig = (config) => {
+    this.setState({appConfig: config}, () => {
       console.log(config);
     });
   }
@@ -62,13 +62,13 @@ class App extends React.Component {
       return <div className="d-flex flex-fill align-items-center"><Loading /></div>;
     }
 
-    const { viewConfig } = this.state;
+    const { appConfig } = this.state;
     
     return (
       <Gallery 
         dtable={this.dtable}
-        viewConfig={viewConfig}
-        updateViewConfig={this.updateViewConfig}
+        appConfig={appConfig}
+        updateAppConfig={this.updateAppConfig}
       />
     );
   }

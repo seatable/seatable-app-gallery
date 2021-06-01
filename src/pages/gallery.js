@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
-import context from '../context';
 import Rename from '../common/rename';
 import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
+import { getImageColumns, getTitleColumns, isEditAppPage } from '../utils/utils';
 
 import '../assets/css/layout.css'
 
@@ -26,14 +26,6 @@ class Gallery extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // init currentSettings
-  }
-
-  isEditAppPage = () => {
-    return context.getSetting('isEditAppPage');
-  }
-
   getRows = (tableName, viewName) => {
     const { dtable } = this.props;
     let rows = [];
@@ -41,21 +33,6 @@ class Gallery extends React.Component {
       rows.push(row);
     });
     return rows;
-  }
-
-  getTitleColumns = (columns) => {
-    const { dtable } = this.props;
-    const CellType = dtable.getCellType();
-    const SHOW_TITLE_COLUMN_TYPE = [
-      CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, 
-      CellType.NUMBER, CellType.FORMULA,CellType.DATE, CellType.COLLABORATOR, 
-      CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR, 
-      CellType.LAST_MODIFIER];
-    return columns.filter(column => SHOW_TITLE_COLUMN_TYPE.find(type => type === column.type));
-  }
-
-  getImageColumns = (columns) => {
-    return columns.filter(column => column.type === 'image');
   }
 
   getTableFormulaRows = (table, view) => {
@@ -96,8 +73,8 @@ class Gallery extends React.Component {
     const viewRows = this.getRows(selectedTable.name, selectedView.name);
     
     const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
-    const titleColumns = this.getTitleColumns(columns);
-    const imageColumns = this.getImageColumns(columns);
+    const titleColumns = getTitleColumns(dtable, columns);
+    const imageColumns = getImageColumns(columns);
 
     const { isShowSetting } = this.state;
     const settingStyle = isShowSetting ?  {display: 'block'} : null;
@@ -107,9 +84,9 @@ class Gallery extends React.Component {
         <div className="col-auto seatable-app-gallery-main">
           <div className="row no-gutters gallery-main-header">
             <div className="col-auto gallery-name">
-              <Rename isSupportRename={this.isEditAppPage()} currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
+              <Rename isSupportRename={isEditAppPage()} currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
             </div>
-            {this.isEditAppPage() && (
+            {isEditAppPage() && (
               <Fragment>
                 <div className="col-md-6 d-none d-md-block">
                   <div className="gallery-options">
@@ -153,7 +130,7 @@ class Gallery extends React.Component {
             />
           </div>
         </div>
-        {this.isEditAppPage() && (
+        {isEditAppPage() && (
           <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
             <GallerySettings 
               dtable={dtable}

@@ -65,3 +65,21 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
 export const checkDesktop = () => {
   return window.innerWidth >= 768;
 };
+
+export const isEditAppPage = () => {
+  return context.getSetting('isEditAppPage');
+}
+
+export const getTitleColumns = (dtable, columns) => {
+  const CellType = dtable.getCellType();
+  const SHOW_TITLE_COLUMN_TYPE = [
+    CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, 
+    CellType.NUMBER, CellType.FORMULA,CellType.DATE, CellType.COLLABORATOR, 
+    CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR, 
+    CellType.LAST_MODIFIER];
+  return columns.filter(column => SHOW_TITLE_COLUMN_TYPE.find(type => type === column.type));
+}
+
+export const getImageColumns = (columns) => {
+  return columns.filter(column => column.type === 'image');
+}

@@ -97,8 +97,8 @@ class App extends React.Component {
         settings = {
           table_name: selectedTable.name,
           view_name: selectedView.name,
-          shown_image_name: imageColumns[0].name,
-          shown_title_name: titleColumns[0].name,
+          shown_image_name: imageColumns[0] && imageColumns[0].name,
+          shown_title_name: titleColumns[0] && titleColumns[0].name,
           shown_column_names: []
         };
         const newAppConfig = Object.assign({}, appConfig, {settings});
@@ -121,8 +121,8 @@ class App extends React.Component {
         settings = {
           table_name: selectedTable.name,
           view_name: views[0].name,
-          shown_image_name: imageColumns[0].name,
-          shown_title_name: titleColumns[0].name,
+          shown_image_name: imageColumns[0] && imageColumns[0].name,
+          shown_title_name: titleColumns[0] && titleColumns[0].name,
           shown_column_names: []
         };
         const newAppConfig = Object.assign({}, appConfig, {settings});
@@ -157,13 +157,53 @@ class App extends React.Component {
     this.setState({isLoading: false});
   }
 
-  updateAppConfig = (config) => {
-    const { id } = config;
-    const newAppConfig = JSON.stringify(config);
+  resetAppConfig = (config) => {
+    const { table_name, view_name } = config.settings;
+
+    const tables = this.dtable.getTables();
+    const selectedTable = tables.find(table => table.name === table_name);
+
+    const columns = this.dtable.getColumns(selectedTable);
+    const imageColumns = getImageColumns(columns);
+    const titleColumns = getTitleColumns(this.dtable, columns);
+
+    // change selected table
+    if (table_name && !view_name) {
+      const views = this.dtable.getViews(selectedTable);
+      const selectedView = views[0];
+
+      const settings = {
+        table_name: table_name,
+        view_name: selectedView.name,
+        shown_image_name: imageColumns[0] && imageColumns[0].name,
+        shown_title_name: titleColumns[0] && titleColumns[0].name,
+        shown_column_names: []
+      };
+      return Object.assign({}, config, {settings});
+    }
+
+    // change selected view
+    if (table_name && view_name) {
+      const settings = {
+        table_name: table_name,
+        view_name: view_name,
+        shown_image_name: imageColumns[0] && imageColumns[0].name,
+        shown_title_name: titleColumns[0] && titleColumns[0].name,
+        shown_column_names: []
+      };
+      return Object.assign({}, config, {settings});
+    }
+
+  }
+
+  updateAppConfig = (config, needResetAppConfig) => {
+    let newAppConfig = config;
+    if (needResetAppConfig) newAppConfig = this.resetAppConfig(config);
     const workspaceID = context.getSetting('workspaceID');
     const dtableName = context.getSetting('dtableName');
-    dtableWebAPI.updateExternalAppInstance(workspaceID, dtableName, id, newAppConfig).then(res => {
-      this.setState({appConfig: config});
+    const appId = context.getSetting('appId');
+    dtableWebAPI.updateExternalAppInstance(workspaceID, dtableName, appId, JSON.stringify(newAppConfig)).then(res => {
+      this.setState({appConfig: newAppConfig});
     }).catch(err => {
       toaster.danger(intl.get('Failed_to_update_app_config'));
     });

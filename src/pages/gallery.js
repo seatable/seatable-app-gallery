@@ -46,7 +46,7 @@ class Gallery extends React.Component {
     const { name } = appConfig;
     if (name === newName) return;
     const newAppConfig = deepCopy(appConfig);
-    newAppConfig.name = name;
+    newAppConfig.app_name = name;
     this.props.updateAppConfig(newAppConfig);
   }
 
@@ -101,7 +101,7 @@ class Gallery extends React.Component {
         <div className="col-auto seatable-app-gallery-main">
           <div className="row no-gutters gallery-main-header">
             <div className="col-auto gallery-name">
-              <Rename isSupportRename={isEditAppPage()} currentName={'aaa'} onUpdateCurrentName={this.onUpdateCurrentName}/>
+              <Rename isSupportRename={isEditAppPage()} currentName={appConfig.app_name} onUpdateCurrentName={this.onUpdateCurrentName}/>
             </div>
             {isEditAppPage() && (
               <Fragment>

@@ -37,10 +37,6 @@ class App extends React.Component {
   async initPluginDTableData() {
     // get accessToken
     await this.dtable.initDTableApp(context.getConfig());
-    await this.dtable.syncWithServer();
-    this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
-    this.unsubscribeLocalDtableChanged = this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
-    this.unsubscribeRemoteDtableChanged = this.dtable.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
     this.resetData(true);
   }
 

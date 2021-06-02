@@ -1,5 +1,5 @@
 import cookie from 'react-cookies';
-import DTableWebAPI  from '../dtable-web-api';
+import DTableWebAPI  from 'dtable-web-api';
 import context from '../context';
 
 let dtableWebAPI = new DTableWebAPI();

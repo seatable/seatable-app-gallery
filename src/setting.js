@@ -8,6 +8,7 @@ let config = {
   password: '',
   lang: "zh-cn",
   siteRoot: '/',
+  mediaUrl: 'http://127.0.0.1:80/media/',
   server: "http://127.0.0.1:80",
   dtableServer: "http://127.0.0.1:5000",
   dtableSocket: "http://127.0.0.1:5000",
@@ -15,7 +16,10 @@ let config = {
   accessToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MjI1NDAwMTIsImR0YWJsZV91dWlkIjoiODRjODAwMTctNTEwZC00YWZlLWFmZTQtNjkxOGQyZGQzZDllIiwidXNlcm5hbWUiOiJlOWY3NWFmNDBhYjk0NjZlOGQ0YmYxMDIyZTNkYWRiYUBhdXRoLmxvY2FsIiwicGVybWlzc2lvbiI6InJ3In0.ObXm_fBLWM0e6q5BfzWaW62_2-sPkls8gJaEEWj6tAo",
   workspaceID: "1",
   dtableName: "test-1",
-  appConfig:"{\"id\":12,\"name\":\"你好的\",\"settings\":{\"table_name\":\"Table1\",\"view_name\":\"默认视图\",\"shown_title_name\":\"\",\"shown_image_name\":\"\",\"shown_column_names\":[]}}",
+  appId: '12',
+  appType: 'gallery',
+  appToken: '5f50a894-bf16-432d-82b0-284a7f437093',
+  appConfig: "{\"app_name\":\"abc\",\"app_type\":\"gallery\",\"settings\":{\"table_name\":\"\",\"view_name\":\"\",\"shown_image_name\":\"\",\"shown_title_name\":\"\",\"shown_column_names\":[]}}",
   isEditAppPage: true,
 };
 

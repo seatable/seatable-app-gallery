@@ -1,0 +1,102 @@
+.share-link-dialog {
+  height: auto;
+  max-width: 652px;
+}
+
+.share-link-dialog .share-link-container {
+  display: flex;
+  flex-direction: row;
+  height: 198px;
+  width: 100%;
+  padding: 0;
+}
+
+.share-link-dialog .share-link-info {
+  width: calc(100% - 198px);
+  padding: 0 16px;
+  border-right: 1px solid #e9ecef;
+}
+
+.share-link-dialog .share-link-qrcode {
+  height: 100%;
+  width: 198px;
+  padding: 30px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.share-link-dialog .share-link-info .share-item {
+  display: flex;
+  height: 80px;
+  line-height: 80px;
+  align-items: center;
+}
+
+.share-link-dialog .share-link-info .share-item-icon {
+  font-size: 20px;
+  color: #999;
+}
+
+.share-link-dialog .share-link-info .share-item-text {
+  display: inline-block;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 14px;
+  color: #000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.share-link-dialog .share-link-info .share-link {
+  width: 100%;
+  height: 38px;
+  display: flex;
+}
+
+.share-link-dialog .share-link-info .share-link-content {
+  display: inline-block;
+  width: 80%;
+  height: 100%;
+  line-height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 40, 100, 0.12);
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.share-link-dialog .share-link-info .share-link-btn {
+  width: 20%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.share-link-dialog .share-link-qrcode .share-link-qrcode-content {
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+  border: 1px solid #e9ecef;
+  padding: 9px;
+}
+
+.share-link-dialog .share-link-qrcode .share-link-qrcode-tip {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.share-link-dialog .share-link-qrcode-tip .qrcode-tip-content {
+  display: inline-block;
+  max-width: 100%;
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

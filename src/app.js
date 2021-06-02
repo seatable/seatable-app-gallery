@@ -19,6 +19,8 @@ class App extends React.Component {
     this.state = {
       isLoading: true,
       appConfig: JSON.parse(appConfig),
+      isSaving: false,
+      isShowSaveMessage: false,
     };
     this.dtable = new DTable();
   }
@@ -197,15 +199,35 @@ class App extends React.Component {
   }
 
   updateAppConfig = (config, needResetAppConfig) => {
-    let newAppConfig = config;
-    if (needResetAppConfig) newAppConfig = this.resetAppConfig(config);
-    const workspaceID = context.getSetting('workspaceID');
-    const dtableName = context.getSetting('dtableName');
-    const appId = context.getSetting('appId');
-    dtableWebAPI.updateExternalAppInstance(workspaceID, dtableName, appId, JSON.stringify(newAppConfig)).then(res => {
-      this.setState({appConfig: newAppConfig});
-    }).catch(err => {
-      toaster.danger(intl.get('Failed_to_update_app_config'));
+    this.setState({
+      isSaving: true,
+      isShowSaveMessage: true,
+    }, () => {
+      let newAppConfig = config;
+      if (needResetAppConfig) newAppConfig = this.resetAppConfig(config);
+      const workspaceID = context.getSetting('workspaceID');
+      const dtableName = context.getSetting('dtableName');
+      const appId = context.getSetting('appId');
+      dtableWebAPI.updateExternalAppInstance(workspaceID, dtableName, appId, JSON.stringify(newAppConfig)).then(res => {
+        this.setState({
+          appConfig: newAppConfig,
+          isSaving: false,
+        }, () => {
+          if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+          }
+          this.timer = setTimeout(() => {
+            this.setState({isShowSaveMessage: false});
+          }, 1000);
+        });
+      }).catch(err => {
+        toaster.danger(intl.get('Failed_to_update_app_config'));
+        this.setState({
+          isSaving: false,
+          isShowSaveMessage: false
+        });
+      });
     });
   }
 
@@ -215,11 +237,13 @@ class App extends React.Component {
       return <div className="d-flex flex-fill align-items-center"><Loading /></div>;
     }
 
-    const { appConfig } = this.state;
+    const { isSaving, isShowSaveMessage, appConfig } = this.state;
     
     return (
       <Gallery 
         dtable={this.dtable}
+        isSaving={isSaving}
+        isShowSaveMessage={isShowSaveMessage}
         appConfig={appConfig}
         updateAppConfig={this.updateAppConfig}
       />

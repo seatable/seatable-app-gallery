@@ -90,3 +90,11 @@ html, body {
   text-align: center;
   padding: 10px;
 }
+
+.tip-message {
+  margin-left: 12px;
+  font-size: 12px;
+  color: #999;
+  width: max-content;
+  white-space: nowrap;
+}

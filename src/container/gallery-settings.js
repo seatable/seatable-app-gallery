@@ -10,7 +10,7 @@ import FieldSettings from '../components/gallery-settings/field-settings';
 import '../assets/css/gallery-settings.css';
 
 const propTypes = {
-  dtable: PropTypes.object.isRequired,
+  dtableUtils: PropTypes.object.isRequired,
   appConfig: PropTypes.object.isRequired,
   tables: PropTypes.array.isRequired,
   views: PropTypes.array.isRequired,
@@ -28,12 +28,12 @@ class GallerySettings extends React.Component {
   }
 
   getColumnIconConfig = () => {
-    const { dtable } = this.props;
-    return dtable.getColumnIconConfig()
+    const { dtableUtils } = this.props;
+    return dtableUtils.getColumnIconConfig()
   }
 
-  onSettingUpdate = (settings, needResetAppConfig) => {
-    this.props.onUpdateAppConfig(settings, needResetAppConfig);
+  onSettingUpdate = (settings, type) => {
+    this.props.onUpdateAppConfig(settings, type);
   }
 
   render() {

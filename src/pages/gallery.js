@@ -12,7 +12,7 @@ import context from '../context';
 import '../assets/css/layout.css'
 
 const propTypes = {
-  dtable: PropTypes.object.isRequired,
+  dtableUtils: PropTypes.object.isRequired,
   appConfig: PropTypes.object.isRequired,
   isSaving: PropTypes.bool.isRequired,
   isShowSaveMessage: PropTypes.bool.isRequired,
@@ -28,21 +28,6 @@ class Gallery extends React.Component {
       isShowSharedDialog: false,
       isShowSetting: false
     };
-  }
-
-  getRows = (tableName, viewName) => {
-    const { dtable } = this.props;
-    let rows = [];
-    dtable.forEachRow(tableName, viewName, (row) => {
-      rows.push(row);
-    });
-    return rows;
-  }
-
-  getTableFormulaRows = (table, view) => {
-    const { dtable } = this.props;
-    let rows = dtable.getViewRows(view, table);
-    return dtable.getTableFormulaResults(table, rows);
   }
 
   onUpdateCurrentName = (newName) => {
@@ -82,34 +67,9 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { dtable, appConfig } = this.props;
-    const tables = dtable.getTables();
-    const { table_name, view_name } = appConfig.settings;
-    const selectedTable = tables.find(table => table.name === table_name);
-    // visit app by shared link, the table in the settings has been deleted
-    if (!isEditAppPage() && !selectedTable) {
-      return (
-        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
-          {intl.get('The_shared_app_has_expired_and_the_related_table_has_been_deleted')}
-        </div>
-      );
-    }
-    // visit app by shared link, the view in the settings has been deleted
-    const views = dtable.getViews(selectedTable);
-    const selectedView = views.find(view => view.name === view_name);
-    if (!isEditAppPage() && !selectedView) {
-      return (
-        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
-          {intl.get('The_shared_app_has_expired_and_the_related_view_has_been_deleted')}
-        </div>
-      );
-    }
+    const { appConfig, dtableUtils, tables, views, columns, rows } = this.props;
     
-    const columns = dtable.getColumns(selectedTable);
-    const viewRows = this.getRows(selectedTable.name, selectedView.name);
-    
-    const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
-    const titleColumns = getTitleColumns(dtable, columns);
+    const titleColumns = getTitleColumns(dtableUtils, columns);
     const imageColumns = getImageColumns(columns);
 
     const { isSaving, isShowSaveMessage } = this.props;
@@ -158,22 +118,19 @@ class Gallery extends React.Component {
             </div>
             <div className="gallery-main-content">
               <GalleryMain
-                dtable={dtable}
+                dtableUtils={dtableUtils}
                 appConfig={appConfig}
-                viewRows={viewRows}
+                viewRows={rows}
                 columns={columns}
                 titleColumns={titleColumns}
                 imageColumns={imageColumns}
-                selectedView={selectedView}
-                selectedTable={selectedTable}
-                formulaRows={formulaRows}
               />
             </div>
           </div>
           {isEditAppPage() && (
             <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
               <GallerySettings 
-                dtable={dtable}
+                dtableUtils={dtableUtils}
                 appConfig={appConfig}
                 tables={tables}
                 views={views}

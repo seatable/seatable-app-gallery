@@ -9,15 +9,12 @@ const propTypes = {
   titleColumn: PropTypes.object,
   imageColumn: PropTypes.object,
   shownColumns: PropTypes.array.isRequired,
-  selectedTable: PropTypes.object.isRequired,
-  selectedView: PropTypes.object.isRequired,
-  formulaRows: PropTypes.object.isRequired,
 };
 
 class GalleryList extends React.Component {
 
   render() {
-    const { dtable, viewRows, imageColumn, titleColumn, shownColumns, selectedView, selectedTable, formulaRows } = this.props;
+    const { dtable, viewRows, imageColumn, titleColumn, shownColumns } = this.props;
 
     return (
       <div className="row no-gutters gallery-list">
@@ -30,9 +27,6 @@ class GalleryList extends React.Component {
               imageColumn={imageColumn}    
               titleColumn={titleColumn}    
               shownColumns={shownColumns}
-              selectedView={selectedView}
-              selectedTable={selectedTable}
-              formulaRows={formulaRows}
             />
           );
         })}

@@ -11,9 +11,6 @@ const propTypes = {
   columns: PropTypes.array.isRequired,
   titleColumns: PropTypes.array.isRequired,
   imageColumns: PropTypes.array.isRequired,
-  selectedView: PropTypes.object.isRequired,
-  selectedTable: PropTypes.object.isRequired,
-  formulaRows: PropTypes.object.isRequired,
 };
 
 class GalleryMain extends React.Component {
@@ -49,7 +46,7 @@ class GalleryMain extends React.Component {
   }
 
   render() {
-    const { dtable, appConfig, viewRows, columns, selectedTable, selectedView, formulaRows } = this.props;
+    const { dtable, appConfig, viewRows, columns } = this.props;
     const imageColumn = this.getImageColumn();
     const titleColumn = this.getTitleColumn();
     const shownColumns = this.getShownColumns();
@@ -63,9 +60,6 @@ class GalleryMain extends React.Component {
           imageColumn={imageColumn} 
           titleColumn={titleColumn}
           shownColumns={shownColumns}
-          selectedView={selectedView}
-          selectedTable={selectedTable}
-          formulaRows={formulaRows}
         />
       </div>
     );

@@ -10,8 +10,6 @@ const propTypes = {
   imageColumn: PropTypes.object,
   titleColumn: PropTypes.object,
   shownColumns: PropTypes.array.isRequired,
-  selectedView: PropTypes.object.isRequired,
-  selectedTable: PropTypes.object.isRequired,
 };
 
 class GalleryItem extends React.Component {
@@ -27,34 +25,9 @@ class GalleryItem extends React.Component {
     return dtable.getCellType();
   }
 
-  getTables = () => {
-    const { dtable } = this.props;
-    return dtable.getTables();
-  }
-
   getCollaborators = () => {
     const { dtable } = this.props;
     return dtable.getRelatedUsers();
-  }
-
-  getLinkCellValue = (linkId, table1Id, table2Id, rowId) => {
-    const { dtable } = this.props;
-    return dtable.getLinkCellValue(linkId, table1Id, table2Id, rowId);
-  }
-
-  getRowsByID = (table_id, rowIds) => {
-    const { dtable } = this.props;
-    return dtable.getRowsByID(table_id, rowIds);
-  }
-
-  getTableById = (table_id) => {
-    const { dtable } = this.props;
-    return dtable.getTableById(table_id);
-  }
-
-  getRowById = (table, rowID) => {
-    const { dtable } = this.props;
-    return dtable.getRowById(table, rowID)
   }
 
   getMediaUrl = () => {
@@ -66,23 +39,15 @@ class GalleryItem extends React.Component {
   }
 
   renderEditorFormatter = () => {
-    let { viewRow, shownColumns, selectedView, selectedTable, formulaRows } = this.props;
-    const row = this.getRowById(selectedTable, viewRow._id);
+    let { viewRow, shownColumns } = this.props;
     return shownColumns.map((column, index) => {
       return (
         <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
           <EditorFormatter
-            row={row}
+            row={viewRow}
             column={column}
-            selectedView={selectedView}
-            table={selectedTable}
-            formulaRows={formulaRows}
             CellType={this.getCellType()}
-            tables={this.getTables()}
             collaborators={this.getCollaborators()}
-            getLinkCellValue={this.getLinkCellValue}
-            getRowsByID={this.getRowsByID}
-            getTableById={this.getTableById}
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}
           />
@@ -92,23 +57,16 @@ class GalleryItem extends React.Component {
   }
 
   renderRowTitle = () => {
-    const { titleColumn, viewRow, selectedView, selectedTable } = this.props; 
-    const row = this.getRowById(selectedTable, viewRow._id);
+    const { titleColumn, viewRow } = this.props; 
 
     return (
       <div className="row-title">
         <EditorFormatter
           type="row_title"
-          row={row}
+          row={viewRow}
           column={titleColumn}
-          selectedView={selectedView}
-          table={selectedTable}
           CellType={this.getCellType()}
-          tables={this.getTables()}
           collaborators={this.getCollaborators()}
-          getLinkCellValue={this.getLinkCellValue}
-          getRowsByID={this.getRowsByID}
-          getTableById={this.getTableById}
           getUserCommonInfo={this.getUserCommonInfo}
           getMediaUrl={this.getMediaUrl}
         />

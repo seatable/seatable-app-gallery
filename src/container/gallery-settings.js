@@ -32,8 +32,8 @@ class GallerySettings extends React.Component {
     return dtable.getColumnIconConfig()
   }
 
-  onSettingUpdate = (settings, needResetAppConfig) => {
-    this.props.onUpdateAppConfig(settings, needResetAppConfig);
+  onSettingUpdate = (settings, type) => {
+    this.props.onUpdateAppConfig(settings, type);
   }
 
   render() {

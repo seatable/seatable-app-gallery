@@ -30,21 +30,6 @@ class Gallery extends React.Component {
     };
   }
 
-  getRows = (tableName, viewName) => {
-    const { dtable } = this.props;
-    let rows = [];
-    dtable.forEachRow(tableName, viewName, (row) => {
-      rows.push(row);
-    });
-    return rows;
-  }
-
-  getTableFormulaRows = (table, view) => {
-    const { dtable } = this.props;
-    let rows = dtable.getViewRows(view, table);
-    return dtable.getTableFormulaResults(table, rows);
-  }
-
   onUpdateCurrentName = (newName) => {
     const { appConfig } = this.props;
     const { name } = appConfig;
@@ -82,33 +67,8 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { dtable, appConfig } = this.props;
-    const tables = dtable.getTables();
-    const { table_name, view_name } = appConfig.settings;
-    const selectedTable = tables.find(table => table.name === table_name);
-    // visit app by shared link, the table in the settings has been deleted
-    if (!isEditAppPage() && !selectedTable) {
-      return (
-        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
-          {intl.get('The_shared_app_has_expired_and_the_related_table_has_been_deleted')}
-        </div>
-      );
-    }
-    // visit app by shared link, the view in the settings has been deleted
-    const views = dtable.getViews(selectedTable);
-    const selectedView = views.find(view => view.name === view_name);
-    if (!isEditAppPage() && !selectedView) {
-      return (
-        <div className="seatable-app seatable-app-gallery row no-gutters error-message">
-          {intl.get('The_shared_app_has_expired_and_the_related_view_has_been_deleted')}
-        </div>
-      );
-    }
+    const { appConfig, dtable, tables, views, columns, rows } = this.props;
     
-    const columns = dtable.getColumns(selectedTable);
-    const viewRows = this.getRows(selectedTable.name, selectedView.name);
-    
-    const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
     const titleColumns = getTitleColumns(dtable, columns);
     const imageColumns = getImageColumns(columns);
 
@@ -160,13 +120,10 @@ class Gallery extends React.Component {
               <GalleryMain
                 dtable={dtable}
                 appConfig={appConfig}
-                viewRows={viewRows}
+                viewRows={rows}
                 columns={columns}
                 titleColumns={titleColumns}
                 imageColumns={imageColumns}
-                selectedView={selectedView}
-                selectedTable={selectedTable}
-                formulaRows={formulaRows}
               />
             </div>
           </div>

@@ -27,7 +27,7 @@ class ViewSetting extends React.Component {
       shown_column_names: [],
     };
 
-    this.props.onSettingUpdate(newAppConfig, true);
+    this.props.onSettingUpdate(newAppConfig, 'view');
   }
 
   renderSelector = () => {

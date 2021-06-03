@@ -12,7 +12,7 @@ import context from '../context';
 import '../assets/css/layout.css'
 
 const propTypes = {
-  dtable: PropTypes.object.isRequired,
+  dtableUtils: PropTypes.object.isRequired,
   appConfig: PropTypes.object.isRequired,
   isSaving: PropTypes.bool.isRequired,
   isShowSaveMessage: PropTypes.bool.isRequired,
@@ -67,9 +67,9 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { appConfig, dtable, tables, views, columns, rows } = this.props;
+    const { appConfig, dtableUtils, tables, views, columns, rows } = this.props;
     
-    const titleColumns = getTitleColumns(dtable, columns);
+    const titleColumns = getTitleColumns(dtableUtils, columns);
     const imageColumns = getImageColumns(columns);
 
     const { isSaving, isShowSaveMessage } = this.props;
@@ -118,7 +118,7 @@ class Gallery extends React.Component {
             </div>
             <div className="gallery-main-content">
               <GalleryMain
-                dtable={dtable}
+                dtableUtils={dtableUtils}
                 appConfig={appConfig}
                 viewRows={rows}
                 columns={columns}
@@ -130,7 +130,7 @@ class Gallery extends React.Component {
           {isEditAppPage() && (
             <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
               <GallerySettings 
-                dtable={dtable}
+                dtableUtils={dtableUtils}
                 appConfig={appConfig}
                 tables={tables}
                 views={views}

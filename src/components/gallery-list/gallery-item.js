@@ -5,7 +5,7 @@ import EditorFormatter from '../../common/formatter/editor-formatter';
 import GalleryImage from './gallery-image';
 
 const propTypes = {
-  dtable: PropTypes.object.isRequired,
+  dtableUtils: PropTypes.object.isRequired,
   viewRow: PropTypes.object.isRequired,
   imageColumn: PropTypes.object,
   titleColumn: PropTypes.object,
@@ -21,13 +21,13 @@ class GalleryItem extends React.Component {
   }
 
   getCellType = () => {
-    const { dtable } = this.props;
-    return dtable.getCellType();
+    const { dtableUtils } = this.props;
+    return dtableUtils.getCellType();
   }
 
   getCollaborators = () => {
-    const { dtable } = this.props;
-    return dtable.getRelatedUsers();
+    const { dtableUtils } = this.props;
+    return dtableUtils.getRelatedUsers();
   }
 
   getMediaUrl = () => {
@@ -44,6 +44,7 @@ class GalleryItem extends React.Component {
       return (
         <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
           <EditorFormatter
+            type={''}
             row={viewRow}
             column={column}
             CellType={this.getCellType()}

@@ -56,10 +56,10 @@ class GalleryImage extends React.Component {
       <Fragment>
         <div className="gallery-image">
           {shownImages.length === 0 && null}
-          {shownImages.length === 1 && <ImageLazyLoad imageUrl={shownImages[0]}/>}
+          {shownImages.length === 1 && <ImageLazyLoad imageUrl={shownImages[0]} onImageClick={this.onImageClick}/>}
           {shownImages.length > 1 && (
             <Fragment>
-              <ImageLazyLoad imageUrl={shownImages[0]}/>
+              <ImageLazyLoad imageUrl={shownImages[0]} onImageClick={this.onImageClick}/>
               <div>{shownImages.length}</div>
             </Fragment>
           )}

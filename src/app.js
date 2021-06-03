@@ -20,7 +20,7 @@ class App extends React.Component {
       isSaving: false,
       isShowSaveMessage: false,
     };
-    this.dtable = new DTableUtils(context.getConfig());
+    this.dtableUtils = new DTableUtils(context.getConfig());
   }
 
   componentDidMount() {
@@ -35,14 +35,14 @@ class App extends React.Component {
   async initPluginDTableData() {
     try {
       const { appConfig } = this.state;
-      await this.dtable.init(appConfig);
+      await this.dtableUtils.init(appConfig);
       if (isEditAppPage()) {
-        const newConfig = await this.dtable.getConfig(appConfig);
+        const newConfig = await this.dtableUtils.getConfig(appConfig);
 
-        const tables = this.dtable.getTables();
-        const views = this.dtable.getViews();
-        const columns = this.dtable.getColumns();
-        const rows = this.dtable.getRows();
+        const tables = this.dtableUtils.getTables();
+        const views = this.dtableUtils.getViews();
+        const columns = this.dtableUtils.getColumns();
+        const rows = this.dtableUtils.getRows();
         this.setState({
           tables,
           views,
@@ -52,8 +52,8 @@ class App extends React.Component {
           appConfig: newConfig
         })
       } else {
-        const columns = this.dtable.getColumns();
-        const rows = this.dtable.getRows();
+        const columns = this.dtableUtils.getColumns();
+        const rows = this.dtableUtils.getRows();
         this.setState({
           columns,
           rows,
@@ -61,13 +61,20 @@ class App extends React.Component {
         });
       }
     } catch(err) {
-      // if (isEditAppPage()) {
-      //   this.setState({
-      //     isLoading: false,
-      //     errorMessage: ''
-      //   })
-      // }
-      console.log(err);
+      let errorMessage = intl.get('Network_error');
+      if (err.response) {
+        const { status } = err.response;
+        if (status === 500) {
+          errorMessage = intl.get('Internal_server_error');
+        }
+        if (!isEditAppPage() && status === 404) {
+          errorMessage = intl.get('The_sharing_link_has_expired');
+        }
+      }
+      this.setState({
+        isLoading: false,
+        errorMessage: errorMessage
+      });
     }
   }
 
@@ -86,15 +93,15 @@ class App extends React.Component {
     });
     let newAppConfig = config;
     if (type && type === 'table') {
-      newAppConfig = await this.dtable.getConfigByChangeSelectedTable(config);
+      newAppConfig = await this.dtableUtils.getConfigByChangeSelectedTable(config);
     }
     if (type && type === 'view') {
-      newAppConfig = await this.dtable.getConfigByChangeSelectedView(config);
+      newAppConfig = await this.dtableUtils.getConfigByChangeSelectedView(config);
     }
     context.updateExternalAppInstance(newAppConfig).then(res => {
-      const views = this.dtable.getViews();
-      const columns = this.dtable.getColumns();
-      const rows = this.dtable.getRows();
+      const views = this.dtableUtils.getViews();
+      const columns = this.dtableUtils.getColumns();
+      const rows = this.dtableUtils.getRows();
       this.setState({
         appConfig: newAppConfig,
         isSaving: false,
@@ -120,9 +127,17 @@ class App extends React.Component {
   }
 
   render() {
-    let { isLoading } = this.state;
+    let { isLoading, errorMessage } = this.state;
     if (isLoading) {
       return <div className="d-flex flex-fill align-items-center"><Loading /></div>;
+    }
+    
+    if (!isLoading && errorMessage) {
+      return (
+        <div className="d-flex flex-fill align-items-center error-message">
+          {errorMessage}
+        </div>
+      );
     }
 
     const { isSaving, isShowSaveMessage, appConfig } = this.state;
@@ -131,7 +146,7 @@ class App extends React.Component {
       <Gallery 
         isSaving={isSaving}
         isShowSaveMessage={isShowSaveMessage}
-        dtable={this.dtable}
+        dtableUtils={this.dtableUtils}
         tables={this.state.tables}
         views={this.state.views}
         columns={this.state.columns}

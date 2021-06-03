@@ -5,7 +5,7 @@ import GalleryList from '../components/gallery-list/gallery-list';
 import '../assets/css/gallery-editor.css';
 
 const propTypes = {
-  dtable: PropTypes.object.isRequired,
+  dtableUtils: PropTypes.object.isRequired,
   appConfig: PropTypes.object.isRequired,
   viewRows: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
@@ -46,14 +46,14 @@ class GalleryMain extends React.Component {
   }
 
   render() {
-    const { dtable, appConfig, viewRows, columns } = this.props;
+    const { dtableUtils, appConfig, viewRows, columns } = this.props;
     const imageColumn = this.getImageColumn();
     const titleColumn = this.getTitleColumn();
     const shownColumns = this.getShownColumns();
     return (
       <div className="gallery-main-container container-fluid" style={{height: window.innerHeight - 50}}>
         <GalleryList 
-          dtable={dtable}
+          dtableUtils={dtableUtils}
           appConfig={appConfig} 
           viewRows={viewRows} 
           columns={columns}

@@ -17,7 +17,10 @@ const en = {
   "The_share_link_has_been_copied": "The share link has been copied.",
   "Copy": "Copy",
   "Scan_QR_code": "Scan QR code",
-  "Open_directly": "Open directly"
+  "Open_directly": "Open directly",
+  "Network_error": "Network error",
+  "Internal_server_error": "Internal server error",
+  "The_sharing_link_has_expired": "The sharing link has expired",
 };
 
 export default en;

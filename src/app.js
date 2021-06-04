@@ -64,6 +64,9 @@ class App extends React.Component {
       let errorMessage = intl.get('Network_error');
       if (err.response) {
         const { status } = err.response;
+        if (status === 403) {
+          errorMessage = intl.get('The_token_has_expired_please_refresh_the_page');
+        }
         if (status === 500) {
           errorMessage = intl.get('Internal_server_error');
         }

@@ -50,6 +50,8 @@ class App extends React.Component {
           rows,
           isLoading: false,
           appConfig: newConfig
+        }, () => {
+          this.updateAppConfig(newConfig);
         })
       } else {
         const columns = this.dtableUtils.getColumns();

@@ -10,6 +10,7 @@
   flex: 1;
   display: flex;
   min-height: 0;
+  width: 100%;
   align-content: flex-start;
 }
 
@@ -46,7 +47,6 @@
 
 .seatable-app-gallery .gallery-item .gallery-image > img{
   max-height: 100%;
-  max-width: none;
 }
 
 .seatable-app-gallery .gallery-item .gallery-image > div {

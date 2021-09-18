@@ -29,6 +29,11 @@ class GalleryItem extends React.Component {
     const { dtableUtils } = this.props;
     return dtableUtils.getRelatedUsers();
   }
+  
+  getOptionColors = () => {
+    const { dtableUtils } = this.props;
+    return dtableUtils.getOptionColors();
+  }
 
   getMediaUrl = () => {
     return context.getSetting('mediaUrl');
@@ -51,6 +56,7 @@ class GalleryItem extends React.Component {
             collaborators={this.getCollaborators()}
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}
+            getOptionColors={this.getOptionColors}
           />
         </div>
       );

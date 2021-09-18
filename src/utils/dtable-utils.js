@@ -1,6 +1,7 @@
 import DTableServerAPI from "../api/dtable-server-api";
 import * as CellType from '../common/constants/cell-types';
 import COLUMNS_ICON_CONFIG from '../common/constants/column-icon';
+import { SELECT_OPTION_COLORS } from "../common/constants/select-option-colors";
 import { getImageColumns, getTitleColumns } from "./utils";
 
 class DTableUtils {
@@ -197,6 +198,10 @@ class DTableUtils {
 
   getColumnIconConfig() {
     return COLUMNS_ICON_CONFIG;
+  }
+
+  getOptionColors = () => {
+    return SELECT_OPTION_COLORS;
   }
 
 }

@@ -21,10 +21,13 @@ import {
   AutoNumberFormatter,
   UrlFormatter,
   EmailFormatter,
-  DurationFormatter
+  DurationFormatter,
+  RateFormatter,
+  ButtonFormatter
 } from 'dtable-ui-component';
 import intl from 'react-intl-universal';
 import { isValidEmail } from '../../utils/utils';
+import '../../assets/css/formatter.css';
 
 const propTypes = {
   type: PropTypes.string,
@@ -34,6 +37,7 @@ const propTypes = {
   collaborators: PropTypes.array,
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
+  getOptionColors: PropTypes.func,
 };
 
 class EditorFormatter extends React.Component {
@@ -57,9 +61,9 @@ class EditorFormatter extends React.Component {
   calculateCollaboratorData = (props) => {
     const { row, column, CellType } = props;
     if (column.type === CellType.LAST_MODIFIER) {
-      this.getCollaborator(row._last_modifier);
+      this.getCollaborator(row[column.name]);
     } else if (column.type === CellType.CREATOR) {
-      this.getCollaborator(row._creator);
+      this.getCollaborator(row[column.name]);
     }
   }
 
@@ -166,16 +170,16 @@ class EditorFormatter extends React.Component {
         return <MTimeFormatter value={row._mtime} />;
       }
       case CellType.CREATOR: {
-        if (!row._creator || !collaborator) return this.renderEmptyFormatter();
+        if (!row[columnName] || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
-          return <CreatorFormatter collaborators={[collaborator]} value={row._creator} />;
+          return <CreatorFormatter collaborators={[collaborator]} value={row[columnName]} />;
         }
         return null
       }
       case CellType.LAST_MODIFIER: {
-        if (!row._last_modifier || !collaborator) return this.renderEmptyFormatter();
+        if (!row[columnName] || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
-          return <LastModifierFormatter collaborators={[collaborator]} value={row._last_modifier} />;
+          return <LastModifierFormatter collaborators={[collaborator]} value={row[columnName]} />;
         }
         return null
       }
@@ -203,6 +207,16 @@ class EditorFormatter extends React.Component {
       case CellType.DURATION: {
         if (!row[columnName]) return this.renderEmptyFormatter();
         return <DurationFormatter value={row[columnName]} format={column.data.duration_format} containerClassName="gallery-text-editor" />;
+      }
+      case CellType.RATE: {
+        if (!row[columnName]) return this.renderEmptyFormatter();
+        return <RateFormatter value={row[columnName]} data={column.data} containerClassName="gallery-text-editor" />;
+      }
+      case CellType.BUTTON: {
+        const { data = {} } = column;
+        const optionColors = this.props.getOptionColors();
+        if (!data.button_name) return this.renderEmptyFormatter();
+        return <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
       }
       default:
         return null

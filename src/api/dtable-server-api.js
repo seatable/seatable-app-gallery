@@ -43,7 +43,8 @@ class DTableServerAPI {
     const url = `api/v1/dtables/${this.dtableUuid}/rows/`;
     const params = {
       table_name: tableName,
-      view_name: viewName
+      view_name: viewName,
+      convert_link_id: true,
     }
     return this.req.get(url, {params});
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import context from '../../context';
 import EditorFormatter from '../../common/formatter/editor-formatter';
+import { checkDesktop } from '../../utils/utils';
 import GalleryImage from './gallery-image';
 
 const propTypes = {
@@ -83,8 +84,9 @@ class GalleryItem extends React.Component {
 
   render() {
     const { shownImages } = this.getShownImages(); 
+    const isDesktop = checkDesktop();
     return (
-      <div className="col-xl-2 col-md-3 col-sm-6 col-xm-12">
+      <div className={`col-xl-2 col-md-3 col-sm-6 col-xm-12 ${isDesktop ? '' : 'col-6' }`}>
         <div className="gallery-item">
           <div className="image-container">
             <GalleryImage shownImages={shownImages} />

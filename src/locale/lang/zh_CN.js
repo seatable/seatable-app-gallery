@@ -20,7 +20,10 @@ const zh_CN = {
   "Internal_server_error": "服务端错误",
   "The_sharing_link_has_expired": "分享链接已失效",
   "Unnamed_record": "未命名行",
-  "The_token_has_expired_please_refresh_the_page": "token已过期，请刷新页面"
+  "The_token_has_expired_please_refresh_the_page": "token已过期，请刷新页面",
+  "Please_select": "请选择",
+  "Cancel": "取消",
+  "Save": "保存"
 };
 
 export default zh_CN;

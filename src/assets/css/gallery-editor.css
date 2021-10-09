@@ -4,6 +4,7 @@
   min-height: 0;
   padding: 10px 10px 10px 20px;
   overflow: auto;
+  background: #f5f5f5;
 }
 
 .seatable-app-gallery .gallery-list {
@@ -64,13 +65,8 @@
   padding: 0 10px;
 }
 
-.seatable-app-gallery .gallery-item .title-container:hover {
-  background: #f1f1f1;
-}
-
 .seatable-app-gallery .gallery-item  .title-container .row-title {
   font-size: 15px;
-  cursor: pointer;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -79,6 +75,7 @@
   display: flex;
   align-items: center;
   border-radius: 2px;
+  margin-top: 8px;
 }
 
 .seatable-app-gallery .gallery-text-editor {

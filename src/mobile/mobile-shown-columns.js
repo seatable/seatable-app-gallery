@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
-import FieldSettingItem from './widgets/field-setting-item';
+import deepCopy from 'deep-copy';
+import ColumnSettingItem from './mobile-column-setting-item';
 
 const propTypes = {
   appConfig: PropTypes.object.isRequired,
@@ -11,7 +11,7 @@ const propTypes = {
   getColumnIconConfig: PropTypes.func.isRequired,
 };
 
-class FieldSettings extends React.Component {
+class MobileShownColumns extends Component {
 
   constructor(props) {
     super(props);
@@ -43,6 +43,10 @@ class FieldSettings extends React.Component {
     })
 
     return {fieldSettings: fieldSettings};
+  }
+  
+  toggleSelectAll = (value) => {
+    this.props.toggleAllColumns(value);
   }
 
   onChooseAllColumns = () => {
@@ -77,6 +81,7 @@ class FieldSettings extends React.Component {
     });
   }
 
+
   onUpdateFieldSetting = (columnSetting) => {
     let shown_column_names = [];
     const { fieldSettings } = this.state;
@@ -102,36 +107,36 @@ class FieldSettings extends React.Component {
     let { fieldSettings } = this.state;
     let isShowHideChoose = fieldSettings.length > 0 && fieldSettings.every(setting => setting.isChecked);
     if (isShowHideChoose) {
-      return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
+      return <span onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>
+    } else {
+      return <span onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>
     }
-    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>;
   }
 
   render() {
     const { fieldSettings } = this.state;
-
     return (
-      <div className="setting-item field-settings">
-        <div className="field-settings-header">
-          <span>{intl.get('Other_fields')}</span>
-          {this.renderChooseFields()}
+      <div className="mobile-setting-item">
+        <div className="mobile-setting-title">
+          <div>{intl.get('Other_fields')}</div>
+          <div className="mobile-select-all">
+            {this.renderChooseFields()}
+          </div>
         </div>
-        <div className="field-settings-body">
-          {fieldSettings.map(setting => {
-            return (
-              <FieldSettingItem 
-                key={setting.key} 
-                setting={setting} 
-                onUpdateFieldSetting={this.onUpdateFieldSetting}
-              />
-            );
-          })}
-        </div>
+        {fieldSettings.map(setting => {
+          return (
+            <ColumnSettingItem
+              key={setting.key} 
+              setting={setting} 
+              onUpdateFieldSetting={this.onUpdateFieldSetting}
+            />
+          );
+        })}
       </div>
     );
   }
 }
 
-FieldSettings.propTypes = propTypes;
+MobileShownColumns.propTypes = propTypes;
 
-export default FieldSettings;
+export default MobileShownColumns;

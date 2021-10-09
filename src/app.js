@@ -103,6 +103,17 @@ class App extends React.Component {
     if (type && type === 'view') {
       newAppConfig = await this.dtableUtils.getConfigByChangeSelectedView(config);
     }
+    const views = this.dtableUtils.getViews();
+    const columns = this.dtableUtils.getColumns();
+    const rows = this.dtableUtils.getRows();
+    this.setState({
+      appConfig: newAppConfig,
+      isSaving: false,
+      views,
+      columns,
+      rows
+    });
+    return;
     context.updateExternalAppInstance(newAppConfig).then(res => {
       const views = this.dtableUtils.getViews();
       const columns = this.dtableUtils.getColumns();

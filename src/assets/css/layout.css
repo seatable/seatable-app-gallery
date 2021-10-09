@@ -51,6 +51,7 @@ html, body {
   justify-content: space-between;
   padding: 0 1rem;
   border-bottom: 1px solid #e4e4e4;
+  flex-wrap: nowrap;
 }
 
 .seatable-app-gallery .gallery-main-header .gallery-name {
@@ -97,4 +98,32 @@ html, body {
   color: #999;
   width: max-content;
   white-space: nowrap;
+}
+
+.dtable-antd-mobile .am-action-sheet-body .am-action-sheet-button-list .am-action-sheet-button-list-item {
+  padding: 0;
+}
+
+.dtable-antd-mobile .am-action-sheet-button-list .am-action-sheet-button-list-item {
+  padding: 0 16px;
+  height: 44px;
+  line-height: 44px;
+  color: #333;
+  font-size: 16px;
+  overflow-y: hidden;
+}
+
+.dtable-antd-mobile .am-action-sheet-button-list {
+  text-align: left;
+  color: #333;
+}
+
+.dtable-antd-mobile .am-action-sheet-button-list .am-action-sheet-button-list-item .dtable-font {
+  color: #888;
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.my-am-action {
+  padding: 0 16px;
 }

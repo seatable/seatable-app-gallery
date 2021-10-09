@@ -2,12 +2,14 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
+import { ActionSheet } from 'antd-mobile';
 import Rename from '../common/rename';
 import GalleryMain from '../container/gallery-main';
 import GallerySettings from '../container/gallery-settings';
-import { getImageColumns, getTitleColumns, isEditAppPage } from '../utils/utils';
+import { getImageColumns, getTitleColumns, isEditAppPage, checkDesktop } from '../utils/utils';
 import ShareLinkDialog from '../components/dialogs/share-link-dialog';
 import context from '../context';
+import GalleryMobileSettings from '../mobile/gallery-mobile-settings';
 
 import '../assets/css/layout.css'
 
@@ -66,15 +68,43 @@ class Gallery extends React.Component {
     return shareLink;
   }
 
+  showActionSheet = () => {
+    let buttons = [(<div className="my-am-action"><i className='dtable-font dtable-icon-share'></i>{intl.get('Share')}</div>), 
+      (<div className="my-am-action"><i className="item-icon dtable-font dtable-icon-leave"></i>{intl.get('App_page')}</div>)
+    ];
+    buttons.push(<div className="my-am-action"><i className="dtable-font dtable-icon-settings"></i>{intl.get('Settings')}</div>);
+    ActionSheet.showActionSheetWithOptions({ 
+      options: buttons, 
+      maskClosable: true,
+      className: 'dtable-antd-mobile'
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        this.onShareDialogToggle();
+      } else if (buttonIndex === 1) {
+        this.onOpenShareApp();
+      } else if (buttonIndex === 2) {
+        this.onSettingsToggle();
+      }
+    });
+  }
+
+  renderMobileGalleryHeader = () => {
+    return (
+      <div className="gallery-options">
+        <button className="btn btn-outline" onClick={this.showActionSheet}>
+          <i className="dtable-font dtable-icon-more-level"></i>
+        </button>
+      </div>
+    )
+  }
+
   render() {
+    const isDesktop = checkDesktop();
     const { appConfig, dtableUtils, tables, views, columns, rows } = this.props;
-    
     const titleColumns = getTitleColumns(dtableUtils, columns);
     const imageColumns = getImageColumns(columns);
-
     const { isSaving, isShowSaveMessage } = this.props;
     const { isShowSetting, isShowSharedDialog } = this.state;
-    const settingStyle = isShowSetting ?  {display: 'block'} : null;
     
     return (
       <Fragment>
@@ -86,7 +116,7 @@ class Gallery extends React.Component {
                 {isShowSaveMessage && isSaving && <span className="tip-message">{intl.get('Saving')}</span>}
                 {isShowSaveMessage && !isSaving && <span className="tip-message">{intl.get('All_changes_saved')}</span>}
               </div>
-              {isEditAppPage() && (
+              {isEditAppPage() && isDesktop && (
                 <Fragment>
                   <div className="col-md-6 d-none d-md-block">
                     <div className="gallery-options">
@@ -115,6 +145,22 @@ class Gallery extends React.Component {
                   </div>
                 </Fragment>
               )}
+              {isEditAppPage() && !isDesktop && (
+                this.renderMobileGalleryHeader()
+              )}
+              {isEditAppPage() && isShowSetting &&
+                <GalleryMobileSettings 
+                  toggleSettingDialog={this.onSettingsToggle}
+                  dtableUtils={dtableUtils}
+                  appConfig={appConfig}
+                  tables={tables}
+                  views={views}
+                  titleColumns={titleColumns}
+                  imageColumns={imageColumns}
+                  columns={columns}
+                  onUpdateAppConfig={this.props.updateAppConfig}
+                />
+              }
             </div>
             <div className="gallery-main-content">
               <GalleryMain
@@ -128,7 +174,7 @@ class Gallery extends React.Component {
             </div>
           </div>
           {isEditAppPage() && (
-            <div style={settingStyle} className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
+            <div className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
               <GallerySettings 
                 dtableUtils={dtableUtils}
                 appConfig={appConfig}

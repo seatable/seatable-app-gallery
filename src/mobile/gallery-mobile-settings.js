@@ -11,6 +11,7 @@ import '../assets/css/mobile-gallery-settings.css';
 
 const propTypes = {
   appConfig: PropTypes.object,
+  dtableUtils: PropTypes.object,
   tables: PropTypes.array,
   views: PropTypes.array,
   titleColumns: PropTypes.array,
@@ -18,7 +19,6 @@ const propTypes = {
   columns: PropTypes.array,
   onUpdateAppConfig: PropTypes.func,
   toggleSettingDialog: PropTypes.func,
-  dtableUtils: PropTypes.func,
 };
 
 class GalleryMobileSettings extends Component {
@@ -160,7 +160,7 @@ class GalleryMobileSettings extends Component {
          <div className="dtable-gallery-app-title">
           <span onClick={toggleSettingDialog} className="dtable-gallery-app-header-btn">{intl.get('Cancel')}</span>
           <h4 className="dtable-gallery-app-header-title">{intl.get('Settings')}</h4>
-          <span onClick={this.props.onSaveSetting} className="dtable-gallery-app-header-btn-highlight dtable-gallery-app-header-btn">{intl.get('Save')}</span>
+          <span onClick={toggleSettingDialog} className="dtable-gallery-app-header-btn-highlight dtable-gallery-app-header-btn">{intl.get('Save')}</span>
         </div>
         <div className="dtable-gallery-app-setting-wrapper">
           {configTypeSettings.map(configTypeSetting => {

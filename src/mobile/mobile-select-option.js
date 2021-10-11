@@ -22,11 +22,11 @@ class MobileSelectOption extends Component {
   }
 
   renderOptions = () => {
-    const { selectedConfigType, options, settings, title } = this.props;
+    const { selectedConfigType, options, settings } = this.props;
     return (
       <div className="mobile-setting-item">
         <div className="mobile-select-options">
-          <List renderHeader={intl.get('Please_select') + title}>
+          <List renderHeader={intl.get('Please_select')}>
             {options.map((settingItem) => {
               return (
                 <Item 

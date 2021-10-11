@@ -34,10 +34,10 @@ class Gallery extends React.Component {
 
   onUpdateCurrentName = (newName) => {
     const { appConfig } = this.props;
-    const { name } = appConfig;
-    if (name === newName) return;
+    const { app_name } = appConfig;
+    if (app_name === newName) return;
     const newAppConfig = deepCopy(appConfig);
-    newAppConfig.app_name = name;
+    newAppConfig.app_name = app_name;
     this.props.updateAppConfig(newAppConfig);
   }
 

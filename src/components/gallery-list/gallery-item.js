@@ -91,11 +91,13 @@ class GalleryItem extends React.Component {
           <div className="image-container">
             <GalleryImage shownImages={shownImages} />
           </div>
-          <div className="title-container">
-            {this.renderRowTitle()}
-          </div>
-          <div className="row-content-container">
-            {this.renderEditorFormatter()}
+          <div className="text-truncate gallery-app-row-container">
+            <div className="title-container">
+              {this.renderRowTitle()}
+            </div>
+            <div className="row-content-container">
+              {this.renderEditorFormatter()}
+            </div>
           </div>
         </div>
       </div>

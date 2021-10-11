@@ -65,6 +65,10 @@ html, body {
   padding-right: 10px;
 }
 
+.seatable-app-gallery .gallery-name .gallery-app-table-rename .dtable-font {
+  color: #999;
+}
+
 .seatable-app-gallery .gallery-main-header .gallery-options {
   height: 50px;
   display: flex;

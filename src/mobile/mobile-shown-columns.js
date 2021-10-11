@@ -26,17 +26,9 @@ class MobileShownColumns extends Component {
     const columnIconConfig = nextProps.getColumnIconConfig();
     const fieldSettings = columns.map(column => {
       const columnIcon = columnIconConfig[column.type];
-      if (shown_column_names.includes(column.name)) {
-        return {
-          key: column.key,
-          isChecked: true,
-          columnName: column.name,
-          columnIcon: columnIcon,
-        };
-      }
       return {
         key: column.key,
-        isChecked: false,
+        isChecked: shown_column_names.includes(column.name),
         columnName: column.name,
         columnIcon: columnIcon,
       };
@@ -116,7 +108,7 @@ class MobileShownColumns extends Component {
   render() {
     const { fieldSettings } = this.state;
     return (
-      <div className="mobile-setting-item">
+      <div className="mobile-setting-item mt-4">
         <div className="mobile-setting-title">
           <div>{intl.get('Other_fields')}</div>
           <div className="mobile-select-all">

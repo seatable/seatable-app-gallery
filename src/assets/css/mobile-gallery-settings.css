@@ -27,7 +27,7 @@
 }
 
 .gallery-app-settings .dtable-gallery-app-header-btn:first-child {
-  text-align: left
+  text-align: left;
 }
 
 .gallery-app-settings .dtable-gallery-app-header-btn:last-child {
@@ -54,7 +54,6 @@
 }
 
 .gallery-app-settings .mobile-setting-item {
-  margin-top: 16px;
   font-size: 14px;
 }
 
@@ -87,7 +86,7 @@
 }
 
 .gallery-app-settings .mobile-selector-icon {
-  color: #bcbcbc;;
+  color: #bcbcbc;
 }
 
 .gallery-app-settings .mobile-select-options {

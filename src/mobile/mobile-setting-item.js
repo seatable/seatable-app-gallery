@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TouchFeedBack from './touch-feedback';
+import { List } from 'antd-mobile';
 
 const propTypes = {
   title: PropTypes.string,
@@ -9,6 +9,8 @@ const propTypes = {
   selectedName: PropTypes.string,
   getSelectConfigOptions: PropTypes.func,
 };
+
+const Item = List.Item;
 
 class MobileSettingItem extends Component {
 
@@ -21,15 +23,11 @@ class MobileSettingItem extends Component {
 
     return (
       <div className="mobile-setting-item">
-        <div className="mobile-setting-title">{title}</div>
-        <TouchFeedBack activeClassName="selected-selector">
-          <div onClick={this.onClick} className="mobile-selector">
-            <span>{selectedName}</span>
-            <div className="mobile-selector-icon">
-              <i className="dtable-font dtable-icon-right"></i>
-            </div>
-          </div>
-        </TouchFeedBack>
+        <List renderHeader={title}>
+          <Item onClick={this.onClick} extra={<i className="dtable-font dtable-icon-right"></i>}>
+            {selectedName || ''}
+          </Item>
+        </List>
       </div>
     )
   }

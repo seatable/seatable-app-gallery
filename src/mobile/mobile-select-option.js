@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
-import TouchFeedBack from './touch-feedback';
+import { List } from 'antd-mobile';
 
 const propTypes = {
   title: PropTypes.string,
@@ -11,6 +11,8 @@ const propTypes = {
   onSelectOption: PropTypes.func,
   hideSelectConfig: PropTypes.func,
 };
+
+const Item = List.Item;
 
 class MobileSelectOption extends Component {
   
@@ -23,29 +25,20 @@ class MobileSelectOption extends Component {
     const { selectedConfigType, options, settings, title } = this.props;
     return (
       <div className="mobile-setting-item">
-        <div className="mobile-setting-title">
-          {intl.get('Please_select') + title}
-        </div>
         <div className="mobile-select-options">
-          {  
-            options.map((settingItem) => {
+          <List renderHeader={intl.get('Please_select') + title}>
+            {options.map((settingItem) => {
               return (
-                <TouchFeedBack key={settingItem._id || settingItem.key} activeClassName="selected-selector">
-                  <div
-                    onClick={() => this.onClick(settingItem)}
-                    className="mobile-select-option"
-                  >
-                    <div className="mobile-selector-option-wrapper">
-                      <span>{settingItem.name}</span>
-                      {settingItem.name === settings[selectedConfigType] && <div className="mobile-selector-icon">
-                        <i className="dtable-font dtable-icon-check-mark"></i>
-                      </div>}
-                    </div>
-                  </div>
-                </TouchFeedBack>
-              )
-            })
-          }
+                <Item 
+                  key={settingItem._id || settingItem.key} 
+                  onClick={() => this.onClick(settingItem)}
+                  extra={settingItem.name === settings[selectedConfigType] && <i className="dtable-font dtable-icon-check-mark"></i>}
+                >
+                  {settingItem.name}
+                </Item>
+              );
+            })}
+           </List>
         </div>
       </div>
     );

@@ -70,9 +70,9 @@ class Gallery extends React.Component {
 
   showActionSheet = () => {
     let buttons = [(<div className="my-am-action"><i className='dtable-font dtable-icon-share'></i>{intl.get('Share')}</div>), 
-      (<div className="my-am-action"><i className="item-icon dtable-font dtable-icon-leave"></i>{intl.get('App_page')}</div>)
+      (<div className="my-am-action"><i className="item-icon dtable-font dtable-icon-leave"></i>{intl.get('App_page')}</div>),
+      (<div className="my-am-action"><i className="dtable-font dtable-icon-settings"></i>{intl.get('Settings')}</div>)
     ];
-    buttons.push(<div className="my-am-action"><i className="dtable-font dtable-icon-settings"></i>{intl.get('Settings')}</div>);
     ActionSheet.showActionSheetWithOptions({ 
       options: buttons, 
       maskClosable: true,

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import context from '../../context';
 import EditorFormatter from '../../common/formatter/editor-formatter';
+import { checkDesktop } from '../../utils/utils';
 import GalleryImage from './gallery-image';
 
 const propTypes = {
@@ -83,17 +84,20 @@ class GalleryItem extends React.Component {
 
   render() {
     const { shownImages } = this.getShownImages(); 
+    const isDesktop = checkDesktop();
     return (
-      <div className="col-xl-2 col-md-3 col-sm-6 col-xm-12">
+      <div className={`col-xl-2 col-md-3 col-sm-6 col-xm-12 ${isDesktop ? '' : 'col-6' }`}>
         <div className="gallery-item">
           <div className="image-container">
             <GalleryImage shownImages={shownImages} />
           </div>
-          <div className="title-container">
-            {this.renderRowTitle()}
-          </div>
-          <div className="row-content-container">
-            {this.renderEditorFormatter()}
+          <div className="text-truncate gallery-app-row-container">
+            <div className="title-container">
+              {this.renderRowTitle()}
+            </div>
+            <div className="row-content-container">
+              {this.renderEditorFormatter()}
+            </div>
           </div>
         </div>
       </div>

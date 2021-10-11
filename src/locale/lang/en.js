@@ -20,7 +20,10 @@ const en = {
   "Internal_server_error": "Internal server error",
   "The_sharing_link_has_expired": "The sharing link has expired",
   "Unnamed_record": "Unnamed record",
-  "The_token_has_expired_please_refresh_the_page": "The token has expired, please refresh the page"
+  "The_token_has_expired_please_refresh_the_page": "The token has expired, please refresh the page",
+  "Please_select": "Please select",
+  "Cancel": "Cancel",
+  "Save": "Save"
 };
 
 export default en;

@@ -63,7 +63,7 @@ class Rename extends React.Component {
   render() {
     const { isRenaming, name } = this.state;
     return (
-      <div className="dtable-edit-collection-table-rename" style={{cursor: 'pointer'}}>
+      <div className="gallery-app-table-rename" style={{cursor: 'pointer'}}>
         {isRenaming ?
           <input 
             ref={this.setInputRef} 

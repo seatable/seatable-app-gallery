@@ -15,6 +15,11 @@ const propTypes = {
 
 class GalleryMain extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.columnIconConfig = props.dtableUtils.getColumnIconConfig();
+  }
+
   getImageColumn = () => {
     const { appConfig, imageColumns } = this.props;
     const { shown_image_name } = appConfig.settings;
@@ -45,11 +50,19 @@ class GalleryMain extends React.Component {
     return shownColumns;
   }
 
+  getDisplayFieldsName = () => {
+    const { appConfig } = this.props;
+    const { display_field_name } = appConfig.settings;
+    return !!display_field_name;
+  }
+
   render() {
     const { dtableUtils, appConfig, viewRows, columns } = this.props;
     const imageColumn = this.getImageColumn();
     const titleColumn = this.getTitleColumn();
     const shownColumns = this.getShownColumns();
+    const displayFieldsName = this.getDisplayFieldsName();
+
     return (
       <div className="gallery-main-container container-fluid" style={{height: window.innerHeight - 50}}>
         <GalleryList 
@@ -60,6 +73,8 @@ class GalleryMain extends React.Component {
           imageColumn={imageColumn} 
           titleColumn={titleColumn}
           shownColumns={shownColumns}
+          displayFieldsName={displayFieldsName}
+          columnIconConfig={this.columnIconConfig}
         />
       </div>
     );

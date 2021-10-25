@@ -45,7 +45,7 @@ class GalleryItem extends React.Component {
   }
 
   renderEditorFormatter = () => {
-    let { viewRow, shownColumns } = this.props;
+    let { viewRow, shownColumns, displayFieldsName, columnIconConfig } = this.props;
     return shownColumns.map((column, index) => {
       return (
         <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
@@ -58,6 +58,8 @@ class GalleryItem extends React.Component {
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}
             getOptionColors={this.getOptionColors}
+            displayFieldsName={displayFieldsName}
+            columnIconConfig={columnIconConfig}
           />
         </div>
       );

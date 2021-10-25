@@ -23,7 +23,8 @@ const en = {
   "The_token_has_expired_please_refresh_the_page": "The token has expired, please refresh the page",
   "Please_select": "Please select",
   "Cancel": "Cancel",
-  "Save": "Save"
+  "Save": "Save",
+  "Display_field_name": "Display field name"
 };
 
 export default en;

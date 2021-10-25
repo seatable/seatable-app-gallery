@@ -21,9 +21,10 @@ const de = {
   "The_sharing_link_has_expired": "Der Freigabelink ist abgelaufen.",
   "Unnamed_record": "Neuer Eintrag",
   "The_token_has_expired_please_refresh_the_page": "Der Token ist abgelaufen. Laden Sie die Seite neu.",
-  "Please_select": "Please select",
-  "Cancel": "Cancel",
-  "Save": "Save"
+  "Please_select": "Auswählen",
+  "Cancel": "Abbrechen",
+  "Save": "Speichern",
+  "Display_field_name": "Display field name"
 };
 
 export default de;

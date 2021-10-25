@@ -57,6 +57,11 @@
   font-size: 14px;
 }
 
+.mobile-setting-item .mobile-field-switch-container .custom-switch-description {
+  margin-left: 0;
+  font-size: 16px;
+}
+
 .gallery-app-settings .mobile-setting-title {
   margin-bottom: 5px;
   padding: 0 16px;

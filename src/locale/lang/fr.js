@@ -21,9 +21,10 @@ const fr = {
   "The_sharing_link_has_expired": "Le lien de partage a expiré.",
   "Unnamed_record": "Nouveau enregistrement",
   "The_token_has_expired_please_refresh_the_page": "Le token a expiré. Veuillez rafraîchir le site web.",
-  "Please_select": "Please select",
-  "Cancel": "Cancel",
-  "Save": "Save"
+  "Please_select": "Sélectionner",
+  "Cancel": "Annuler",
+  "Save": "Enregistrer",
+  "Display_field_name": "Display field name"
 };
 
 export default fr;

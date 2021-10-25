@@ -15,17 +15,18 @@ const Item = List.Item;
 class MobileSettingItem extends Component {
 
   onClick = () => {
-    this.props.getSelectConfigOptions(this.props.selectedConfigType)
+    this.props.getSelectConfigOptions(this.props.type);
   }
 
   render() { 
-    const { title, selectedName } = this.props;
+    const { settings, type } = this.props;
+    const title = this.props.getSelectedConfigTitle(type);
 
     return (
       <div className="mobile-setting-item">
         <List renderHeader={title}>
           <Item onClick={this.onClick} extra={<i className="dtable-font dtable-icon-right"></i>}>
-            {selectedName || ''}
+            {settings[type] || ''}
           </Item>
         </List>
       </div>

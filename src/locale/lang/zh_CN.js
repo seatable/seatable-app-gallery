@@ -23,7 +23,8 @@ const zh_CN = {
   "The_token_has_expired_please_refresh_the_page": "token已过期，请刷新页面",
   "Please_select": "请选择",
   "Cancel": "取消",
-  "Save": "保存"
+  "Save": "保存",
+  "Display_field_name": "显示字段名称"
 };
 
 export default zh_CN;

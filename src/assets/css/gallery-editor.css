@@ -88,6 +88,14 @@
   white-space: nowrap;
 }
 
+.seatable-app-gallery .gallery-editor-container .cell-formatter-container {
+  line-height: 28px;
+}
+
+.seatable-app-gallery .gallery-formula-container {
+  text-align: left!important;
+}
+
 .seatable-app-gallery .gallery-item .row-content-container {
   padding: 8px 10px 0;
 }
@@ -96,6 +104,17 @@
   margin-top: 7px;
   min-height: 28px;
   display: flex;
-  align-items: center;
   font-size: 14px;
+  flex-direction: column;
+}
+
+.seatable-app-gallery .gallery-editor-container .gallery-editor-title .dtable-font {
+  color: #999;
+  font-size: 12px;
+  margin-right: 0.5rem;
+}
+
+.seatable-app-gallery  .gallery-editor-container .gallery-editor-title .gallery-editor-title-text {
+  color: #666;
+  font-size: 12px;
 }

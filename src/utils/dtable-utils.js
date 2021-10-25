@@ -45,7 +45,7 @@ class DTableUtils {
   }
 
   async getConfig(appConfig) {
-    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names } = appConfig.settings;
+    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names, display_field_name } = appConfig.settings;
 
     let settings = null;
     let selectedTable = null;
@@ -69,7 +69,8 @@ class DTableUtils {
         view_name: selectedView.name,
         shown_image_name: imageColumns[0] && imageColumns[0].name,
         shown_title_name: titleColumns[0] && titleColumns[0].name,
-        shown_column_names: []
+        shown_column_names: [],
+        display_field_name: false
       };
 
       this.views = selectedTable.views;
@@ -94,7 +95,8 @@ class DTableUtils {
         view_name: selectedView.name,
         shown_image_name: imageColumns[0] && imageColumns[0].name,
         shown_title_name: titleColumns[0] && titleColumns[0].name,
-        shown_column_names: []
+        shown_column_names: [],
+        display_field_name: false
       };
 
       this.views = selectedTable.views;
@@ -113,7 +115,8 @@ class DTableUtils {
       view_name: selectedView.name,
       shown_image_name: isImageExist ? shown_image_name : (imageColumns[0] && imageColumns[0].name),
       shown_title_name: isTitleExist ? shown_title_name : (titleColumns[0] && titleColumns[0].name),
-      shown_column_names: shown_column_names
+      shown_column_names: shown_column_names,
+      display_field_name: !!display_field_name
     };
 
     this.views = selectedTable.views;

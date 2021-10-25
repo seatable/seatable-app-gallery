@@ -6,6 +6,7 @@ import MobileSettingItem from './mobile-setting-item';
 import MobileShownColumns from './mobile-shown-columns';
 import MobileSelectOption from './mobile-select-option';
 import { SELECT_CONFIG_TYPE } from '../common/constants/select-config-type';
+import MobileDisplayFieldName from './mobile-display-field-name';
 
 import '../assets/css/mobile-gallery-settings.css';
 
@@ -163,26 +164,40 @@ class GalleryMobileSettings extends Component {
           <span onClick={toggleSettingDialog} className="dtable-gallery-app-header-btn-highlight dtable-gallery-app-header-btn">{intl.get('Save')}</span>
         </div>
         <div className="dtable-gallery-app-setting-wrapper">
-          {configTypeSettings.map(configTypeSetting => {
-            if (configTypeSetting === SELECT_CONFIG_TYPE.SHOWN_COLUMN_NAMES) {
-              return (<MobileShownColumns
-                key={configTypeSetting}
-                appConfig={appConfig}
-                columns={columns}
-                onSettingUpdate={this.props.onUpdateAppConfig}
-                getColumnIconConfig={this.getColumnIconConfig}
-              />);
-            } else {
-              const title = this.getSelectedConfigTitle(configTypeSetting);
-              return <MobileSettingItem 
-                key={configTypeSetting}
-                selectedConfigType={configTypeSetting}
-                getSelectConfigOptions={this.getSelectConfigOptions}
-                selectedName={settings[configTypeSetting]}
-                title={title}
-              />
-            }
-          })}
+          <MobileSettingItem
+            settings={settings}
+            getSelectConfigOptions={this.getSelectConfigOptions}
+            getSelectedConfigTitle={this.getSelectedConfigTitle}
+            type={SELECT_CONFIG_TYPE.TABLE_NAME}
+          />
+          <MobileSettingItem
+            settings={settings}
+            getSelectConfigOptions={this.getSelectConfigOptions}
+            getSelectedConfigTitle={this.getSelectedConfigTitle}
+            type={SELECT_CONFIG_TYPE.VIEW_NAME}
+          />
+          <MobileSettingItem 
+            settings={settings}
+            getSelectConfigOptions={this.getSelectConfigOptions}
+            getSelectedConfigTitle={this.getSelectedConfigTitle}
+            type={SELECT_CONFIG_TYPE.SHOWN_IMAGE_NAME}
+          />
+          <MobileSettingItem 
+            settings={settings}
+            getSelectConfigOptions={this.getSelectConfigOptions}
+            getSelectedConfigTitle={this.getSelectedConfigTitle}
+            type={SELECT_CONFIG_TYPE.SHOWN_TITLE_NAME}
+          />
+          <MobileDisplayFieldName 
+            appConfig={appConfig}
+            onUpdateAppConfig={this.props.onUpdateAppConfig}
+          />
+          <MobileShownColumns
+            appConfig={appConfig}
+            columns={columns}
+            onSettingUpdate={this.props.onUpdateAppConfig}
+            getColumnIconConfig={this.getColumnIconConfig}
+          />
         </div>
         {isShowSelectOption &&
           <MobileSelectOption

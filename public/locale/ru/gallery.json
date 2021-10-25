@@ -23,5 +23,6 @@
   "The_token_has_expired_please_refresh_the_page": "Срок действия токена истек, пожалуйста, обновите страницу",
   "Please_select": "Please select",
   "Cancel": "Cancel",
-  "Save": "Save"
+  "Save": "Save",
+  "Display_field_name": "Display field name"
 }

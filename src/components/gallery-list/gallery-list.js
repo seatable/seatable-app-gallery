@@ -14,7 +14,7 @@ const propTypes = {
 class GalleryList extends React.Component {
 
   render() {
-    const { dtableUtils, viewRows, imageColumn, titleColumn, shownColumns } = this.props;
+    const { dtableUtils, viewRows, imageColumn, titleColumn, shownColumns, displayFieldsName, columnIconConfig } = this.props;
 
     return (
       <div className="row no-gutters gallery-list">
@@ -27,6 +27,8 @@ class GalleryList extends React.Component {
               imageColumn={imageColumn}    
               titleColumn={titleColumn}    
               shownColumns={shownColumns}
+              displayFieldsName={displayFieldsName}
+              columnIconConfig={columnIconConfig}
             />
           );
         })}

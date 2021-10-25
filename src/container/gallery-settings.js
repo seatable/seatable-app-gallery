@@ -6,6 +6,7 @@ import ViewSetting from '../components/gallery-settings/view-setting';
 import ImageSetting from '../components/gallery-settings/image-setting';
 import TitleSetting from '../components/gallery-settings/title-setting';
 import FieldSettings from '../components/gallery-settings/field-settings';
+import DisplayFieldsSettings from '../components/gallery-settings/display-fields-settings';
 
 import '../assets/css/gallery-settings.css';
 
@@ -62,6 +63,10 @@ class GallerySettings extends React.Component {
           <TitleSetting 
             appConfig={appConfig} 
             titleColumns={titleColumns}
+            onSettingUpdate={this.onSettingUpdate}
+          />
+          <DisplayFieldsSettings 
+            appConfig={appConfig} 
             onSettingUpdate={this.onSettingUpdate}
           />
           <FieldSettings 

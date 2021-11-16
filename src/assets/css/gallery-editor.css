@@ -108,12 +108,6 @@
   flex-direction: column;
 }
 
-.seatable-app-gallery .gallery-editor-container .gallery-editor-title .dtable-font {
-  color: #999;
-  font-size: 12px;
-  margin-right: 0.5rem;
-}
-
 .seatable-app-gallery  .gallery-editor-container .gallery-editor-title .gallery-editor-title-text {
   color: #666;
   font-size: 12px;

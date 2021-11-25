@@ -24,7 +24,11 @@ const en = {
   "Please_select": "Please select",
   "Cancel": "Cancel",
   "Save": "Save",
-  "Display_field_name": "Display field name"
+  "Display_field_name": "Display field name",
+  "Made_app_tip": "This is the application I made <span class='share-link-app-name'>{itemName}</span>",
+  "Click_the_link_to_experience_it": "Click the link to experience it!",
+  "Scan_the_code_to_experience_it": "Scan the code to experience it!",
+  "Copy_link": "Copy link"
 };
 
 export default en;

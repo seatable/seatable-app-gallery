@@ -6,9 +6,9 @@
 .share-link-dialog .share-link-container {
   display: flex;
   flex-direction: row;
-  height: 198px;
   width: 100%;
   padding: 0;
+  padding-bottom: 1rem;
 }
 
 .share-link-dialog .share-link-info {
@@ -27,8 +27,7 @@
 
 .share-link-dialog .share-link-info .share-item {
   display: flex;
-  height: 80px;
-  line-height: 80px;
+  padding: 20px 0;
   align-items: center;
 }
 
@@ -50,32 +49,44 @@
 
 .share-link-dialog .share-link-info .share-link {
   width: 100%;
-  height: 38px;
-  display: flex;
+  background: #fafafa;
+  border: 1px solid rgba(0, 40, 100, 0.12);
+  padding: 10px;
+  border-radius: 3px;
+
 }
 
 .share-link-dialog .share-link-info .share-link-content {
   display: inline-block;
-  width: 80%;
-  height: 100%;
-  line-height: 36px;
-  padding: 0 10px;
-  border: 1px solid rgba(0, 40, 100, 0.12);
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-right: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  width: 100%;
+  color: #ff8000;
+  cursor: pointer;
 }
 
-.share-link-dialog .share-link-info .share-link-btn {
-  width: 20%;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+.share-link-dialog .share-link-info .share-link-content:hover {
+  text-decoration: underline;
+}
+
+.share-link-dialog .share-link-description {
+  color: #444;
+  font-size: 13px;
+}
+
+.share-link-dialog .share-link-app-name {
+  color: #000;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: bottom
+}
+
+.share-link-dialog .share-link-btn {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 14px;
 }
 
 .share-link-dialog .share-link-qrcode .share-link-qrcode-content {

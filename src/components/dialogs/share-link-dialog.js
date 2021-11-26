@@ -29,6 +29,17 @@ class ShareLinkDialog extends React.Component {
     toaster.success(message);
   }
 
+  onOpenShareLink = () => {
+    const { shareLink } = this.props;
+    window.open(shareLink);
+  }
+
+  getConvertShareLink = () => {
+    const { shareLink } = this.props;
+    const convertLink = shareLink.slice(0, 25) + '...' + shareLink.slice(-25);
+    return convertLink;
+  }
+
   renderIcon = () => {
     const { fontIcon, itemIcon } = this.props;
     if (fontIcon) {
@@ -39,6 +50,7 @@ class ShareLinkDialog extends React.Component {
 
   render() {
     const { itemName, shareLink } = this.props;
+    const convertLink = this.getConvertShareLink()
 
     return (
       <Modal isOpen={true} toggle={this.toggle} className="share-link-dialog">
@@ -50,17 +62,20 @@ class ShareLinkDialog extends React.Component {
               <span className="share-item-text">{itemName}</span>
             </div>
             <div className="share-link">
-              <span className="share-link-content">{shareLink}</span>
-              <Button color="primary" onClick={this.onCopy} className="share-link-btn" title={intl.get('Copy')}>{intl.get('Copy')}</Button>
+              <span className="share-link-content" onClick={this.onOpenShareLink}>{convertLink}</span>
+              <div className="share-link-description">
+                {intl.getHTML('Made_app_tip', {itemName})}, {intl.get('Click_the_link_to_experience_it')}
+              </div>
             </div>
+            <Button color="primary" onClick={this.onCopy} className="share-link-btn" title={intl.get('Copy_link')}>{intl.get('Copy_link')}</Button>
           </div>
           <div className="share-link-qrcode">
             <div className="share-link-qrcode-content">
               <QRCode value={shareLink} size={80} />
             </div>
             <div className="share-link-qrcode-tip">
-              <span className="qrcode-tip-content">{intl.get('Scan_QR_code')}</span>
-              <span className="qrcode-tip-content">{intl.get('Open_directly')}</span>
+              <span className="qrcode-tip-content">{intl.getHTML('Made_app_tip', {itemName})}</span>
+                <span className="qrcode-tip-content">{intl.get('Scan_the_code_to_experience_it')}</span>
             </div>
           </div>
         </ModalBody>

@@ -74,6 +74,7 @@
 
 .share-link-dialog .share-link-app-name {
   color: #000;
+  font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -110,4 +111,5 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #444;
 }

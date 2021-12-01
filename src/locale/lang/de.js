@@ -29,7 +29,7 @@ const de = {
   "Click_the_link_to_experience_it": "Click the link to experience it!",
   "Scan_the_code_to_experience_it": "Scan the code to experience it!",
   "Copy_link": "Copy link",
-  "Share_app_tip": "This is the application I made {itemName}"
+  "Share_app_tip": "This is the application I made {itemName},"
 };
 
 export default de;

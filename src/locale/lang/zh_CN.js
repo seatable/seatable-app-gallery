@@ -29,7 +29,7 @@ const zh_CN = {
   "Click_the_link_to_experience_it": "点击链接体验一下吧！",
   "Scan_the_code_to_experience_it": "扫码体验一下吧！",
   "Copy_link": "复制链接",
-  "Share_app_tip": "这是我做的应用 {itemName}，"
+  "Share_app_tip": "这是我做的应用 “{itemName}”，"
 };
 
 export default zh_CN;

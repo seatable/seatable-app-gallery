@@ -23,8 +23,9 @@ class ShareLinkDialog extends React.Component {
   }
 
   onCopy = () => {
-    const { shareLink } = this.props;
-    copy(shareLink);
+    const { shareLink, itemName } = this.props;
+    const copyContent = `${shareLink} ${intl.get('Share_app_tip', {itemName})} ${intl.get('Click_the_link_to_experience_it')}`
+    copy(copyContent);
     let message = intl.get('The_share_link_has_been_copied');
     toaster.success(message);
   }

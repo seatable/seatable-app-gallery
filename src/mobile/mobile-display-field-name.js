@@ -36,7 +36,7 @@ class MobileDisplayFieldsName extends React.Component {
         <div className="mobile-column-setting-item">
           <Switch 
             checked={this.state.isChecked}  
-            placeholder={intl.get('Display_field_name')} 
+            placeholder={intl.get('Show_field_names')} 
             onChange={this.onUpdateFieldSetting} 
             switchClassName="mobile-field-switch-container"
           />

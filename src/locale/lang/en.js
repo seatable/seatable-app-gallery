@@ -8,7 +8,7 @@ const en = {
   "Title_field": "Title field",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
-  "Choose_all": "Choose all",
+  "Show_all": "Show all",
   "Failed_to_update_app_config": "Failed to update app config",
   "Saving": "Saving...",
   "All_changes_saved": "All changes saved",

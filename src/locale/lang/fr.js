@@ -8,7 +8,7 @@ const fr = {
   "Title_field": "Titre",
   "Other_fields": "Autres colonnes",
   "Hide_all": "Masquer toutes",
-  "Choose_all": "Afficher toutes",
+  "Show_all": "Afficher toutes",
   "Failed_to_update_app_config": "La mise à jour de la configuration a échoué.",
   "Saving": "En train d'enregistrer ...",
   "All_changes_saved": "Toutes les modifications ont été enregistrées.",

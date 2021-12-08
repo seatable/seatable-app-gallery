@@ -104,7 +104,7 @@ class FieldSettings extends React.Component {
     if (isShowHideChoose) {
       return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
     }
-    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>;
+    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Show_all')}</span>;
   }
 
   render() {

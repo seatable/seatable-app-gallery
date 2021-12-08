@@ -101,7 +101,7 @@ class MobileShownColumns extends Component {
     if (isShowHideChoose) {
       return <span onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>
     } else {
-      return <span onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>
+      return <span onClick={this.onChooseAllColumns}>{intl.get('Show_all')}</span>
     }
   }
 

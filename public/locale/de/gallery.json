@@ -8,7 +8,7 @@
   "Title_field": "Title",
   "Other_fields": "Weitere Spalten",
   "Hide_all": "Alle ausblenden",
-  "Choose_all": "Alle auswählen",
+  "Show_all": "Alle auswählen",
   "Failed_to_update_app_config": "Die Konfiguration der App konnte nicht aktualisiert werden.",
   "Saving": "Die Änderungen werden gespeichert.",
   "All_changes_saved": "Alle Änderungen wurden gespeichert.",

@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal';
 import context from '../context';
 
 export const generatorBase64Code = (keyLength = 4) => {
@@ -83,3 +84,17 @@ export const getTitleColumns = (dtable, columns) => {
 export const getImageColumns = (columns) => {
   return columns.filter(column => column.type === 'image');
 }
+
+export const validateName = (name) => {
+  name = name.trim();
+  if (name === '') {
+    return { isValid: false, message: intl.get('Name_is_required') };
+  }
+  if (name.includes('/')) {
+    return { isValid: false, message: intl.get('Name_cannot_contain_slash') };
+  }
+  if (name.includes('\\')) {
+    return { isValid: false, message: intl.get('Name_cannot_contain_backslash') };
+  }
+  return { isValid: true, message: name };
+};

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isHotkey from 'is-hotkey';
+import toaster from '../toaster';
+import { validateName } from '../../utils/utils';
 
 const propTypes = {
   currentName: PropTypes.string,
@@ -52,8 +54,14 @@ class Rename extends React.Component {
   }
 
   onBlur = () => {
-    this.setState({isRenaming: false});
-    this.props.onUpdateCurrentName(this.state.name);
+    const { isValid, message } = validateName(this.state.name);
+    if (!isValid) {
+      toaster.danger(message);
+      return;
+    } else {
+      this.setState({isRenaming: false});
+      this.props.onUpdateCurrentName(message);
+    }   
   }
 
   setInputRef = (ref) => {

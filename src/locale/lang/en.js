@@ -29,6 +29,9 @@ const en = {
   "Click_the_link_to_experience_it": "Click the link to experience it!",
   "Scan_the_code_to_experience_it": "Scan the code to experience it!",
   "Copy_link": "Copy link",
+  "Name_is_required": "Name is required",
+  "Name_cannot_contain_slash": "Name cannot contain slash",
+  "Name_cannot_contain_backslash": "Name cannot contain backslash",
   "Share_app_tip": "This is my application \"{itemName}\","
 };
 

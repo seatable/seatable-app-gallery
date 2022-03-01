@@ -153,7 +153,6 @@ class GalleryMobileSettings extends Component {
     const { toggleSettingDialog, appConfig, columns } = this.props;
     const { selectedConfigType, isShowSelectOption } = this.state;
     const { settings } = appConfig;
-    const configTypeSettings = Object.keys(settings);
     const selectedTitle = this.getSelectedConfigTitle(selectedConfigType);
 
     return (

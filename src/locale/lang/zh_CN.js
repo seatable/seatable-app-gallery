@@ -25,11 +25,13 @@ const zh_CN = {
   "Cancel": "取消",
   "Save": "保存",
   "Show_field_names": "显示字段名称",
-  "Made_app_tip": "这是我做的应用 <span class='share-link-app-name'>{itemName}</span>",
-  "Click_the_link_to_experience_it": "点击链接体验一下吧！",
-  "Scan_the_code_to_experience_it": "扫码体验一下吧！",
-  "Copy_link": "复制链接",
-  "Share_app_tip": "这是我做的应用 “{itemName}”，"
+  "Click_link_to_view": "点击链接查看",
+  "Scan_QR_code_to_open_app": "扫描二维码打开应用",
+  "Copy_link_only": "仅复制链接",
+  "Name_is_required": "名称是必填项",
+  "Name_cannot_contain_slash": "名称不能包含斜杠",
+  "Name_cannot_contain_backslash": "名称不能包含反斜杠",
+  "App": "应用"
 };
 
 export default zh_CN;

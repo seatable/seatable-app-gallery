@@ -22,9 +22,15 @@ class ShareLinkDialog extends React.Component {
     this.props.shareCancel();
   }
 
+  onCopyLink = () => {
+    copy(this.props.shareLink);
+    let message = intl.get('The_share_link_has_been_copied');
+    toaster.success(message);
+  }
+
   onCopy = () => {
     const { shareLink, itemName } = this.props;
-    const copyContent = `${shareLink} ${intl.get('Share_app_tip', {itemName})} ${intl.get('Click_the_link_to_experience_it')}`
+    const copyContent = `${shareLink}\n${intl.get('App')} ${itemName}, ${intl.get('Click_link_to_view')}`
     copy(copyContent);
     let message = intl.get('The_share_link_has_been_copied');
     toaster.success(message);
@@ -65,19 +71,17 @@ class ShareLinkDialog extends React.Component {
             <div className="share-link">
               <span className="share-link-content" onClick={this.onOpenShareLink}>{convertLink}</span>
               <div className="share-link-description">
-                {intl.getHTML('Made_app_tip', {itemName})}, {intl.get('Click_the_link_to_experience_it')}
+                {intl.getHTML('App')} {itemName}, {intl.get('Click_link_to_view')}
               </div>
             </div>
-            <Button color="primary" onClick={this.onCopy} className="share-link-btn" title={intl.get('Copy_link')}>{intl.get('Copy_link')}</Button>
+            <Button color="primary" onClick={this.onCopyLink} outline={true} className="mt-4 mb-6" title={intl.get('Copy_link_only')}>{intl.get('Copy_link_only')}</Button>
+            <Button color="primary" onClick={this.onCopy} className="mt-4 mb-6 ml-4" title={intl.get('Copy')}>{intl.get('Copy')}</Button>
           </div>
           <div className="share-link-qrcode">
             <div className="share-link-qrcode-content">
               <QRCode value={shareLink} size={80} />
             </div>
-            <div className="share-link-qrcode-tip">
-              <span className="qrcode-tip-content">{intl.getHTML('Made_app_tip', {itemName})}</span>
-                <span className="qrcode-tip-content">{intl.get('Scan_the_code_to_experience_it')}</span>
-            </div>
+            <div className="seatable-tip-default mt-2 mx-2">{intl.get('Scan_QR_code_to_open_app')} {itemName}</div>
           </div>
         </ModalBody>
       </Modal>

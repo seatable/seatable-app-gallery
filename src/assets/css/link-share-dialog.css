@@ -97,19 +97,3 @@
   border: 1px solid #e9ecef;
   padding: 9px;
 }
-
-.share-link-dialog .share-link-qrcode .share-link-qrcode-tip {
-  margin-top: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-.share-link-dialog .share-link-qrcode-tip .qrcode-tip-content {
-  display: inline-block;
-  max-width: 100%;
-  font-size: 13px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #444;
-}

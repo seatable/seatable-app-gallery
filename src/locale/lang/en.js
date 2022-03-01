@@ -25,14 +25,13 @@ const en = {
   "Cancel": "Cancel",
   "Save": "Save",
   "Show_field_names": "Show field names",
-  "Made_app_tip": "This is my application <span class='share-link-app-name'>{itemName}</span>",
-  "Click_the_link_to_experience_it": "Click the link to experience it!",
-  "Scan_the_code_to_experience_it": "Scan the code to experience it!",
-  "Copy_link": "Copy link",
+  "Click_link_to_view": "Click link to view",
+  "Scan_QR_code_to_open_app": "Scan qr code to open app",
+  "Copy_link_only": "Copy link only",
   "Name_is_required": "Name is required",
   "Name_cannot_contain_slash": "Name cannot contain slash",
   "Name_cannot_contain_backslash": "Name cannot contain backslash",
-  "Share_app_tip": "This is my application \"{itemName}\","
+  "App": "App"
 };
 
 export default en;

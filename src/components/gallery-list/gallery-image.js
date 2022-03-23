@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
 import ImageLazyLoad from '../../common/image/ImageLazyLoad';
 import ImagePreviewerLightbox from '../../common/image-preview-lightbox';
+import { getImageThumbnailUrl } from '../../utils/utils'
 
 const propTypes = {
   shownImages: PropTypes.array.isRequired,
@@ -49,19 +49,23 @@ class GalleryImage extends React.Component {
     }));
   }
 
+  renderImage = (url) => {
+    return <ImageLazyLoad imageUrl={getImageThumbnailUrl(url)} onImageClick={this.onImageClick}/>;
+  }
+
   render() {
     const { shownImages } = this.props;
     const { largeImageIndex } = this.state;
     return (
-      <Fragment>
+      <>
         <div className="gallery-image">
           {shownImages.length === 0 && null}
-          {shownImages.length === 1 && <ImageLazyLoad imageUrl={shownImages[0]} onImageClick={this.onImageClick}/>}
+          {shownImages.length === 1 && this.renderImage(shownImages[0])}
           {shownImages.length > 1 && (
-            <Fragment>
-              <ImageLazyLoad imageUrl={shownImages[0]} onImageClick={this.onImageClick}/>
+            <>
+              {this.renderImage(shownImages[0])}
               <div>{shownImages.length}</div>
-            </Fragment>
+            </>
           )}
         </div>
         {this.state.isShowLargeImage && (
@@ -73,7 +77,7 @@ class GalleryImage extends React.Component {
             moveToNextImage={this.moveNext}
           />
         )}
-      </Fragment>
+      </>
     );
   }
 }

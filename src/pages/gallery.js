@@ -64,8 +64,7 @@ class Gallery extends React.Component {
   getAppShareLink = () => {
     const server = context.getSetting('server');
     const appToken = context.getSetting('appToken');
-    const shareLink = `${server}/dtable/external-apps/${appToken}/`;
-    return shareLink;
+    return `${server}/external-apps/${appToken}/`;
   }
 
   showActionSheet = () => {

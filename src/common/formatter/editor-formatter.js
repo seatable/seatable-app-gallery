@@ -202,7 +202,8 @@ class EditorFormatter extends React.Component {
         return dateFormatter;
       }
       case CellType.MULTIPLE_SELECT: {
-        let multipleSelectFormatter = <MultipleSelectFormatter value={row[columnName]} options={column.data.options} />;
+        const options = (column.data && column.data.options) || [];
+        let multipleSelectFormatter = <MultipleSelectFormatter value={row[columnName]} options={options} />;
         if (!row[columnName] || row[columnName].length === 0) {
           multipleSelectFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {
@@ -211,7 +212,8 @@ class EditorFormatter extends React.Component {
         return multipleSelectFormatter;
       }
       case CellType.SINGLE_SELECT: {
-       let singleSelectFormatter = <SingleSelectFormatter value={row[columnName]} options={column.data.options} />;
+        const options = (column.data && column.data.options) || [];
+       let singleSelectFormatter = <SingleSelectFormatter value={row[columnName]} options={options} />;
         if (!row[columnName]) {
           singleSelectFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {

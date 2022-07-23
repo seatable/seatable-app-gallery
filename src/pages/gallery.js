@@ -70,7 +70,7 @@ class Gallery extends React.Component {
   showActionSheet = () => {
     let buttons = [(<div className="my-am-action"><i className='dtable-font dtable-icon-share'></i>{intl.get('Share')}</div>), 
       (<div className="my-am-action"><i className="item-icon dtable-font dtable-icon-leave"></i>{intl.get('App_page')}</div>),
-      (<div className="my-am-action"><i className="dtable-font dtable-icon-settings"></i>{intl.get('Settings')}</div>)
+      (<div className="my-am-action"><i className="dtable-font dtable-icon-set-up"></i>{intl.get('Settings')}</div>)
     ];
     ActionSheet.showActionSheetWithOptions({ 
       options: buttons, 
@@ -138,7 +138,7 @@ class Gallery extends React.Component {
                         <i className="dtable-font dtable-icon-leave"></i>
                       </button>
                       <button className="btn btn-outline-primary option-item" onClick={this.onSettingsToggle}>
-                        <i className="dtable-font dtable-icon-settings"></i>
+                        <i className="dtable-font dtable-icon-set-up"></i>
                       </button>
                     </div>
                   </div>

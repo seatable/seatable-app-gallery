@@ -15,6 +15,10 @@
   align-content: flex-start;
 }
 
+.seatable-app-gallery .gallery-list>div {
+  margin-bottom: 10px;
+}
+
 .seatable-app-gallery .gallery-item {
   margin: 0 10px 10px 0;
   height: 100%;

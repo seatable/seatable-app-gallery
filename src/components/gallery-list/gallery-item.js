@@ -85,7 +85,7 @@ class GalleryItem extends React.Component {
   }
 
   render() {
-    const { shownImages } = this.getShownImages(); 
+    const { shownImages } = this.getShownImages();
     const isDesktop = checkDesktop();
     return (
       <div className={`col-xl-2 col-md-3 col-sm-6 col-xm-12 ${isDesktop ? '' : 'col-6' }`}>

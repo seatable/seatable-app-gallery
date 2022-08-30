@@ -24,8 +24,8 @@ class GalleryList extends React.Component {
               key={row._id}
               viewRow={row}
               dtableUtils={dtableUtils}
-              imageColumn={imageColumn}    
-              titleColumn={titleColumn}    
+              imageColumn={imageColumn}
+              titleColumn={titleColumn}
               shownColumns={shownColumns}
               displayFieldsName={displayFieldsName}
               columnIconConfig={columnIconConfig}

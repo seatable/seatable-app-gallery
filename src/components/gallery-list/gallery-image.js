@@ -33,16 +33,14 @@ class GalleryImage extends React.Component {
     });
   }
 
-  moveNext = (e) => {
-    e.preventDefault();
+  moveNext = () => {
     const { shownImages } = this.props;
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + 1) % shownImages.length,
     }));
   }
 
-  movePrev = (e) => {
-    e.preventDefault();
+  movePrev = () => {
     const { shownImages } = this.props;
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + shownImages.length - 1) % shownImages.length,

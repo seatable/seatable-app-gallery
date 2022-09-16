@@ -26,7 +26,16 @@ function ImagePreviewerLightbox(props) {
   const { imageItems, imageIndex } = props;
   const imageItemsLength = imageItems.length;
   const URL = imageItems[imageIndex];
-  const imageTitle = URL ? URL.slice(URL.lastIndexOf('/') + 1, URL.indexOf('?')) : '';
+
+  // Handle URL has special symbol %$
+  let imageTitle = '';
+  try {
+    imageTitle = URL ? decodeURI(URL.slice(URL.lastIndexOf('/') + 1)) : '';
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+
   const isDesktop = checkDesktop();
   let overlay = {
     zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX

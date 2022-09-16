@@ -7,6 +7,7 @@ const propTypes = {
 };
 
 const modalRoot = document.getElementById('modal-wrapper');
+
 class ModalPortal extends React.Component {
 
   constructor(props) {

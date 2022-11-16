@@ -1,4 +1,4 @@
-import DTableServerAPI from "../api/dtable-server-api";
+import GalleryAPI from "../api/gallery-api";
 import * as CellType from '../common/constants/cell-types';
 import COLUMNS_ICON_CONFIG from '../common/constants/column-icon';
 import { SELECT_OPTION_COLORS } from "../common/constants/select-option-colors";
@@ -8,7 +8,7 @@ class DTableUtils {
 
   constructor(config) {
     this.config = config;
-    this.dtableServerAPI = new DTableServerAPI(config);
+    this.galleryAPI = new GalleryAPI(config);
     this.tables = [];
     this.views = [];
     this.columns = [];
@@ -22,25 +22,25 @@ class DTableUtils {
   async init(appConfig) {
     const { isEditAppPage } = this.config;
     if (isEditAppPage) {
-      const res = await this.dtableServerAPI.getDTable();
-      const dtable = res.data;
-      this.tables = dtable.tables;
+      const res = await this.galleryAPI.getDTableMetadata();
+      const metadata = res.data.metadata;
+      this.tables = metadata.tables;
     } else {
       const { table_name, view_name } = appConfig.settings;
       this.columns = await this.listColumns(table_name, view_name);
       this.rows = await this.listRows(table_name, view_name);
     }
-    const res = await this.dtableServerAPI.getRelatedUsers();
+    const res = await this.galleryAPI.getRelatedUsers();
     this.relatedUsers = res.data.user_list;
   }
   
   async listColumns(tableName, viewName) {
-    const res = await this.dtableServerAPI.listColumns(tableName, viewName);
+    const res = await this.galleryAPI.listColumns(tableName, viewName);
     return res.data.columns;
   }
 
   async listRows(tableName, viewName) {
-    const res = await this.dtableServerAPI.listRows(tableName, viewName);
+    const res = await this.galleryAPI.listRows(tableName, viewName);
     return res.data.rows;
   }
 
@@ -61,7 +61,10 @@ class DTableUtils {
     if (!table_name || !selectedTable) {
       selectedTable = tables[0];
       selectedView = selectedTable.views[0];
-      columns = selectedTable.columns;
+      columns = selectedTable.columns.filter(col => {
+        if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+        return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+      });
       imageColumns = getImageColumns(columns);
       titleColumns = getTitleColumns(this, columns);
       settings = {
@@ -100,7 +103,10 @@ class DTableUtils {
       };
 
       this.views = selectedTable.views;
-      this.columns = columns;
+      this.columns = columns.filter(col => {
+        if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+        return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+      });
       this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
       this.selectedTable = selectedTable;
@@ -120,7 +126,10 @@ class DTableUtils {
     };
 
     this.views = selectedTable.views;
-    this.columns = columns;
+    this.columns = columns.filter(col => {
+      if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+      return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+    });;
     this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
     this.selectedTable = selectedTable;
@@ -146,7 +155,10 @@ class DTableUtils {
 
     
     this.views = selectedTable.views;
-    this.columns = columns;
+    this.columns = columns.filter(col => {
+      if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+      return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+    });
     this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
     this.selectedTable = selectedTable;
@@ -157,7 +169,8 @@ class DTableUtils {
   async getConfigByChangeSelectedView(appConfig) {
     const { view_name } = appConfig.settings;
     const selectedView = this.views.find(view => view.name === view_name);
-    const columns = this.selectedTable.columns;
+    console.log('selectedView: ', selectedView);
+    let columns = this.selectedTable.columns;
     const imageColumns = getImageColumns(columns);
     const titleColumns = getTitleColumns(this, columns);
     const settings = {
@@ -167,7 +180,12 @@ class DTableUtils {
       shown_title_name: titleColumns[0] && titleColumns[0].name,
       shown_column_names: []
     }
-
+    const { hidden_columns } = selectedView;
+    console.log('hidden_columns: ', hidden_columns);
+    if (hidden_columns && Array.isArray(hidden_columns) && hidden_columns.length > 0) {
+      columns = columns.filter(col => !hidden_columns.find(colKey => colKey === col.key));
+    }
+    console.log('columns: ', columns);
     this.columns = columns;
     this.rows = await this.listRows(this.selectedTable.name, selectedView.name);
 

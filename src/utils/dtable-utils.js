@@ -139,7 +139,6 @@ class DTableUtils {
 
   async getConfigByChangeSelectedTable(appConfig) {
     const { table_name } = appConfig.settings;
-    console.log(table_name);
     const selectedTable = this.tables.find(table => table.name === table_name);
     const selectedView = selectedTable.views[0];
     const columns = selectedTable.columns;
@@ -169,7 +168,6 @@ class DTableUtils {
   async getConfigByChangeSelectedView(appConfig) {
     const { view_name } = appConfig.settings;
     const selectedView = this.views.find(view => view.name === view_name);
-    console.log('selectedView: ', selectedView);
     let columns = this.selectedTable.columns;
     const imageColumns = getImageColumns(columns);
     const titleColumns = getTitleColumns(this, columns);
@@ -181,11 +179,9 @@ class DTableUtils {
       shown_column_names: []
     }
     const { hidden_columns } = selectedView;
-    console.log('hidden_columns: ', hidden_columns);
     if (hidden_columns && Array.isArray(hidden_columns) && hidden_columns.length > 0) {
       columns = columns.filter(col => !hidden_columns.find(colKey => colKey === col.key));
     }
-    console.log('columns: ', columns);
     this.columns = columns;
     this.rows = await this.listRows(this.selectedTable.name, selectedView.name);
 

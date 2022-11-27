@@ -20,14 +20,14 @@ class DTableUtils {
   }
 
   async init(appConfig) {
-    const { isEditAppPage } = this.config;
+    const { isEditAppPage, columns } = this.config;
     if (isEditAppPage) {
       const res = await this.galleryAPI.getDTableMetadata();
       const metadata = res.data.metadata;
       this.tables = metadata.tables;
     } else {
       const { table_name, view_name } = appConfig.settings;
-      this.columns = this.listColumns(table_name, view_name);
+      this.columns = JSON.parse(columns);
       this.rows = await this.listRows(table_name, view_name);
     }
     const res = await this.galleryAPI.getRelatedUsers();

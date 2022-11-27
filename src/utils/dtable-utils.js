@@ -27,16 +27,20 @@ class DTableUtils {
       this.tables = metadata.tables;
     } else {
       const { table_name, view_name } = appConfig.settings;
-      this.columns = await this.listColumns(table_name, view_name);
+      this.columns = this.listColumns(table_name, view_name);
       this.rows = await this.listRows(table_name, view_name);
     }
     const res = await this.galleryAPI.getRelatedUsers();
     this.relatedUsers = res.data.user_list;
   }
   
-  async listColumns(tableName, viewName) {
-    const res = await this.galleryAPI.listColumns(tableName, viewName);
-    return res.data.columns;
+  listColumns(tableName, viewName) {
+    const table = this.tables.find(table => table.name === tableName);
+    if (!table) return [];
+    const view = table.views.find(view => view.name === viewName);
+    if (!view) return table.columns;
+    const columns = table.columns.filter(col => !(view.hidden_columns || []).find(hColKey => col.key === hColKey));
+    return columns;
   }
 
   async listRows(tableName, viewName) {

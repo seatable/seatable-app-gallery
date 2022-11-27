@@ -23,15 +23,6 @@ class GalleryAPI {
     return this.req.get(url);
   }
 
-  listColumns(tableName, viewName) {
-    const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/columns/`;
-    const params = {
-      table_name: tableName,
-      view_name: viewName
-    }
-    return this.req.get(url, {params});
-  }
-  
   listRows(tableName, viewName) {
     const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/rows/`;
     const params = {

@@ -1,6 +1,7 @@
 import cookie from 'react-cookies';
 import DTableWebAPI  from 'dtable-web-api';
 import User from './model/user';
+import eventBus from './utils/event-bus';
 
 class Context {
 
@@ -9,6 +10,7 @@ class Context {
     this.api = null;
     this.initApi();
     this.collaboratorsCache = {};
+    this.loadCollaboratorMap = {};
   }
 
   initApi() {
@@ -42,6 +44,30 @@ class Context {
   listUserInfo(useList) {
     if (!this.api) return Promise.reject();
     return this.api.listUserInfo(useList);
+  }
+
+  loadCollaborator = (email) => {
+    if (!email || this.loadCollaboratorMap[email] || this.getCollaboratorFromCache(email)) {
+      return;
+    }
+    this.loadCollaboratorMap[email] = true;
+    // send email request on demand
+    let collaborator;
+    this.getUserCommonInfo(email).then(res => {
+      collaborator = res.data;
+      this.updateCollaboratorsCache(email, collaborator);
+      eventBus.dispatch('collaborators-updated');
+    }).catch(() => {
+      // If the network request is wrong, use the default avatar
+      let mediaUrl = this.getSetting('mediaUrl');
+      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
+      collaborator = {
+        name: email,
+        avatar_url: defaultAvatarUrl,
+      };
+      this.updateCollaboratorsCache(email, collaborator);
+      eventBus.dispatch('collaborators-updated');
+    });
   }
 
   getCollaboratorFromCache(email) {

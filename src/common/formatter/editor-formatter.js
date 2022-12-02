@@ -27,6 +27,8 @@ import {
 } from 'dtable-ui-component';
 import intl from 'react-intl-universal';
 import context from '../../context';
+import eventBus from '../../utils/event-bus';
+
 import '../../assets/css/formatter.css';
 
 const propTypes = {
@@ -42,73 +44,43 @@ class EditorFormatter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDataLoaded: false,
       collaborators: context.getCollaboratorsFromCache(),
     }
   }
 
   componentDidMount() {
     this.calculateCollaboratorData(this.props);
+    this.listenCollaboratorsUpdated = eventBus.subscribe('collaborators-updated', this.updateCollaborators);
   }
 
   componentWillReceiveProps(nextProps) {
     this.calculateCollaboratorData(nextProps);
   }
 
+  componentWillUnmount() {
+    this.listenCollaboratorsUpdated();
+  }
+
+  updateCollaborators = () => {
+    this.setState({
+      collaborators: context.getCollaboratorsFromCache(),
+    });
+  }
+
   calculateCollaboratorData = (props) => {
     const { row, column, CellType } = props;
     if (column.type === CellType.CREATOR || column.type === CellType.LAST_MODIFIER) {
       const email = row[column.name];
-      this.getCollaborator(email);
+      context.loadCollaborator(email);
     }
     else if (column.type === CellType.COLLABORATOR) {
       const emails = row[column.name];
       if (Array.isArray(emails)) {
         emails.forEach(email => {
-          this.getCollaborator(email);
+          context.loadCollaborator(email);
         });
       }
     }
-  }
-
-  getCollaborator = (email) => {
-    if (!email) {
-      this.setState({ isDataLoaded: true });
-      return;
-    }
-    this.setState({ isDataLoaded: false });
-
-    // If found from the current state, then return directly
-    let { collaborators } = this.state;
-    let collaborator = collaborators && collaborators.find(c => c.email === email);
-    if (collaborator) {
-      this.setState({ isDataLoaded: true });
-      return;
-    }
-    
-    // If not found email request on demand
-    console.log(email);
-    context.getUserCommonInfo(email).then(res => {
-      collaborator = res.data;
-      context.updateCollaboratorsCache(email, collaborator);
-      this.setState({
-        isDataLoaded: true,
-        collaborators: context.getCollaboratorsFromCache(),
-      });
-    }).catch(() => {
-      // If the network request is wrong, set the default avatar
-      let mediaUrl = context.getSetting('mediaUrl');
-      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
-      collaborator = {
-        name: email,
-        avatar_url: defaultAvatarUrl,
-      };
-      context.updateCollaboratorsCache(email, collaborator);
-      this.setState({
-        isDataLoaded: true,
-        collaborators: context.getCollaboratorsFromCache(),
-      });
-    });
   }
 
   renderColumnFormatter = (formatter) => {
@@ -141,7 +113,7 @@ class EditorFormatter extends React.Component {
   renderFormatter = () => {
     const { column, row, CellType, displayFieldsName } = this.props;
     let { type: columnType, name: columnName } = column;
-    const { isDataLoaded, collaborators } = this.state;
+    const { collaborators } = this.state;
     
     switch(columnType) {
       case CellType.TEXT: {
@@ -154,7 +126,7 @@ class EditorFormatter extends React.Component {
         return textFormatter;
       }
       case CellType.COLLABORATOR: {
-        if (!row[columnName] || row[columnName].length === 0 || !isDataLoaded) {
+        if (!row[columnName] || row[columnName].length === 0) {
           return this.renderEmptyFormatter();
         } 
         let collaboratorFormatter = <CollaboratorFormatter value={row[columnName]} collaborators={collaborators} />;
@@ -264,7 +236,6 @@ class EditorFormatter extends React.Component {
       }
       case CellType.CREATOR: {
         if (!row[columnName]) return this.renderEmptyFormatter();
-        if (!isDataLoaded) return null;
         let creatorFormatter = <CreatorFormatter collaborators={collaborators} value={row[columnName]} />;
         if (displayFieldsName) {
           creatorFormatter = this.renderColumnFormatter(creatorFormatter);
@@ -273,7 +244,6 @@ class EditorFormatter extends React.Component {
       }
       case CellType.LAST_MODIFIER: {
         if (!row[columnName]) return this.renderEmptyFormatter();
-        if (!isDataLoaded) return null;
         let lastModifierFormatter = <LastModifierFormatter collaborators={collaborators} value={row[columnName]} />;
         if (displayFieldsName) {
           lastModifierFormatter = this.renderColumnFormatter(lastModifierFormatter);

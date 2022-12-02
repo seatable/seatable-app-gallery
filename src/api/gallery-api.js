@@ -17,11 +17,6 @@ class GalleryAPI {
     const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/metadata/`;
     return this.req.get(url);
   }
-  
-  getRelatedUsers() {
-    const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/related-users/`;
-    return this.req.get(url);
-  }
 
   listRows(tableName, viewName) {
     const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/rows/`;

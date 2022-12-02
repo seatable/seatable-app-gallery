@@ -1,11 +1,14 @@
 import cookie from 'react-cookies';
 import DTableWebAPI  from 'dtable-web-api';
+import User from './model/user';
+
 class Context {
 
   constructor() {
     this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
     this.api = null;
     this.initApi();
+    this.collaboratorsCache = {};
   }
 
   initApi() {
@@ -22,6 +25,40 @@ class Context {
       dtableWebAPI.initForDTableUsage({ siteRoot, xcsrfHeaders });
     }
     this.api = dtableWebAPI;
+  }
+
+  getCollaborators() {
+    if (!this.api) return Promise.reject();
+    const dtableName = this.getSetting('dtableName');
+    const workspaceID = this.getSetting('workspaceID');
+    return this.api.getTableRelatedUsers(workspaceID, dtableName);
+  }
+
+  getUserCommonInfo(email, avatar_size) {
+    if (!this.api) return Promise.reject();
+    return this.api.getUserCommonInfo(email, avatar_size);
+  }
+
+  listUserInfo(useList) {
+    if (!this.api) return Promise.reject();
+    return this.api.listUserInfo(useList);
+  }
+
+  getCollaboratorFromCache(email) {
+    return this.collaboratorsCache[email];
+  }
+
+  getCollaboratorsFromCache() {
+    const collaboratorsCache = this.collaboratorsCache;
+    return Object.values(collaboratorsCache).filter(item => item.email !== 'anonymous');
+  }
+
+  updateCollaboratorsCache(email, collaborator) {
+    if (collaborator instanceof User) {
+      this.collaboratorsCache[email] = collaborator;
+      return;
+    }
+    this.collaboratorsCache[email] = new User(collaborator);
   }
 
   getConfig() {
@@ -43,11 +80,6 @@ class Context {
 
   closePlugin() {
     window.app && window.app.onClosePlugin();
-  }
-
-  getUserCommonInfo(email, avatar_size) {
-    if (!this.api) return Promise.reject();
-    return this.api.getUserCommonInfo(email, avatar_size);
   }
 
   updateExternalAppInstance(newAppConfig) {

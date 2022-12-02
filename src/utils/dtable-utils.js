@@ -3,6 +3,7 @@ import * as CellType from '../common/constants/cell-types';
 import COLUMNS_ICON_CONFIG from '../common/constants/column-icon';
 import { SELECT_OPTION_COLORS } from "../common/constants/select-option-colors";
 import { getImageColumns, getTitleColumns } from "./utils";
+import context from '../context';
 
 class DTableUtils {
 
@@ -13,7 +14,6 @@ class DTableUtils {
     this.views = [];
     this.columns = [];
     this.rows = [];
-    this.relatedUsers = [];
 
     this.selectedTable = null;
     this.selectedView = null;
@@ -30,8 +30,19 @@ class DTableUtils {
       this.columns = JSON.parse(columns);
       this.rows = await this.listRows(table_name, view_name);
     }
-    const res = await this.galleryAPI.getRelatedUsers();
-    this.relatedUsers = res.data.user_list;
+
+    // Edit APP page, load all collaborators for page setting in app.js
+    // Preview APP page, load collaborator on demand
+    if (isEditAppPage) {
+      const res = await context.getCollaborators();
+      const { app_user_list, user_list } = res.data;
+      app_user_list.forEach(user => {
+        context.updateCollaboratorsCache(user.email, user);
+      });
+      user_list.forEach(user => {
+        context.updateCollaboratorsCache(user.email, user);
+      });
+    }
   }
   
   listColumns(tableName, viewName) {
@@ -211,10 +222,6 @@ class DTableUtils {
 
   getCellType() {
     return CellType;
-  }
-
-  getRelatedUsers() {
-    return this.relatedUsers;
   }
 
   getColumnIconConfig() {

@@ -37,10 +37,10 @@ class DTableUtils {
       const res = await context.getCollaborators();
       const { app_user_list, user_list } = res.data;
       app_user_list.forEach(user => {
-        context.updateCollaboratorsCache(user.email, user);
+        context.updateCollaboratorsCache(user.email, Object.assign({}, user, {loaded: true}));
       });
       user_list.forEach(user => {
-        context.updateCollaboratorsCache(user.email, user);
+        context.updateCollaboratorsCache(user.email, Object.assign({}, user, {loaded: true}));
       });
     }
   }

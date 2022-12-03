@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import context from '../../context';
 import EditorFormatter from '../../common/formatter/editor-formatter';
 import { checkDesktop } from '../../utils/utils';
 import GalleryImage from './gallery-image';
@@ -22,26 +21,11 @@ class GalleryItem extends React.Component {
   }
 
   getCellType = () => {
-    const { dtableUtils } = this.props;
-    return dtableUtils.getCellType();
-  }
-
-  getCollaborators = () => {
-    const { dtableUtils } = this.props;
-    return dtableUtils.getRelatedUsers();
+    return this.props.dtableUtils.getCellType();
   }
   
   getOptionColors = () => {
-    const { dtableUtils } = this.props;
-    return dtableUtils.getOptionColors();
-  }
-
-  getMediaUrl = () => {
-    return context.getSetting('mediaUrl');
-  }
-
-  getUserCommonInfo = (email, avatar_size) => {
-    return context.getUserCommonInfo(email, avatar_size);
+    return this.props.dtableUtils.getOptionColors();
   }
 
   renderEditorFormatter = () => {
@@ -54,9 +38,6 @@ class GalleryItem extends React.Component {
             row={viewRow}
             column={column}
             CellType={this.getCellType()}
-            collaborators={this.getCollaborators()}
-            getUserCommonInfo={this.getUserCommonInfo}
-            getMediaUrl={this.getMediaUrl}
             getOptionColors={this.getOptionColors}
             displayFieldsName={displayFieldsName}
             columnIconConfig={columnIconConfig}
@@ -66,25 +47,8 @@ class GalleryItem extends React.Component {
     });
   }
 
-  renderRowTitle = () => {
-    const { titleColumn, viewRow } = this.props; 
-
-    return (
-      <div className="row-title">
-        <EditorFormatter
-          type="row_title"
-          row={viewRow}
-          column={titleColumn}
-          CellType={this.getCellType()}
-          collaborators={this.getCollaborators()}
-          getUserCommonInfo={this.getUserCommonInfo}
-          getMediaUrl={this.getMediaUrl}
-        />
-      </div>
-    );
-  }
-
   render() {
+    const { titleColumn, viewRow } = this.props; 
     const { shownImages } = this.getShownImages();
     const isDesktop = checkDesktop();
     return (
@@ -95,7 +59,14 @@ class GalleryItem extends React.Component {
           </div>
           <div className="text-truncate gallery-app-row-container">
             <div className="title-container">
-              {this.renderRowTitle()}
+            <div className="row-title">
+              <EditorFormatter
+                type="row_title"
+                row={viewRow}
+                column={titleColumn}
+                CellType={this.getCellType()}
+              />
+            </div>
             </div>
             <div className="row-content-container">
               {this.renderEditorFormatter()}

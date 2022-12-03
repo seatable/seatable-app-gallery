@@ -1,11 +1,16 @@
 import cookie from 'react-cookies';
 import DTableWebAPI  from 'dtable-web-api';
+import User from './model/user';
+import eventBus from './utils/event-bus';
+
 class Context {
 
   constructor() {
     this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
     this.api = null;
     this.initApi();
+    this.collaboratorsCache = {};
+    this.loadCollaboratorMap = {};
   }
 
   initApi() {
@@ -22,6 +27,64 @@ class Context {
       dtableWebAPI.initForDTableUsage({ siteRoot, xcsrfHeaders });
     }
     this.api = dtableWebAPI;
+  }
+
+  getCollaborators() {
+    if (!this.api) return Promise.reject();
+    const dtableName = this.getSetting('dtableName');
+    const workspaceID = this.getSetting('workspaceID');
+    return this.api.getTableRelatedUsers(workspaceID, dtableName);
+  }
+
+  getUserCommonInfo(email, avatar_size) {
+    if (!this.api) return Promise.reject();
+    return this.api.getUserCommonInfo(email, avatar_size);
+  }
+
+  listUserInfo(useList) {
+    if (!this.api) return Promise.reject();
+    return this.api.listUserInfo(useList);
+  }
+
+  loadCollaborator = (email) => {
+    if (!email || this.loadCollaboratorMap[email] || this.getCollaboratorFromCache(email)) {
+      return;
+    }
+    this.loadCollaboratorMap[email] = true;
+    // send email request on demand
+    let collaborator;
+    this.getUserCommonInfo(email).then(res => {
+      collaborator = res.data;
+      this.updateCollaboratorsCache(email, collaborator);
+      eventBus.dispatch('collaborators-updated');
+    }).catch(() => {
+      // If the network request is wrong, use the default avatar
+      let mediaUrl = this.getSetting('mediaUrl');
+      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
+      collaborator = {
+        name: email,
+        avatar_url: defaultAvatarUrl,
+      };
+      this.updateCollaboratorsCache(email, collaborator);
+      eventBus.dispatch('collaborators-updated');
+    });
+  }
+
+  getCollaboratorFromCache(email) {
+    return this.collaboratorsCache[email];
+  }
+
+  getCollaboratorsFromCache() {
+    const collaboratorsCache = this.collaboratorsCache;
+    return Object.values(collaboratorsCache).filter(item => item.email !== 'anonymous');
+  }
+
+  updateCollaboratorsCache(email, collaborator) {
+    if (collaborator instanceof User) {
+      this.collaboratorsCache[email] = collaborator;
+      return;
+    }
+    this.collaboratorsCache[email] = new User(collaborator);
   }
 
   getConfig() {
@@ -43,11 +106,6 @@ class Context {
 
   closePlugin() {
     window.app && window.app.onClosePlugin();
-  }
-
-  getUserCommonInfo(email, avatar_size) {
-    if (!this.api) return Promise.reject();
-    return this.api.getUserCommonInfo(email, avatar_size);
   }
 
   updateExternalAppInstance(newAppConfig) {

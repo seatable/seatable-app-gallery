@@ -1,46 +1,61 @@
-import DTableServerAPI from "../api/dtable-server-api";
+import GalleryAPI from "../api/gallery-api";
 import * as CellType from '../common/constants/cell-types';
 import COLUMNS_ICON_CONFIG from '../common/constants/column-icon';
 import { SELECT_OPTION_COLORS } from "../common/constants/select-option-colors";
 import { getImageColumns, getTitleColumns } from "./utils";
+import context from '../context';
 
 class DTableUtils {
 
   constructor(config) {
     this.config = config;
-    this.dtableServerAPI = new DTableServerAPI(config);
+    this.galleryAPI = new GalleryAPI(config);
     this.tables = [];
     this.views = [];
     this.columns = [];
     this.rows = [];
-    this.relatedUsers = [];
 
     this.selectedTable = null;
     this.selectedView = null;
   }
 
   async init(appConfig) {
-    const { isEditAppPage } = this.config;
+    const { isEditAppPage, columns } = this.config;
     if (isEditAppPage) {
-      const res = await this.dtableServerAPI.getDTable();
-      const dtable = res.data;
-      this.tables = dtable.tables;
+      const res = await this.galleryAPI.getDTableMetadata();
+      const metadata = res.data.metadata;
+      this.tables = metadata.tables;
     } else {
       const { table_name, view_name } = appConfig.settings;
-      this.columns = await this.listColumns(table_name, view_name);
+      this.columns = JSON.parse(columns);
       this.rows = await this.listRows(table_name, view_name);
     }
-    const res = await this.dtableServerAPI.getRelatedUsers();
-    this.relatedUsers = res.data.user_list;
+
+    // Edit APP page, load all collaborators for page setting in app.js
+    // Preview APP page, load collaborator on demand
+    if (isEditAppPage) {
+      const res = await context.getCollaborators();
+      const { app_user_list, user_list } = res.data;
+      app_user_list.forEach(user => {
+        context.updateCollaboratorsCache(user.email, user);
+      });
+      user_list.forEach(user => {
+        context.updateCollaboratorsCache(user.email, user);
+      });
+    }
   }
   
-  async listColumns(tableName, viewName) {
-    const res = await this.dtableServerAPI.listColumns(tableName, viewName);
-    return res.data.columns;
+  listColumns(tableName, viewName) {
+    const table = this.tables.find(table => table.name === tableName);
+    if (!table) return [];
+    const view = table.views.find(view => view.name === viewName);
+    if (!view) return table.columns;
+    const columns = table.columns.filter(col => !(view.hidden_columns || []).find(hColKey => col.key === hColKey));
+    return columns;
   }
 
   async listRows(tableName, viewName) {
-    const res = await this.dtableServerAPI.listRows(tableName, viewName);
+    const res = await this.galleryAPI.listRows(tableName, viewName);
     return res.data.rows;
   }
 
@@ -61,7 +76,10 @@ class DTableUtils {
     if (!table_name || !selectedTable) {
       selectedTable = tables[0];
       selectedView = selectedTable.views[0];
-      columns = selectedTable.columns;
+      columns = selectedTable.columns.filter(col => {
+        if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+        return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+      });
       imageColumns = getImageColumns(columns);
       titleColumns = getTitleColumns(this, columns);
       settings = {
@@ -100,7 +118,10 @@ class DTableUtils {
       };
 
       this.views = selectedTable.views;
-      this.columns = columns;
+      this.columns = columns.filter(col => {
+        if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+        return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+      });
       this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
       this.selectedTable = selectedTable;
@@ -120,7 +141,10 @@ class DTableUtils {
     };
 
     this.views = selectedTable.views;
-    this.columns = columns;
+    this.columns = columns.filter(col => {
+      if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+      return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+    });;
     this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
     this.selectedTable = selectedTable;
@@ -130,7 +154,6 @@ class DTableUtils {
 
   async getConfigByChangeSelectedTable(appConfig) {
     const { table_name } = appConfig.settings;
-    console.log(table_name);
     const selectedTable = this.tables.find(table => table.name === table_name);
     const selectedView = selectedTable.views[0];
     const columns = selectedTable.columns;
@@ -146,7 +169,10 @@ class DTableUtils {
 
     
     this.views = selectedTable.views;
-    this.columns = columns;
+    this.columns = columns.filter(col => {
+      if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
+      return !selectedView.hidden_columns.find(colKey => colKey === col.key);
+    });
     this.rows = await this.listRows(selectedTable.name, selectedView.name);
 
     this.selectedTable = selectedTable;
@@ -157,7 +183,7 @@ class DTableUtils {
   async getConfigByChangeSelectedView(appConfig) {
     const { view_name } = appConfig.settings;
     const selectedView = this.views.find(view => view.name === view_name);
-    const columns = this.selectedTable.columns;
+    let columns = this.selectedTable.columns;
     const imageColumns = getImageColumns(columns);
     const titleColumns = getTitleColumns(this, columns);
     const settings = {
@@ -167,7 +193,10 @@ class DTableUtils {
       shown_title_name: titleColumns[0] && titleColumns[0].name,
       shown_column_names: []
     }
-
+    const { hidden_columns } = selectedView;
+    if (hidden_columns && Array.isArray(hidden_columns) && hidden_columns.length > 0) {
+      columns = columns.filter(col => !hidden_columns.find(colKey => colKey === col.key));
+    }
     this.columns = columns;
     this.rows = await this.listRows(this.selectedTable.name, selectedView.name);
 
@@ -193,10 +222,6 @@ class DTableUtils {
 
   getCellType() {
     return CellType;
-  }
-
-  getRelatedUsers() {
-    return this.relatedUsers;
   }
 
   getColumnIconConfig() {

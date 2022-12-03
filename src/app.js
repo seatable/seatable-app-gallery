@@ -27,11 +27,6 @@ class App extends React.Component {
     this.initPluginDTableData();
   }
 
-  componentWillUnmount() {
-    this.unsubscribeLocalDtableChanged();
-    this.unsubscribeRemoteDtableChanged();
-  }
-
   async initPluginDTableData() {
     try {
       const { appConfig } = this.state;

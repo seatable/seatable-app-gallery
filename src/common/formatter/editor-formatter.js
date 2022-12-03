@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { 
   TextFormatter,
@@ -26,7 +26,9 @@ import {
   ButtonFormatter
 } from 'dtable-ui-component';
 import intl from 'react-intl-universal';
-import { isValidEmail } from '../../utils/utils';
+import context from '../../context';
+import eventBus from '../../utils/event-bus';
+
 import '../../assets/css/formatter.css';
 
 const propTypes = {
@@ -34,9 +36,6 @@ const propTypes = {
   column: PropTypes.object.isRequired,
   row: PropTypes.object.isRequired,
   CellType: PropTypes.object,
-  collaborators: PropTypes.array,
-  getUserCommonInfo: PropTypes.func,
-  getMediaUrl: PropTypes.func,
   getOptionColors: PropTypes.func,
 };
 
@@ -45,64 +44,43 @@ class EditorFormatter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDataLoaded: false,
-      collaborator: null
+      collaborators: context.getCollaboratorsFromCache(),
     }
   }
 
   componentDidMount() {
     this.calculateCollaboratorData(this.props);
+    this.listenCollaboratorsUpdated = eventBus.subscribe('collaborators-updated', this.updateCollaborators);
   }
 
   componentWillReceiveProps(nextProps) {
     this.calculateCollaboratorData(nextProps);
   }
 
-  calculateCollaboratorData = (props) => {
-    const { row, column, CellType } = props;
-    if (column.type === CellType.LAST_MODIFIER) {
-      this.getCollaborator(row[column.name]);
-    } else if (column.type === CellType.CREATOR) {
-      this.getCollaborator(row[column.name]);
-    }
+  componentWillUnmount() {
+    this.listenCollaboratorsUpdated();
   }
 
-  getCollaborator = (value) => {
-    if (!value) {
-      this.setState({isDataLoaded: true, collaborator: null});
-      return;
-    }
-    this.setState({isDataLoaded: false, collaborator: null});
-    let { collaborators } = this.props;
-    let collaborator = collaborators && collaborators.find(c => c.email === value);
-    if (collaborator) {
-      this.setState({isDataLoaded: true, collaborator: collaborator});
-      return;
-    }
-
-    if (!isValidEmail(value)) {
-      let mediaUrl = this.props.getMediaUrl();
-      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
-      collaborator = {
-        name: value,
-        avatar_url: defaultAvatarUrl,
-      };
-      this.setState({isDataLoaded: true, collaborator: collaborator});
-      return;
-    }
-    
-    this.props.getUserCommonInfo(value).then(res => {
-      collaborator = res.data;
-      this.setState({isDataLoaded: true, collaborator: collaborator});
-    }).catch(() => {
-      let mediaUrl = this.props.getMediaUrl();
-      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
-      collaborator = {
-        name: value,
-        avatar_url: defaultAvatarUrl,
-      };
-      this.setState({isDataLoaded: true, collaborator: collaborator});
+  updateCollaborators = () => {
+    this.setState({
+      collaborators: context.getCollaboratorsFromCache(),
     });
+  }
+
+  calculateCollaboratorData = (props) => {
+    const { row, column, CellType } = props;
+    if (column.type === CellType.CREATOR || column.type === CellType.LAST_MODIFIER) {
+      const email = row[column.name];
+      context.loadCollaborator(email);
+    }
+    else if (column.type === CellType.COLLABORATOR) {
+      const emails = row[column.name];
+      if (Array.isArray(emails)) {
+        emails.forEach(email => {
+          context.loadCollaborator(email);
+        });
+      }
+    }
   }
 
   renderColumnFormatter = (formatter) => {
@@ -133,9 +111,9 @@ class EditorFormatter extends React.Component {
   }
 
   renderFormatter = () => {
-    const { column, row, collaborators, CellType, displayFieldsName } = this.props;
-    let {type: columnType, name: columnName} = column;
-    const { isDataLoaded, collaborator } = this.state;
+    const { column, row, CellType, displayFieldsName } = this.props;
+    let { type: columnType, name: columnName } = column;
+    const { collaborators } = this.state;
     
     switch(columnType) {
       case CellType.TEXT: {
@@ -148,10 +126,11 @@ class EditorFormatter extends React.Component {
         return textFormatter;
       }
       case CellType.COLLABORATOR: {
-        let collaboratorFormatter = <CollaboratorFormatter value={row[columnName]} collaborators={collaborators} />;
         if (!row[columnName] || row[columnName].length === 0) {
-          collaboratorFormatter = this.renderEmptyFormatter();
-        } else if (displayFieldsName) {
+          return this.renderEmptyFormatter();
+        } 
+        let collaboratorFormatter = <CollaboratorFormatter value={row[columnName]} collaborators={collaborators} />;
+        if (displayFieldsName) {
           collaboratorFormatter = this.renderColumnFormatter(collaboratorFormatter);
         }
         return collaboratorFormatter;
@@ -256,26 +235,20 @@ class EditorFormatter extends React.Component {
         return mTimeFormatter;
       }
       case CellType.CREATOR: {
-        if (!row[columnName] || !collaborator) return this.renderEmptyFormatter();
-        if (isDataLoaded) {
-          let creatorFormatter = <CreatorFormatter collaborators={[collaborator]} value={row[columnName]} />;
-          if (displayFieldsName) {
-            creatorFormatter = this.renderColumnFormatter(creatorFormatter);
-          }
-          return creatorFormatter;
+        if (!row[columnName]) return this.renderEmptyFormatter();
+        let creatorFormatter = <CreatorFormatter collaborators={collaborators} value={row[columnName]} />;
+        if (displayFieldsName) {
+          creatorFormatter = this.renderColumnFormatter(creatorFormatter);
         }
-        return null
+        return creatorFormatter;
       }
       case CellType.LAST_MODIFIER: {
-        if (!row[columnName] || !collaborator) return this.renderEmptyFormatter();
-        if (isDataLoaded) {
-          let lastModifierFormatter = <LastModifierFormatter collaborators={[collaborator]} value={row[columnName]} />;
-          if (displayFieldsName) {
-            lastModifierFormatter = this.renderColumnFormatter(lastModifierFormatter);
-          }
-          return lastModifierFormatter;
+        if (!row[columnName]) return this.renderEmptyFormatter();
+        let lastModifierFormatter = <LastModifierFormatter collaborators={collaborators} value={row[columnName]} />;
+        if (displayFieldsName) {
+          lastModifierFormatter = this.renderColumnFormatter(lastModifierFormatter);
         }
-        return null
+        return lastModifierFormatter;
       }
       case CellType.FORMULA: {
         let formulaValue = row[columnName];
@@ -354,9 +327,9 @@ class EditorFormatter extends React.Component {
 
   render() {
     return(
-      <Fragment>
+      <>
         {this.renderFormatter()}
-      </Fragment>
+      </>
     );
   }
 }

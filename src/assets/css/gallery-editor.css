@@ -111,7 +111,8 @@
 }
 
 .seatable-app-gallery .gallery-editor-container .cell-formatter-container {
-  line-height: 28px;
+  display: flex;
+  align-items: center;
 }
 
 .seatable-app-gallery .gallery-formula-container {

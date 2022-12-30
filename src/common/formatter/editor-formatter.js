@@ -12,7 +12,6 @@ import {
   FileFormatter,
   GeolocationFormatter,
   SimpleLongTextFormatter,
-  // LinkFormatter,
   FormulaFormatter,
   CTimeFormatter,
   CreatorFormatter,
@@ -28,6 +27,7 @@ import {
 import intl from 'react-intl-universal';
 import context from '../../context';
 import eventBus from '../../utils/event-bus';
+import LinkFormatter from './link-formatter';
 
 import '../../assets/css/formatter.css';
 
@@ -261,8 +261,21 @@ class EditorFormatter extends React.Component {
         return formulaFormatter;
       }
       case CellType.LINK: {
-        // todo ?? return null
-        return this.renderEmptyFormatter();
+        const value = row[columnName];
+        if (!Array.isArray(value) || value.length === 0) return this.renderEmptyFormatter();
+        let linkFormatter = (
+          <LinkFormatter
+            value={value}
+            column={column}
+            containerClassName="dtable-link-formatter"
+            renderEmptyFormatter={this.renderEmptyFormatter}
+            getOptionColors={this.props.getOptionColors}
+          />
+        );
+        if (displayFieldsName) {
+          linkFormatter = this.renderColumnFormatter(linkFormatter);
+        }
+        return linkFormatter;
       }
       case CellType.AUTO_NUMBER: {
         let autoNumberFormatter = <AutoNumberFormatter value={row[columnName]} containerClassName="gallery-text-editor" />;

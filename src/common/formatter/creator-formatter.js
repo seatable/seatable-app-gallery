@@ -51,7 +51,7 @@ class CreatorFormatter extends Component {
         name: value,
       };
       context.updateCollaboratorsCache(value, valueTemplate);
-      window.app.queryUsers([ value ], (emailUserMap) => {
+      context.queryUsers([ value ], (emailUserMap) => {
         collaborator = (emailUserMap && emailUserMap[value]) || generateDefaultUser(value);
         const loadedCollaborator = { ...collaborator, loaded: true };
         context.updateCollaboratorsCache(value, loadedCollaborator);

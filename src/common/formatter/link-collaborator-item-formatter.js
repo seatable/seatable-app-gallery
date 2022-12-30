@@ -58,7 +58,7 @@ class LinkCollaboratorItemFormatter extends Component {
         };
         context.updateCollaboratorsCache(email, valueTemplate);
       });
-      window.app.queryUsers(unknownCollaboratorEmails, (emailUserMap) => {
+      context.queryUsers(unknownCollaboratorEmails, (emailUserMap) => {
         unknownCollaboratorEmails.forEach(email => {
           const collaborator = (emailUserMap && emailUserMap[email]) || { ...generateDefaultUser(email), name: intl.get('Unknown') };
           const loadedCollaborator = { ...collaborator, loaded: true };

@@ -116,6 +116,10 @@ class Context {
     return this.api.updateExternalAppInstance(workspaceID, dtableName, appId, JSON.stringify(newAppConfig));
   }
 
+  queryUsers(emails, callback) {
+    window.app && window.app.queryUsers(emails, callback)
+  }
+
 }
 
 const context =  new Context();

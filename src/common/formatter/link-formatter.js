@@ -5,17 +5,12 @@ import { MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter
   MTimeFormatter, CheckboxFormatter, LongTextFormatter } from 'dtable-ui-component';
 import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString, getGeolocationDisplayString,
   getMultipleOptionName } from 'dtable-store';
-import { EVENT_BUS_TYPE } from '../constants/event-bus-type';
 import { getFormulaArrayValue, isArrayFormalColumn, getFormulaDisplayString } from '../../utils/link-format-utils';
 import CreatorFormatter from './creator-formatter';
 import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';
-import ExpandIcon from './link-formatter-widgets/expand-icon';
 import { COLUMN_CONFIG_KEY } from '../constants/column-config-key';
 
 import '../../assets/css/link-formatter.css';
-
-const PREVIEWER = 'previewer';
-const ADDITION = 'addition';
 
 export default class LinkFormatter extends React.Component {
 
@@ -25,7 +20,6 @@ export default class LinkFormatter extends React.Component {
     containerClassName: PropTypes.string,
     renderEmptyFormatter: PropTypes.func,
     getOptionColors: PropTypes.func,
-    isCellSelected: PropTypes.bool,
   };
 
   constructor(props) {
@@ -36,44 +30,7 @@ export default class LinkFormatter extends React.Component {
       isHasMore: false,
     };
     this.rowRefs = [];
-    this.addLinkRef = null;
     this.ellisRef = null;
-    // this.canAddLink = this.canAddRecords();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // When no cell was selected, the cell is now selected
-    if (!this.props.isCellSelected && nextProps.isCellSelected) {
-      // Determine the width of all current rows, and then whether it exceeds the width of the whole cell
-      const containerWidth = this.linksContainerRef.clientWidth;
-      let isHasMore = false;
-      for (let j = 0; j < this.rowRefs.length; j++) {
-        let dom = this.rowRefs[j];
-        if (!dom) continue;
-        let currentWidth = dom.offsetLeft + dom.clientWidth;
-        // If one exceeds the width, set the status to display isHasMore ellipsis
-        if (currentWidth + 50 > containerWidth) {
-          isHasMore = true;
-        }
-        // and set all the following rows not to be displayed
-        if (isHasMore) {
-          dom.style.display = 'none';
-        }
-      }
-      this.setState({ isHasMore });
-    }
-    // If the cell was originally selected, no cell is currently selected
-    if (this.props.isCellSelected && !nextProps.isCellSelected) {
-      for (let j = 0; j < this.rowRefs.length; j++) {
-        let dom = this.rowRefs[j];
-        if (!dom) continue;
-        // Set all rows to be displayed
-        dom.style.display = 'inline-block';
-      }
-      // Set ellipsis hide
-      this.setState({ isHasMore: false });
-    }
-    return;
   }
 
   canAddRecords = () => {
@@ -104,29 +61,14 @@ export default class LinkFormatter extends React.Component {
   }
 
   renderEmpty = () => {
-    const { isCellSelected } = this.props;
     return (
       <>
         <div className="links-formatter">
           <div className='formatter-show' ref={ref => this.linksContainerRef = ref}>
-            {isCellSelected &&
-              <span className="link-add link p-1" onClick={this.addLink} ref={ref => this.addLinkRef = ref}>
-                <i className="dtable-font dtable-icon-add-table"></i>
-              </span>
-            }
           </div>
         </div>
-        {isCellSelected && <ExpandIcon onClick={this.expandLink}/>}
       </>
     );
-  }
-
-  expandLink = () => {
-    window.app.eventBus.dispatch(EVENT_BUS_TYPE.OPEN_EDITOR, PREVIEWER);
-  }
-
-  addLink = () => {
-    window.app.eventBus.dispatch(EVENT_BUS_TYPE.OPEN_EDITOR, ADDITION);
   }
 
   render () {
@@ -137,17 +79,15 @@ export default class LinkFormatter extends React.Component {
     if (!Array.isArray(value) || value.length === 0) {
       return this.renderEmpty();
     }
-    let { array_type:arrayType, display_column_key: displayColumnKey, array_data: arrayData } = data || {};
+    let { array_type: arrayType, display_column_key: displayColumnKey, array_data: arrayData } = data || {};
     const displayColumn = { type: arrayType, key: displayColumnKey, data: arrayData }
-    if (!displayColumn) {
-      return this.renderEmpty();
-    }
     const { type: displayColumnType, data: displayColumnData } = displayColumn;
     const cellValue = getFormulaArrayValue(value, !isArrayFormalColumn(displayColumnType));
-
+    console.log('cellValue',cellValue);
     if (!Array.isArray(cellValue) || cellValue.length === 0) {
       return this.renderEmpty();
     }
+    console.log('displayColumnType',displayColumnType);
 
     let dom = null;
     switch (displayColumnType) {
@@ -401,7 +341,6 @@ export default class LinkFormatter extends React.Component {
       }
     }
 
-    const { isCellSelected } = this.props;
     const ellisId = `link-ellipsis-${column.key}`;
     return (
       <>
@@ -414,7 +353,6 @@ export default class LinkFormatter extends React.Component {
                 ref={ref => this.ellisRef = ref}
                 className="link link-ellipsis mr-1 p-1"
                 style={{display: this.state.isHasMore ? 'inline-flex' : 'none'}}
-                onClick={this.expandLink}
               >
                 <i className="dtable-font dtable-icon-more-level"></i>
               </span>
@@ -428,14 +366,8 @@ export default class LinkFormatter extends React.Component {
               >
               </Tooltip>
             </>
-            {isCellSelected &&
-              <span className="link-add link p-1" onClick={this.addLink} ref={ref => this.addLinkRef = ref}>
-                <i className="dtable-font dtable-icon-add-table"></i>
-              </span>
-            }
           </div>
         </div>
-        {isCellSelected && <ExpandIcon onClick={this.expandLink}/>}
       </>
     );
   }

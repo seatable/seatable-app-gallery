@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'reactstrap';
-import { MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter,
-  MTimeFormatter, CheckboxFormatter, LongTextFormatter } from 'dtable-ui-component';
-import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString, getGeolocationDisplayString,
-  getMultipleOptionName } from 'dtable-store';
+import { MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter, MTimeFormatter } from 'dtable-ui-component';
+import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString } from 'dtable-store';
 import { getFormulaArrayValue, isArrayFormalColumn, getFormulaDisplayString } from '../../utils/link-format-utils';
 import CreatorFormatter from './creator-formatter';
 import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';
@@ -36,31 +34,20 @@ export default class LinkFormatter extends React.Component {
     this.setState({ tooltipOpen: !this.state.tooltipOpen });
   }
 
-  renderEmpty = () => {
-    return (
-      <>
-        <div className="links-formatter">
-          <div className='formatter-show' ref={ref => this.linksContainerRef = ref}>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   render () {
     const props = this.props;
     const { column, value, containerClassName } = props;
     const { data } = column;
 
     if (!Array.isArray(value) || value.length === 0) {
-      return this.renderEmpty();
+      return this.props.renderEmptyFormatter();
     }
     let { array_type: arrayType, display_column_key: displayColumnKey, array_data: arrayData } = data || {};
     const displayColumn = { type: arrayType, key: displayColumnKey, data: arrayData }
     const { type: displayColumnType, data: displayColumnData } = displayColumn;
     const cellValue = getFormulaArrayValue(value, !isArrayFormalColumn(displayColumnType));
     if (!Array.isArray(cellValue) || cellValue.length === 0) {
-      return this.renderEmpty();
+      return this.props.renderEmptyFormatter();
     }
 
     let dom = null;
@@ -176,7 +163,7 @@ export default class LinkFormatter extends React.Component {
         break;
       }
       case CellType.SINGLE_SELECT: {
-        if (!cellValue || cellValue.length === 0) return this.renderEmpty();
+        if (!cellValue || cellValue.length === 0) return this.props.renderEmptyFormatter();
         const options = displayColumnData && Array.isArray(displayColumnData.options) ? displayColumnData.options : [];
         dom = (
           <MultipleSelectFormatter
@@ -187,28 +174,9 @@ export default class LinkFormatter extends React.Component {
         );
         break;
       }
-      case CellType.MULTIPLE_SELECT: {
-        // not support yet.
-        if (!cellValue || cellValue.length === 0) return this.renderEmpty();
-        const options = displayColumnData && Array.isArray(displayColumnData.options) ? displayColumnData.options : [];
-        dom = (
-          <div className={containerClassName}>
-            {cellValue.map((value, index) => {
-              if (!value) return null;
-              const valueDisplayString = Array.isArray(value) ? getMultipleOptionName(options, value) : getMultipleOptionName(options, [value]);
-              return (
-                <div key={`link-${displayColumnType}-${index}`} className="dtable-link-item" ref={ref => this.rowRefs[index] = ref}>
-                  {valueDisplayString}
-                </div>
-              );
-            })}
-          </div>
-        );
-        break;
-      }
       case CellType.COLLABORATOR: {
         // not support yet.
-        if (!cellValue || cellValue.length === 0) return this.renderEmpty();
+        if (!cellValue || cellValue.length === 0) return this.props.renderEmptyFormatter();
         dom = (
           <div className={containerClassName}>
             {cellValue.map((value, index) => {
@@ -218,61 +186,6 @@ export default class LinkFormatter extends React.Component {
                   <LinkCollaboratorItemFormatter
                     key={`link-${displayColumnType}-${index}`}
                     value={Array.isArray(value) ? value : [ value ]}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
-        break;
-      }
-      case CellType.CHECKBOX: {
-        // not support yet.
-        dom = (
-          <div className={containerClassName}>
-            {cellValue.map((value, index) => {
-              return (
-                <div ref={ref => this.rowRefs[index] = ref}>
-                  <CheckboxFormatter
-                    key={`link-${displayColumnType}-${index}`}
-                    value={Boolean(value)}
-                    containerClassName={`dtable-${displayColumnType}-item`}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
-        break;
-      }
-      case CellType.GEOLOCATION: {
-        // not support yet.
-        dom = (
-          <div className={containerClassName}>
-            {cellValue.map((value, index) => {
-              if (!value) return null;
-              return (
-                <div key={`link-${displayColumnType}-${index}`} className="dtable-link-item" ref={ref => this.rowRefs[index] = ref}>
-                  {getGeolocationDisplayString(value, displayColumnData)}
-                </div>
-              );
-            })}
-          </div>
-        );
-        break;
-      }
-      case CellType.LONG_TEXT: {
-        // not support yet.
-        dom = (
-          <div className={containerClassName}>
-            {cellValue.map((value, index) => {
-              if (!value) return null;
-              return (
-                <div ref={ref => this.rowRefs[index] = ref}>
-                  <LongTextFormatter
-                    key={`link-${displayColumnType}-${index}`}
-                    value={value}
-                    containerClassName={`dtable-${displayColumnType}-item`}
                   />
                 </div>
               );
@@ -311,7 +224,7 @@ export default class LinkFormatter extends React.Component {
         break;
       }
       default: {
-        return this.renderEmpty();
+        return this.props.renderEmptyFormatter();
       }
     }
 

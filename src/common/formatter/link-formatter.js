@@ -83,11 +83,9 @@ export default class LinkFormatter extends React.Component {
     const displayColumn = { type: arrayType, key: displayColumnKey, data: arrayData }
     const { type: displayColumnType, data: displayColumnData } = displayColumn;
     const cellValue = getFormulaArrayValue(value, !isArrayFormalColumn(displayColumnType));
-    console.log('cellValue',cellValue);
     if (!Array.isArray(cellValue) || cellValue.length === 0) {
       return this.renderEmpty();
     }
-    console.log('displayColumnType',displayColumnType);
 
     let dom = null;
     switch (displayColumnType) {

@@ -8,7 +8,6 @@ import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString, getGeolocation
 import { getFormulaArrayValue, isArrayFormalColumn, getFormulaDisplayString } from '../../utils/link-format-utils';
 import CreatorFormatter from './creator-formatter';
 import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';
-import { COLUMN_CONFIG_KEY } from '../constants/column-config-key';
 
 import '../../assets/css/link-formatter.css';
 
@@ -31,29 +30,6 @@ export default class LinkFormatter extends React.Component {
     };
     this.rowRefs = [];
     this.ellisRef = null;
-  }
-
-  canAddRecords = () => {
-    const { column, value } = this.props;
-    const page = window.app.getPage();
-    const { link_columns_settings: linkColumnSettings } = page;
-    if (!linkColumnSettings || linkColumnSettings.length === 0) {
-      return true;
-    }
-    const linkColumnSetting = linkColumnSettings.find(item => item.key === column.key);
-    if (!linkColumnSetting) {
-      return true;
-    }
-    if (linkColumnSetting[COLUMN_CONFIG_KEY.ENABLE_ADD_NEW_RECORDS]) {
-      return true;
-    }
-    if (linkColumnSetting[COLUMN_CONFIG_KEY.ENABLE_LINK_EXISTING_RECORDS] && !linkColumnSetting[COLUMN_CONFIG_KEY.LINK_AT_MOST_ONE_RECORD]) {
-      return true;
-    }
-    if (linkColumnSetting[COLUMN_CONFIG_KEY.ENABLE_LINK_EXISTING_RECORDS] && linkColumnSetting[COLUMN_CONFIG_KEY.LINK_AT_MOST_ONE_RECORD] && value.length === 0) {
-      return true;
-    }
-    return false;
   }
 
   toggleTooltip = () => {

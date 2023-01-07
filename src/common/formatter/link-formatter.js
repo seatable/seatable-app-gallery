@@ -5,7 +5,7 @@ import { MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter
 import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString } from 'dtable-store';
 import { getFormulaArrayValue, isArrayFormalColumn, getFormulaDisplayString } from '../../utils/link-format-utils';
 import CreatorFormatter from './creator-formatter';
-import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';
+// import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';  link column not support collaborator column in base 
 
 import '../../assets/css/link-formatter.css';
 
@@ -176,22 +176,7 @@ export default class LinkFormatter extends React.Component {
       }
       case CellType.COLLABORATOR: {
         // not support yet.
-        if (!cellValue || cellValue.length === 0) return this.props.renderEmptyFormatter();
-        dom = (
-          <div className={containerClassName}>
-            {cellValue.map((value, index) => {
-              if (!value) return null;
-              return (
-                <div ref={ref => this.rowRefs[index] = ref}>
-                  <LinkCollaboratorItemFormatter
-                    key={`link-${displayColumnType}-${index}`}
-                    value={Array.isArray(value) ? value : [ value ]}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
+        this.props.renderEmptyFormatter();
         break;
       }
       case CellType.FORMULA:

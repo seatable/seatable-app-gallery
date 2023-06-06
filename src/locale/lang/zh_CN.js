@@ -2,7 +2,7 @@ const zh_CN = {
   "Share": "共享",
   "App_page": "应用页面",
   "Settings": "设置",
-  "Table": "表格",
+  "Table": "子表",
   "View": "视图",
   "Image_field": "图片字段",
   "Title_field": "标题字段",

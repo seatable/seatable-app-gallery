@@ -32,11 +32,13 @@ class ViewSetting extends React.Component {
 
   renderSelector = () => {
     const { appConfig, views } = this.props;
-    const options = views.map((item) => {
-      let value = item['name'];
-      let label = item['name'];
-      return {value, label};
-    });
+    const options = views
+      .filter((view) => !view['private_for'])
+      .map((item) => {
+        let value = item['name'];
+        let label = item['name'];
+        return { value, label };
+      });
     const { settings } = appConfig;
     let selectedOption = options.find(item => item.value === settings['view_name']);
     if (!selectedOption) {

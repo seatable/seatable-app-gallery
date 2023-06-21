@@ -209,7 +209,7 @@ class DTableUtils {
   }
   
   getViews() {
-    return this.views;
+    return this.views.filter(view => !view['private_for']);
   }
 
   getColumns() {

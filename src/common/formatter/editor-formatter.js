@@ -250,15 +250,22 @@ class EditorFormatter extends React.Component {
         }
         return lastModifierFormatter;
       }
+      case CellType.LINK_FORMULA:
       case CellType.FORMULA: {
         let formulaValue = row[columnName];
-        let formulaFormatter = <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} tables={[]} containerClassName="gallery-formula-container" />;
-        if (!formulaValue) {
-          formulaFormatter = this.renderEmptyFormatter();
+        if (!formulaValue && formulaValue !== 0) {
+          return this.renderEmptyFormatter();
         } else if (displayFieldsName) {
-          formulaFormatter = this.renderColumnFormatter(formulaFormatter);
+          return this.renderColumnFormatter(formulaFormatter);
         }
-        return formulaFormatter;
+        return (
+          <FormulaFormatter
+            value={formulaValue}
+            column={column}
+            collaborators={collaborators}
+            containerClassName="gallery-formula-container"
+          />
+        );
       }
       case CellType.LINK: {
         const value = row[columnName];

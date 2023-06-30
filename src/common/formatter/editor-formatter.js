@@ -256,7 +256,14 @@ class EditorFormatter extends React.Component {
         if (!formulaValue && formulaValue !== 0) {
           return this.renderEmptyFormatter();
         } else if (displayFieldsName) {
-          return this.renderColumnFormatter(formulaFormatter);
+          return this.renderColumnFormatter(
+            <FormulaFormatter
+              value={formulaValue}
+              column={column}
+              collaborators={collaborators}
+              containerClassName="gallery-formula-container"
+            />
+          );
         }
         return (
           <FormulaFormatter

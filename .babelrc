@@ -1,6 +1,7 @@
 {
   "presets": ["react-app"],
   "plugins": [
-    ["on-demand-loading", {"library": "dtable-ui-component"}]
+    ["on-demand-loading", {"library": "dtable-ui-component"}],
+    ["import", { "libraryName": "antd-mobile", "libraryDirectory": "lib" }, "antd-mobile"]
   ]
 }

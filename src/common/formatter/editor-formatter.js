@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CellType } from 'dtable-utils';
 import { 
   TextFormatter,
   NumberFormatter,
@@ -22,7 +23,7 @@ import {
   EmailFormatter,
   DurationFormatter,
   RateFormatter,
-  ButtonFormatter
+  ButtonFormatter,
 } from 'dtable-ui-component';
 import intl from 'react-intl-universal';
 import context from '../../context';
@@ -35,7 +36,6 @@ const propTypes = {
   type: PropTypes.string,
   column: PropTypes.object.isRequired,
   row: PropTypes.object.isRequired,
-  CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
 };
 
@@ -46,6 +46,7 @@ class EditorFormatter extends React.Component {
     this.state = {
       collaborators: context.getCollaboratorsFromCache(),
     }
+    this.isBaiduMap = context.isBaiduMap();
   }
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class EditorFormatter extends React.Component {
   }
 
   calculateCollaboratorData = (props) => {
-    const { row, column, CellType } = props;
+    const { row, column } = props;
     if (column.type === CellType.CREATOR || column.type === CellType.LAST_MODIFIER) {
       const email = row[column.name];
       context.loadCollaborator(email);
@@ -111,10 +112,9 @@ class EditorFormatter extends React.Component {
   }
 
   renderFormatter = () => {
-    const { column, row, CellType, displayFieldsName } = this.props;
+    const { column, row, displayFieldsName } = this.props;
     let { type: columnType, name: columnName } = column;
     const { collaborators } = this.state;
-    
     switch(columnType) {
       case CellType.TEXT: {
         let textFormatter = <TextFormatter value={row[columnName]} containerClassName="gallery-text-editor" />;
@@ -128,7 +128,7 @@ class EditorFormatter extends React.Component {
       case CellType.COLLABORATOR: {
         if (!row[columnName] || row[columnName].length === 0) {
           return this.renderEmptyFormatter();
-        } 
+        }
         let collaboratorFormatter = <CollaboratorFormatter value={row[columnName]} collaborators={collaborators} />;
         if (displayFieldsName) {
           collaboratorFormatter = this.renderColumnFormatter(collaboratorFormatter);
@@ -154,16 +154,24 @@ class EditorFormatter extends React.Component {
         return imageFormatter;
       }
       case CellType.GEOLOCATION : {
-       let geolocationFormatter = <GeolocationFormatter value={row[columnName]} containerClassName="gallery-text-editor" />;
-        if (!row[columnName]) {
-          geolocationFormatter = this.renderEmptyFormatter();
-        } else if (displayFieldsName) {
-          geolocationFormatter = this.renderColumnFormatter(geolocationFormatter);
+        const cellValue = row[columnName];
+        if (!cellValue) {
+          return this.renderEmptyFormatter();
+        }
+        let geolocationFormatter = (
+          <GeolocationFormatter
+            value={cellValue}
+            containerClassName="gallery-text-editor"
+            isBaiduMap={this.isBaiduMap}
+          />
+        );
+        if (displayFieldsName) {
+          return this.renderColumnFormatter(geolocationFormatter);
         }
         return geolocationFormatter;
       }
       case CellType.NUMBER: {
-       let numberFormatter = <NumberFormatter value={row[columnName]} data={column.data} />;
+        let numberFormatter = <NumberFormatter value={row[columnName]} data={column.data} />;
         if (!row[columnName]) {
           numberFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {
@@ -192,7 +200,7 @@ class EditorFormatter extends React.Component {
       }
       case CellType.SINGLE_SELECT: {
         const options = (column.data && column.data.options) || [];
-       let singleSelectFormatter = <SingleSelectFormatter value={row[columnName]} options={options} />;
+        let singleSelectFormatter = <SingleSelectFormatter value={row[columnName]} options={options} />;
         if (!row[columnName]) {
           singleSelectFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {
@@ -201,7 +209,7 @@ class EditorFormatter extends React.Component {
         return singleSelectFormatter;
       }
       case CellType.FILE: {
-       let fileFormatter = <FileFormatter value={row[columnName]} isSample />;
+        let fileFormatter = <FileFormatter value={row[columnName]} isSample />;
         if (!row[columnName] || row[columnName].length === 0) {
           fileFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {
@@ -210,14 +218,14 @@ class EditorFormatter extends React.Component {
         return fileFormatter;
       }
       case CellType.CHECKBOX: {
-       let checkboxFormatter = <CheckboxFormatter value={row[columnName]} />;
+        let checkboxFormatter = <CheckboxFormatter value={row[columnName]} />;
         if (displayFieldsName) {
           checkboxFormatter = this.renderColumnFormatter(checkboxFormatter);
         }
         return checkboxFormatter;
       }
       case CellType.CTIME: {
-       let cTimeFormatter = <CTimeFormatter value={row._ctime} />;
+        let cTimeFormatter = <CTimeFormatter value={row._ctime} />;
         if (!row._ctime) {
           cTimeFormatter = this.renderEmptyFormatter();
         } else if (displayFieldsName) {
@@ -353,11 +361,7 @@ class EditorFormatter extends React.Component {
   }
 
   render() {
-    return(
-      <>
-        {this.renderFormatter()}
-      </>
-    );
+    return this.renderFormatter();
   }
 }
 

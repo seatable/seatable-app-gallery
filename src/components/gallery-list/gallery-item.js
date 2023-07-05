@@ -20,10 +20,6 @@ class GalleryItem extends React.Component {
     return { shownImages };
   }
 
-  getCellType = () => {
-    return this.props.dtableUtils.getCellType();
-  }
-  
   getOptionColors = () => {
     return this.props.dtableUtils.getOptionColors();
   }
@@ -37,7 +33,6 @@ class GalleryItem extends React.Component {
             type={''}
             row={viewRow}
             column={column}
-            CellType={this.getCellType()}
             getOptionColors={this.getOptionColors}
             displayFieldsName={displayFieldsName}
             columnIconConfig={columnIconConfig}
@@ -64,7 +59,6 @@ class GalleryItem extends React.Component {
                 type="row_title"
                 row={viewRow}
                 column={titleColumn}
-                CellType={this.getCellType()}
               />
             </div>
             </div>

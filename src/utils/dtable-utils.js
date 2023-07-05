@@ -1,7 +1,8 @@
+import {
+  COLUMNS_ICON_CONFIG,
+  SELECT_OPTION_COLORS,
+} from 'dtable-utils';
 import GalleryAPI from "../api/gallery-api";
-import * as CellType from '../common/constants/cell-types';
-import COLUMNS_ICON_CONFIG from '../common/constants/column-icon';
-import { SELECT_OPTION_COLORS } from "../common/constants/select-option-colors";
 import { getImageColumns, getTitleColumns } from "./utils";
 import context from '../context';
 
@@ -167,7 +168,6 @@ class DTableUtils {
       shown_column_names: []
     }
 
-    
     this.views = selectedTable.views;
     this.columns = columns.filter(col => {
       if (!selectedView.hidden_columns || selectedView.hidden_columns.length === 0) return true;
@@ -218,10 +218,6 @@ class DTableUtils {
 
   getRows() {
     return this.rows;
-  }
-
-  getCellType() {
-    return CellType;
   }
 
   getColumnIconConfig() {

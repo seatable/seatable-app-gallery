@@ -1,14 +1,9 @@
 import intl from 'react-intl-universal';
+import {
+  CellType,
+  generatorBase64Code,
+} from 'dtable-utils';
 import context from '../context';
-
-export const generatorBase64Code = (keyLength = 4) => {
-  let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789';
-  let key = '';
-  for (let i = 0; i < keyLength; i++) {
-    key += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return key;
-};
 
 export const generatorViewId = (views) => {
   let view_id, isUnique = false;
@@ -32,12 +27,6 @@ export const getImageThumbnailUrl = (url) => {
     return imageThumbnailUrl;
   }
   return url;
-};
-
-export const isValidEmail = (email) => {
-  const reg = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,6}$/;
-
-  return reg.test(email);
 };
 
 export const calculateColumns = (galleryColumnsName, currentColumns) => {
@@ -72,7 +61,6 @@ export const isEditAppPage = () => {
 }
 
 export const getTitleColumns = (dtable, columns) => {
-  const CellType = dtable.getCellType();
   const SHOW_TITLE_COLUMN_TYPE = [
     CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, 
     CellType.NUMBER, CellType.FORMULA,CellType.DATE, CellType.COLLABORATOR, 

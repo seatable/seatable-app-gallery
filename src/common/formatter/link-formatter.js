@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'reactstrap';
-import { MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter, MTimeFormatter } from 'dtable-ui-component';
-import { CellType, FORMULA_RESULT_TYPE, getDurationDisplayString } from 'dtable-store';
-import { getFormulaArrayValue, isArrayFormalColumn, getFormulaDisplayString } from '../../utils/link-format-utils';
+import {
+  CellType,
+  FORMULA_RESULT_TYPE,
+  getDurationDisplayString,
+  getFormulaDisplayString,
+} from 'dtable-utils';
+import {
+  MultipleSelectFormatter, NumberFormatter, DateFormatter, CTimeFormatter,
+  MTimeFormatter,
+} from 'dtable-ui-component';
 import CreatorFormatter from './creator-formatter';
-// import LinkCollaboratorItemFormatter from './link-collaborator-item-formatter';  link column not support collaborator column in base 
 
 import '../../assets/css/link-formatter.css';
 
@@ -38,14 +44,14 @@ export default class LinkFormatter extends React.Component {
     const props = this.props;
     const { column, value, containerClassName } = props;
     const { data } = column;
-
     if (!Array.isArray(value) || value.length === 0) {
       return this.props.renderEmptyFormatter();
     }
-    let { array_type: arrayType, display_column_key: displayColumnKey, array_data: arrayData } = data || {};
+
+    const { array_type: arrayType, display_column_key: displayColumnKey, array_data: arrayData } = data || {};
     const displayColumn = { type: arrayType, key: displayColumnKey, data: arrayData }
     const { type: displayColumnType, data: displayColumnData } = displayColumn;
-    const cellValue = getFormulaArrayValue(value, !isArrayFormalColumn(displayColumnType));
+    const cellValue = value.map((link) => link && link.display_value).filter(Boolean);
     if (!Array.isArray(cellValue) || cellValue.length === 0) {
       return this.props.renderEmptyFormatter();
     }
@@ -215,32 +221,30 @@ export default class LinkFormatter extends React.Component {
 
     const ellisId = `link-ellipsis-${column.key}`;
     return (
-      <>
-        <div className="links-formatter">
-          <div className='formatter-show' ref={ref => this.linksContainerRef = ref}>
-            <>
-              {dom}
-              <span
-                id={ellisId}
-                ref={ref => this.ellisRef = ref}
-                className="link link-ellipsis mr-1 p-1"
-                style={{display: this.state.isHasMore ? 'inline-flex' : 'none'}}
-              >
-                <i className="dtable-font dtable-icon-more-level"></i>
-              </span>
-              <Tooltip
-                placement='bottom'
-                isOpen={this.state.tooltipOpen}
-                toggle={this.toggleTooltip}
-                target={ellisId}
-                delay={{show: 0, hide: 0 }}
-                fade={false}
-              >
-              </Tooltip>
-            </>
-          </div>
+      <div className="links-formatter">
+        <div className='formatter-show' ref={ref => this.linksContainerRef = ref}>
+          <>
+            {dom}
+            <span
+              id={ellisId}
+              ref={ref => this.ellisRef = ref}
+              className="link link-ellipsis mr-1 p-1"
+              style={{display: this.state.isHasMore ? 'inline-flex' : 'none'}}
+            >
+              <i className="dtable-font dtable-icon-more-level"></i>
+            </span>
+            <Tooltip
+              placement='bottom'
+              isOpen={this.state.tooltipOpen}
+              toggle={this.toggleTooltip}
+              target={ellisId}
+              delay={{show: 0, hide: 0 }}
+              fade={false}
+            >
+            </Tooltip>
+          </>
         </div>
-      </>
+      </div>
     );
   }
 }

@@ -120,6 +120,12 @@ class Context {
     window.app && window.app.queryUsers(emails, callback)
   }
 
+  isBaiduMap() {
+    const dtableBaiduMapKey = this.getSetting('dtableBaiduMapKey');
+    const dtableMineMapKey = this.getSetting('dtableMineMapKey');
+    return !!dtableBaiduMapKey || !! dtableMineMapKey
+  }
+
 }
 
 const context =  new Context();

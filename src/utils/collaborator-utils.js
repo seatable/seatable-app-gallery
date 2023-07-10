@@ -1,14 +1,9 @@
+import { isValidEmail } from 'dtable-utils';
 import context from '../context';
 import User from '../model/user';
 
 export const getMediaUrl = () => {
   return context.getSetting('mediaUrl');
-};
-
-export const isValidCollaboratorEmail = (email) => {
-  const reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,6}$/;
-
-  return reg.test(email);
 };
 
 export const getKnownCollaboratorByEmail = (email) => {
@@ -23,7 +18,7 @@ export const getKnownCollaboratorByEmail = (email) => {
   }
   let creator = context.getCollaboratorFromCache(email);
   if (creator) return creator;
-  if (!isValidCollaboratorEmail(email)) {
+  if (!isValidEmail(email)) {
     creator = new User({
       ...defaultUser,
       loaded: true,

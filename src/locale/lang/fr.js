@@ -1,6 +1,6 @@
 const fr = {
   "Share": "Partager",
-  "App_page": "Page de l'application",
+  "App_page": "Page de l'app",
   "Settings": "Paramètres",
   "Table": "Tableau",
   "View": "Vue",
@@ -8,7 +8,7 @@ const fr = {
   "Title_field": "Titre",
   "Other_fields": "Autres colonnes",
   "Hide_all": "Masquer toutes",
-  "Show_all": "Afficher toutes",
+  "Show_all": "Afficher tout",
   "Failed_to_update_app_config": "La mise à jour de la configuration a échoué.",
   "Saving": "En train d'enregistrer ...",
   "All_changes_saved": "Toutes les modifications ont été enregistrées.",
@@ -19,17 +19,19 @@ const fr = {
   "Network_error": "Erreur réseau",
   "Internal_server_error": "Erreur interne du serveur",
   "The_sharing_link_has_expired": "Le lien de partage a expiré.",
-  "Unnamed_record": "Nouveau enregistrement",
+  "Unnamed_record": "Nouvel enregistrement",
   "The_token_has_expired_please_refresh_the_page": "Le token a expiré. Veuillez rafraîchir le site web.",
   "Please_select": "Sélectionner",
   "Cancel": "Annuler",
   "Save": "Enregistrer",
-  "Show_field_names": "Afficher nom de colonne",
-  "Made_app_tip": "This is my application <span class='share-link-app-name'>{itemName}</span>",
-  "Click_the_link_to_experience_it": "Click the link to experience it!",
-  "Scan_the_code_to_experience_it": "Scan the code to experience it!",
-  "Copy_link": "Copy link",
-  "Share_app_tip": "This is my application \"{itemName}\","
+  "Show_field_names": "Afficher les noms de colonnes",
+  "Click_link_to_view": "Veuillez cliquer le lien pour afficher",
+  "Scan_QR_code_to_open_app": "Scanner le code QR pour ouvrir l'app",
+  "Copy_link_only": "Copier le lien uniquement",
+  "Name_is_required": "Le nom est nécessaire.",
+  "Name_cannot_contain_slash": "Le nom ne doit pas contenir de barre oblique ( / ).",
+  "Name_cannot_contain_backslash": "Le nom ne doit pas contenir de barre oblique inverse ( \\ ).",
+  "App": "App"
 };
 
 export default fr;

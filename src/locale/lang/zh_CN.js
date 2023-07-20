@@ -8,7 +8,7 @@ const zh_CN = {
   "Title_field": "标题字段",
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",
-  "Show_all": "选择全部",
+  "Show_all": "显示全部",
   "Failed_to_update_app_config": "更新app配置失败",
   "Saving": "保存中...",
   "All_changes_saved": "所有更改均已保存",

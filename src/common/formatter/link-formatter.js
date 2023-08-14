@@ -99,11 +99,10 @@ export default class LinkFormatter extends React.Component {
           <div className={containerClassName}>
             {cellValue.map((value, index) => {
               const { format } = displayColumnData || {};
-              const sValue = typeof value !== 'string' ? '' : value;
               return (
                 <div key={`link-${displayColumnType}-${index}`} ref={ref => this.rowRefs[index] = ref}>
                   <DateFormatter
-                    value={sValue.replace('T', ' ').replace('Z', '')}
+                    value={value}
                     format={format}
                     containerClassName="dtable-link-item"
                   />

@@ -61,7 +61,7 @@ class DTableUtils {
   }
 
   async getConfig(appConfig) {
-    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names, display_field_name } = appConfig.settings;
+    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names, display_field_name, fields_key = [] } = appConfig.settings;
 
     let settings = null;
     let selectedTable = null;
@@ -83,12 +83,14 @@ class DTableUtils {
       });
       imageColumns = getImageColumns(columns);
       titleColumns = getTitleColumns(this, columns);
+      const fieldsKey = columns.filter(column => column.key !== titleColumns[0].key).map(column => column.key);
       settings = {
         table_name: selectedTable.name,
         view_name: selectedView.name,
         shown_image_name: imageColumns[0] && imageColumns[0].name,
         shown_title_name: titleColumns[0] && titleColumns[0].name,
         shown_column_names: [],
+        fields_key: fieldsKey,
         display_field_name: false
       };
 
@@ -105,6 +107,7 @@ class DTableUtils {
     imageColumns = getImageColumns(columns);
     titleColumns = getTitleColumns(this, columns);
     selectedView = selectedTable.views.find(view => view.name === view_name);
+    const fieldsKey = columns.filter(column => column.key !== titleColumns[0].key).map(column => column.key);
 
     // selected view has been deleted in original base's table
     if (!selectedView) {
@@ -115,6 +118,7 @@ class DTableUtils {
         shown_image_name: imageColumns[0] && imageColumns[0].name,
         shown_title_name: titleColumns[0] && titleColumns[0].name,
         shown_column_names: [],
+        fields_key: fieldsKey,
         display_field_name: false
       };
 
@@ -138,6 +142,7 @@ class DTableUtils {
       shown_image_name: isImageExist ? shown_image_name : (imageColumns[0] && imageColumns[0].name),
       shown_title_name: isTitleExist ? shown_title_name : (titleColumns[0] && titleColumns[0].name),
       shown_column_names: shown_column_names,
+      fields_key: fields_key,
       display_field_name: !!display_field_name
     };
 
@@ -165,7 +170,8 @@ class DTableUtils {
       view_name: selectedView.name,
       shown_image_name: imageColumns[0] && imageColumns[0].name,
       shown_title_name: titleColumns[0] && titleColumns[0].name,
-      shown_column_names: []
+      shown_column_names: [],
+      fields_key: [],
     }
 
     this.views = selectedTable.views;
@@ -191,7 +197,8 @@ class DTableUtils {
       view_name: selectedView.name,
       shown_image_name: imageColumns[0] && imageColumns[0].name,
       shown_title_name: titleColumns[0] && titleColumns[0].name,
-      shown_column_names: []
+      shown_column_names: [],
+      fields_key: [],
     }
     const { hidden_columns } = selectedView;
     if (hidden_columns && Array.isArray(hidden_columns) && hidden_columns.length > 0) {

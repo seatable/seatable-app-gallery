@@ -31,7 +31,7 @@ class DisplayFieldsSettings extends React.Component {
   render() {
     const { isShowColumnName } = this.state;
     return (
-      <div className="setting-item field-settings">
+      <div className="setting-item field-settings mb-0">
         <Switch
           checked={isShowColumnName}
           placeholder={intl.get('Show_field_names')}

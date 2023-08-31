@@ -61,7 +61,7 @@ class DTableUtils {
   }
 
   async getConfig(appConfig) {
-    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names, display_field_name, fields_key = [] } = appConfig.settings;
+    const { table_name, view_name, shown_image_name, shown_title_name, shown_column_names, display_field_name, fields_key } = appConfig.settings;
 
     let settings = null;
     let selectedTable = null;

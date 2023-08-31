@@ -61,7 +61,7 @@ class TitleSetting extends React.Component {
 
   render() {
     return (
-      <div className="setting-item title-setting">
+      <div className="setting-item title-setting mb-0">
         <div className="title">{intl.get('Title_field')}</div>
         {this.renderSelector()}
       </div>

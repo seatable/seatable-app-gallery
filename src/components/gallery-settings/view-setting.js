@@ -56,7 +56,7 @@ class ViewSetting extends React.Component {
 
   render() {
     return (
-      <div className="setting-item view-setting">
+      <div className="setting-item view-setting mb-0">
         <div className="title">{intl.get('View')}</div>
         {this.renderSelector()}
       </div>

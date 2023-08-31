@@ -29,17 +29,13 @@ class GallerySettings extends React.Component {
     this.state = {
       fields: this.getFields(props),
     };
-    this.columnsMap = props.columns.reduce((map, column) => {
-      map[column.key] = column;
-      return map;
-    }, {});
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.appConfig.settings.fields_key !== prevProps.appConfig.settings.fields_key) {
-      const newFields = this.getFields(this.props);
-      this.setState({ fields: newFields });
-    }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.appConfig.fields_key !== nextProps.appConfig.settings.fields_key) {
+        const updatedFields = this.getFields(nextProps);
+        this.setState({ fields: updatedFields });
+      }
   }
 
   onSettingContainerClick = (event) => {
@@ -54,67 +50,25 @@ class GallerySettings extends React.Component {
   getFields = (props) => {
     const { appConfig, columns } = props;
     const { shown_column_names = [], fields_key = [], shown_title_name  } = appConfig.settings;
-
-    if (fields_key.length <= 0) {
-      columns.forEach(column => {
-        if (shown_title_name !== column.name) {
-          fields_key.push(column.key);
-        }
-      });
+    let fieldsKey = [...fields_key];
+    if (fieldsKey.length === 0) {
+      fieldsKey = columns.filter(column => column.name !== shown_title_name).map(column => column.key);
+      appConfig.settings.fields_key = fieldsKey;
     }
-
-    let fields = [];
     const columnsMap = columns.reduce((map, column) => {
       map[column.key] = column;
       return map;
     }, {});
 
-    fields_key.forEach(key => {
-      let field;
+    return fieldsKey.map(key => {
       const column = columnsMap[key];
-      if (shown_column_names.includes(column.name)) {
-        field = {
-          key: column.key,
-          shown: true,
-          name: column.name,
-          type: column.type,
-        }
-      } else {
-        field = {
-          key: column.key,
-          shown: false,
-          name: column.name,
-          type: column.type,
-        }
+      let field = {
+        key: key,
+        type: column.type,
+        name: column.name,
       }
-      if (shown_title_name !== column.name) {
-        fields.push(field);
-      }
-    });
-    return fields;
-  }
-
-  onToggleFieldsVisibility = (fieldAllShown) => {
-    const { appConfig } = this.props;
-    const { fields } = this.state;
-    let shown_column_names = [];
-    let updatedFields;
-    if (fieldAllShown) {
-      updatedFields = fields.map(field => {
-        field.shown = false;
-        return field;
-      });
-    } else {
-      updatedFields = fields.map(field => {
-        field.shown = true;
-        shown_column_names.push(field.name);
-        return field;
-      });
-    }
-    const newAppConfig = deepCopy(appConfig);
-    newAppConfig.settings.shown_column_names = shown_column_names;
-    this.setState({ fields: updatedFields }, () => {
-      this.props.onUpdateAppConfig(newAppConfig);
+      field.shown = shown_column_names.includes(column.name) ? true : false;
+      return field;
     });
   }
 
@@ -141,52 +95,35 @@ class GallerySettings extends React.Component {
   }
 
   onMoveColumn = (dropColumnKey, dragColumnKey) => {
-    const { appConfig, columns } = this.props;
+    const { appConfig } = this.props;
     const { settings } = appConfig;
-    const { fields_key, shown_column_names, shown_title_name } = settings;
-
-    const dropColumnIndex = fields_key.findIndex(item => item === dropColumnKey);
-    const dragColumnIndex = fields_key.findIndex(item => item === dragColumnKey);
-    if (dropColumnIndex < 0 || dropColumnIndex >= fields_key.length || dragColumnIndex < 0 || dragColumnIndex >= fields_key.length) {
+    const { fields_key } = settings;
+    const dropIndex = fields_key.findIndex(field => field === dropColumnKey);
+    const dragIndex = fields_key.findIndex(field => field === dragColumnKey);
+    if (dropIndex < 0 || fields_key > fields_key.length || dragIndex < 0 || dragIndex > fields_key.length) {
       return;
     }
+    const updatedFieldsKey = [...fields_key];
+    const tempField = updatedFieldsKey[dropIndex];
+    updatedFieldsKey[dropIndex] = updatedFieldsKey[dragIndex];
+    updatedFieldsKey[dragIndex] = tempField;
 
-    const tempColumnKey = fields_key[dropColumnIndex];
-    fields_key[dropColumnIndex] = fields_key[dragColumnIndex];
-    fields_key[dragColumnIndex] = tempColumnKey;
-
-    let updatedFields = [];
-    const columnsMap = columns.reduce((map, column) => {
-      map[column.key] = column;
-      return map;
-    }, {});
-
-    fields_key.forEach(key => {
-      let field;
-      const column = columnsMap[key];
-      if (shown_column_names.includes(column.name)) {
-        field = {
-          key: column.key,
-          shown: true,
-          name: column.name,
-          type: column.type,
-        }
-      } else {
-        field = {
-          key: column.key,
-          shown: false,
-          name: column.name,
-          type: column.type,
-        }
-      }
-      if (shown_title_name !== column.name) {
-        updatedFields.push(field);
-      }
-    });
-
-    this.setState({ fields: updatedFields });
     const newAppConfig = deepCopy(appConfig);
-    newAppConfig.settings.fields_key = fields_key;
+    newAppConfig.settings.fields_key = updatedFieldsKey;
+    this.props.onUpdateAppConfig(newAppConfig);
+  }
+
+  onToggleFieldsVisibility = (fieldAllShown) => {
+    let shownColumnNames;
+    if (fieldAllShown) {
+      shownColumnNames = [];
+    } else {
+      const { fields } = this.state;
+      shownColumnNames  = fields.map(field => field.name);
+    }
+    const { appConfig } = this.props;
+    const newAppConfig = deepCopy(appConfig);
+    newAppConfig.settings.shown_column_names = shownColumnNames;
     this.props.onUpdateAppConfig(newAppConfig);
   }
 
@@ -219,6 +156,8 @@ class GallerySettings extends React.Component {
             views={views}
             onSettingUpdate={this.onSettingUpdate}
           />
+
+          <div className='split-line'></div>
           <ImageSetting 
             appConfig={appConfig} 
             imageColumns={imageColumns}

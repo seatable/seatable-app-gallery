@@ -25,6 +25,7 @@ class ViewSetting extends React.Component {
       shown_image_name: '',
       shown_title_name: '',
       shown_column_names: [],
+      fields_key: [],
     };
 
     this.props.onSettingUpdate(newAppConfig, 'view');
@@ -55,7 +56,7 @@ class ViewSetting extends React.Component {
 
   render() {
     return (
-      <div className="setting-item view-setting">
+      <div className="setting-item view-setting mb-0">
         <div className="title">{intl.get('View')}</div>
         {this.renderSelector()}
       </div>

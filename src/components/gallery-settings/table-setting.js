@@ -25,6 +25,7 @@ class TableSetting extends React.Component {
       shown_image_name: '',
       shown_title_name: '',
       shown_column_names: [],
+      fields_key: [],
     };
     
     this.props.onSettingUpdate(newAppConfig, 'table');

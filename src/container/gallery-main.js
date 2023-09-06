@@ -42,11 +42,21 @@ class GalleryMain extends React.Component {
   
   getShownColumns = () => {
     const { appConfig, columns } = this.props;
-    const { shown_column_names } = appConfig.settings;
-    let shownColumns = [];
-    if (shown_column_names && Array.isArray(shown_column_names) && shown_column_names.length > 0) {
-      shownColumns = columns.filter(column => shown_column_names.includes(column.name));
+    const { shown_column_names, fields_key } = appConfig.settings;
+    if (shown_column_names.length <= 0) {
+      return [];
     }
+    const columnsMap = columns.reduce((map, column) => {
+      map[column.key] = column;
+      return map;
+    }, {});
+    let shownColumns = [];
+    fields_key.forEach(key => {
+      const field = columnsMap[key];
+      if (shown_column_names.includes(field.name)) {
+        shownColumns.push(field);
+      }
+    })
     return shownColumns;
   }
 

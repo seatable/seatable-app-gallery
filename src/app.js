@@ -7,7 +7,8 @@ import toaster from './common/toaster';
 import { isEditAppPage } from './utils/utils.js';
 import DTableUtils from './utils/dtable-utils.js';
 
-import './locale/index.js'
+import './init-scrollbar.js';
+import './locale/index.js';
 
 class App extends React.Component {
 

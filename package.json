@@ -5,7 +5,7 @@
   "dependencies": {
     "@seafile/react-image-lightbox": "2.0.4",
     "antd-mobile": "2.3.1",
-    "axios": "1.4.0",
+    "axios": "1.6.0",
     "babel-plugin-on-demand-loading": "^0.0.9",
     "copy-to-clipboard": "3.3.1",
     "deep-copy": "1.4.2",

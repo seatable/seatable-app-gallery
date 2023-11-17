@@ -1,5 +1,6 @@
 const { mediaUrl, serviceURL: server, siteRoot, lang } = window.app.config;
-const { workspaceID, dtableUuid, dtableName, appId, appType, token, appConfig, accessToken, dtableServer, isEditAppPage, columns } = window.shared.pageOptions;
+const { workspaceID, dtableUuid, dtableName, appId, appType, appUuid
+  , appConfig, accessToken, dtableServer, isEditAppPage, columns } = window.shared.pageOptions;
 
 window.dtable = {
   lang,
@@ -14,7 +15,7 @@ window.dtable = {
   dtableSocket: dtableServer,
   appId,
   appType,
-  appToken: token,
+  appUuid,
   appConfig,
   isEditAppPage,
   columns

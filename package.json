@@ -9,7 +9,7 @@
     "babel-plugin-on-demand-loading": "^0.0.9",
     "copy-to-clipboard": "3.3.1",
     "deep-copy": "1.4.2",
-    "dtable-ui-component": "0.3.25",
+    "dtable-ui-component": "0.3.26",
     "dtable-utils": "4.3.0",
     "dtable-web-api": "4.3.1",
     "glamor": "2.20.40",
@@ -20,9 +20,10 @@
     "react-cookies": "0.1.1",
     "react-dom": "17.0.2",
     "react-intl-universal": "^2.2.2",
+    "react-responsive": "^8.0.3",
     "react-select": "^5.7.0",
-    "react-transition-group": "4.4.2",
-    "reactstrap": "^8.4.1"
+    "react-transition-group": "4.4.1",
+    "reactstrap": "8.9.0"
   },
   "scripts": {
     "clean": "rm -rf plugin-zip && mkdir plugin-zip",

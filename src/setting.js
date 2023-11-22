@@ -18,7 +18,7 @@ let config = {
   dtableName: "test-1",
   appId: '12',
   appType: 'gallery',
-  appToken: '5f50a894-bf16-432d-82b0-284a7f437093',
+  appUuid: '5f50a894-bf16-432d-82b0-284a7f437093',
   appConfig: "{\"app_name\":\"abc\",\"app_type\":\"gallery\",\"settings\":{\"table_name\":\"\",\"view_name\":\"\",\"shown_image_name\":\"\",\"shown_title_name\":\"\",\"shown_column_names\":[]}}",
   columns: "[{\"key\":\"0000\",\"name\":\"name\",\"type\":\"text\",\"width\":200,\"editable\":true,\"resizable\":true,\"editor\":{\"key\":null,\"ref\":null,\"props\":{},\"_owner\":null,\"_store\":{}},\"formatter\":{\"key\":null,\"ref\":null,\"props\":{},\"_owner\":null,\"_store\":{}}}]",
   isEditAppPage: true,

@@ -63,8 +63,8 @@ class Gallery extends React.Component {
   
   getAppShareLink = () => {
     const server = context.getSetting('server');
-    const appToken = context.getSetting('appToken');
-    return `${server}/external-apps/${appToken}/`;
+    const appUuid = context.getSetting('appUuid');
+    return `${server}/external-apps/${appUuid}/`;
   }
 
   showActionSheet = () => {

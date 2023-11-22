@@ -3,10 +3,10 @@ import axios from 'axios';
 class GalleryAPI {
 
   constructor(config) {
-    const { server, dtableUuid, accessToken, lang, appToken } = config;
+    const { server, dtableUuid, accessToken, lang, appUuid } = config;
     this.dtableUuid = dtableUuid;
     this.lang = lang;
-    this.appToken = appToken;
+    this.appUuid = appUuid;
     this.req = axios.create({
       baseURL: server,
       headers: {Authorization: 'Token ' + accessToken}
@@ -14,12 +14,12 @@ class GalleryAPI {
   }
 
   getDTableMetadata() {
-    const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/metadata/`;
+    const url = `/api/v2.1/dtable-apps/gallery/${this.appUuid}/metadata/`;
     return this.req.get(url);
   }
 
   listRows(tableName, viewName) {
-    const url = `/api/v2.1/dtable-apps/gallery/${this.appToken}/rows/`;
+    const url = `/api/v2.1/dtable-apps/gallery/${this.appUuid}/rows/`;
     const params = {
       table_name: tableName,
       view_name: viewName

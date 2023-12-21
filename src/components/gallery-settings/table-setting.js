@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
-import PluginSelect from '../../common/select';
+import { DTableSelect } from 'dtable-ui-component';
 
 const propTypes = {
   appConfig: PropTypes.object.isRequired,
@@ -44,7 +44,7 @@ class TableSetting extends React.Component {
       selectedOption = options[0];
     }
     return (
-      <PluginSelect
+      <DTableSelect
         value={selectedOption}
         options={options}
         onChange={this.onSettingUpdate}

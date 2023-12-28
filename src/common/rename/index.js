@@ -71,7 +71,7 @@ class Rename extends React.Component {
   render() {
     const { isRenaming, name } = this.state;
     return (
-      <div className="gallery-app-table-rename" style={{cursor: 'pointer'}}>
+      <div className="gallery-app-table-rename-container d-flex">
         {isRenaming ?
           <input 
             ref={this.setInputRef} 
@@ -84,7 +84,7 @@ class Rename extends React.Component {
           />
           :
           <Fragment>
-            <span className="mr-2">{name}</span>
+            <span className="mr-2 text-truncate">{name}</span>
             {this.props.isSupportRename && (
               <i className="dtable-font dtable-icon-rename edit" onClick={this.onRenameClick}></i>
             )}

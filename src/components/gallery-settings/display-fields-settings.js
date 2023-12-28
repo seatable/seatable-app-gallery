@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
-import Switch from '../../common/switch';
+import { DTableSwitch } from 'dtable-ui-component';
 
 const propTypes = {
   appConfig: PropTypes.object.isRequired,
@@ -31,8 +31,8 @@ class DisplayFieldsSettings extends React.Component {
   render() {
     const { isShowColumnName } = this.state;
     return (
-      <div className="setting-item field-settings mb-0">
-        <Switch
+      <div className="setting-item display-field-settings mb-0">
+        <DTableSwitch
           checked={isShowColumnName}
           placeholder={intl.get('Show_field_names')}
           onChange={this.showColumnNameToggle}

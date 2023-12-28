@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import deepCopy from 'deep-copy';
 import intl from 'react-intl-universal';
-import Switch from '../common/switch';
+import { DTableSwitch } from 'dtable-ui-component';
 
 const propTypes = {
   appConfig: PropTypes.object,
@@ -30,14 +30,12 @@ class MobileDisplayFieldsName extends React.Component {
 
   render() {
     return (
-      <div 
-        className="mobile-setting-item mt-4" 
-      >
+      <div className="mobile-setting-item mt-4">
         <div className="mobile-column-setting-item">
-          <Switch 
-            checked={this.state.isChecked}  
-            placeholder={intl.get('Show_field_names')} 
-            onChange={this.onUpdateFieldSetting} 
+          <DTableSwitch
+            checked={this.state.isChecked}
+            placeholder={intl.get('Show_field_names')}
+            onChange={this.onUpdateFieldSetting}
             switchClassName="mobile-field-switch-container"
           />
         </div>

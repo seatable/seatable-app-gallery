@@ -145,7 +145,7 @@ class GallerySettings extends React.Component {
     return (
       <div className="gallery-settings-container" onClick={this.onSettingContainerClick}>
         <div className="gallery-settings-header">{intl.get('Settings')}</div>
-        <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 50}}>
+        <div className="gallery-settings-content" style={{maxHeight: window.innerHeight - 100}}>
           <TableSetting
             appConfig={appConfig} 
             tables={tables}

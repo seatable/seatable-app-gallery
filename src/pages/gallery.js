@@ -10,6 +10,7 @@ import { getImageColumns, getTitleColumns, isEditAppPage, checkDesktop } from '.
 import ShareLinkDialog from '../components/dialogs/share-link-dialog';
 import context from '../context';
 import GalleryMobileSettings from '../mobile/gallery-mobile-settings';
+import logo from '../assets/image/icon.png';
 
 import '../assets/css/layout.css'
 
@@ -104,13 +105,14 @@ class Gallery extends React.Component {
     const imageColumns = getImageColumns(columns);
     const { isSaving, isShowSaveMessage } = this.props;
     const { isShowSetting, isShowSharedDialog } = this.state;
-    
+
     return (
       <Fragment>
         <div className="seatable-app seatable-app-gallery row no-gutters">
           <div className="col-auto seatable-app-gallery-main">
             <div className="row no-gutters gallery-main-header">
               <div className="col-auto gallery-name">
+                <img className="logo-icon mr-2" src={logo} alt="" />
                 <Rename isSupportRename={isEditAppPage()} currentName={appConfig.app_name} onUpdateCurrentName={this.onUpdateCurrentName}/>
                 {isShowSaveMessage && isSaving && <span className="tip-message">{intl.get('Saving')}</span>}
                 {isShowSaveMessage && !isSaving && <span className="tip-message">{intl.get('All_changes_saved')}</span>}
@@ -170,25 +172,25 @@ class Gallery extends React.Component {
                 titleColumns={titleColumns}
                 imageColumns={imageColumns}
               />
+              {isEditAppPage() && (
+                <div className="seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
+                  <GallerySettings 
+                    dtableUtils={dtableUtils}
+                    appConfig={appConfig}
+                    tables={tables}
+                    views={views}
+                    titleColumns={titleColumns}
+                    imageColumns={imageColumns}
+                    columns={columns}
+                    onUpdateAppConfig={this.props.updateAppConfig}
+                  />
+                </div>
+              )}
             </div>
           </div>
-          {isEditAppPage() && (
-            <div className="col-md-3 col-lg-2 seatable-app-gallery-settings" onClick={this.onSettingsToggle}>
-              <GallerySettings 
-                dtableUtils={dtableUtils}
-                appConfig={appConfig}
-                tables={tables}
-                views={views}
-                titleColumns={titleColumns}
-                imageColumns={imageColumns}
-                columns={columns}
-                onUpdateAppConfig={this.props.updateAppConfig}
-              />
-            </div>
-          )}
         </div>
         {isShowSharedDialog && (
-          <ShareLinkDialog 
+          <ShareLinkDialog
             itemIcon={this.getAppIcon()}
             itemName={appConfig.app_name}
             shareLink={this.getAppShareLink()}
@@ -196,7 +198,6 @@ class Gallery extends React.Component {
           />
         )}
       </Fragment>
-      
     );
   }
 }

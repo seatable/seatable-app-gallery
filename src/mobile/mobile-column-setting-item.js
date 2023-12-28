@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Switch from '../common/switch';
+import { DTableSwitch } from 'dtable-ui-component';
 
 const propTypes = {
   setting: PropTypes.object.isRequired,
@@ -45,13 +45,11 @@ class MobileColumnSettingItem extends React.Component {
       </div>
     );
     return (
-      <div 
-        className="mobile-column-setting-item" 
-      >
-        <Switch 
-          checked={setting.isChecked}  
-          placeholder={placeholder} 
-          onChange={this.onUpdateFieldSetting} 
+      <div className="mobile-column-setting-item">
+        <DTableSwitch
+          checked={setting.isChecked}
+          placeholder={placeholder}
+          onChange={this.onUpdateFieldSetting}
         />
       </div>
     );

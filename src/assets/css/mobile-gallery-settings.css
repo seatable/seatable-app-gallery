@@ -132,6 +132,10 @@
   line-height: 50px;
 }
 
+.gallery-app-settings .mobile-column-setting-item .dtable-switch {
+  width: 100%;
+}
+
 .gallery-app-settings .mobile-column-setting-item .custom-switch {
   width: 100%;
   justify-content: space-between;

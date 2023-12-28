@@ -34,50 +34,56 @@ html, body {
   min-width: 300px;
 }
 
-@media (max-width: 768px) {
-  .seatable-app-gallery .seatable-app-gallery-settings {
-    display: none;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-}
-
 .seatable-app-gallery .gallery-main-header {
-  height: 50px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  align-items: center;
   border-bottom: 1px solid #e4e4e4;
-  flex-wrap: nowrap;
+  padding: 0 16px;
+  height: 50px;
+  background: #fff;
 }
 
 .seatable-app-gallery .gallery-main-header .gallery-name {
-  height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e4e4e4;
+  margin-right: 30px;
+  height: 50px;
+}
+
+.seatable-app-gallery .gallery-main-header .gallery-name .logo-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .seatable-app-gallery .gallery-main-header .gallery-name > span {
   padding-right: 10px;
 }
 
-.seatable-app-gallery .gallery-name .gallery-app-table-rename .dtable-font {
+.seatable-app-gallery .gallery-name .gallery-app-table-rename-container span {
+  display: block;
+  max-width: 300px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.seatable-app-gallery .gallery-name .gallery-app-table-rename-container .dtable-icon-rename {
   color: #999;
 }
 
+.seatable-app-gallery .gallery-name .gallery-app-table-rename-container .dtable-icon-rename:hover {
+  color: #666;
+  cursor: pointer;
+}
+
 .seatable-app-gallery .gallery-main-header .gallery-options {
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border-bottom: 1px solid #e4e4e4;
 }
 
-.seatable-app-gallery .gallery-main-header .gallery-options .option-item {
+.seatable-app-gallery .gallery-main-header .gallery-options .option-item:first-child {
   margin-right: 10px;
 }
 
@@ -134,4 +140,18 @@ html, body {
 
 .am-list-item .am-list-line .am-list-content {
   color: #212529;
+}
+
+@media (max-width: 768px) {
+  .seatable-app-gallery .seatable-app-gallery-settings {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .seatable-app-gallery .gallery-name .gallery-app-table-rename-container span {
+    max-width: 220px;
+  }
 }

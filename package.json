@@ -22,7 +22,7 @@
     "react-intl-universal": "^2.2.2",
     "react-responsive": "^8.0.3",
     "react-transition-group": "4.4.1",
-    "reactstrap": "8.9.0"
+    "reactstrap": "9.0.2"
   },
   "scripts": {
     "clean": "rm -rf plugin-zip && mkdir plugin-zip",

@@ -9,7 +9,7 @@
     "babel-plugin-on-demand-loading": "^0.0.9",
     "copy-to-clipboard": "3.3.1",
     "deep-copy": "1.4.2",
-    "dtable-ui-component": "4.3.9-alpha1",
+    "dtable-ui-component": "4.3.10",
     "dtable-utils": "4.3.5",
     "dtable-web-api": "4.3.1",
     "is-hotkey": "0.2.0",

@@ -1,9 +1,9 @@
 import React from 'react';
 import intl from 'react-intl-universal';
+import { toaster } from 'dtable-ui-component';
 import context from './context.js';
 import Gallery from './pages/gallery.js';
 import Loading from './common/loading';
-import toaster from './common/toaster';
 import { isEditAppPage } from './utils/utils.js';
 import DTableUtils from './utils/dtable-utils.js';
 

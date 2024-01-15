@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isHotkey from 'is-hotkey';
-import toaster from '../toaster';
+import { toaster } from 'dtable-ui-component';
 import { validateName } from '../../utils/utils';
 
 const propTypes = {

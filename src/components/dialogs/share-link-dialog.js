@@ -4,7 +4,7 @@ import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import intl from 'react-intl-universal';
-import toaster from '../../common/toaster';
+import { toaster } from 'dtable-ui-component';
 
 import '../../assets/css/link-share-dialog.css';
 
